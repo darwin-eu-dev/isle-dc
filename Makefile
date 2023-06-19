@@ -248,12 +248,14 @@ help:
 .PHONY: pull
 ## Fetches the latest images from the registry.
 pull: docker-compose.yml
+	docker login
 ifeq ($(REPOSITORY), local)
 	# Only need to pull external services if using local images.
 	docker compose pull $(filter $(EXTERNAL_SERVICES), $(SERVICES))
 else
 	docker compose pull
 endif
+	docker logout
 
 
 .PHONY: build
