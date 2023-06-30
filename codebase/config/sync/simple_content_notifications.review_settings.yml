@@ -1,0 +1,9 @@
+_core:
+  default_config_hash: ajhQn36djhL4BRP55H5X-iIuUyQ1Mkxk_PtiXMuik0c
+review_notifications_live_domain: drupal.org
+review_notifications_due: '-6 months'
+review_notifications_active: false
+review_notifications_published: true
+review_notifications_in_dev: 0
+review_notifications_delay: '+7 days'
+review_notifications_subject: 'Website Content Needing Review'
