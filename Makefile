@@ -202,6 +202,7 @@ production: generate-secrets
 	docker compose exec -T drupal with-contenv bash -lc "drush -l $(SITE) user:role:add fedoraadmin admin"
 	MIGRATE_IMPORT_USER_OPTION=--userid=1 $(MAKE) hydrate
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 islandora_fits_tags'
+	$(MAKE) node_access_rebuild
 	$(MAKE) login
 
 
@@ -583,6 +584,7 @@ starter-finalize:
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 --tag=islandora'
 	#docker compose exec -T drupal with-contenv bash -lc 'chown -R `id -u`:nginx /var/www/drupal'
 	#docker compose exec -T drupal with-contenv bash -lc 'drush migrate:rollback islandora_defaults_tags,islandora_tags'
+	$(MAKE) node_access_rebuild
 	$(MAKE) login
 
 
@@ -672,4 +674,14 @@ fix_masonry:
 fix_views:
 	docker cp scripts/patch_views.sh $$(docker ps --format "{{.Names}}" | grep drupal):/var/www/drupal/patch_views.sh
 	docker compose exec -T drupal with-contenv bash -lc "bash /var/www/drupal/patch_views.sh ; rm /var/www/drupal/patch_views.sh ; drush cr"
+
+##################################################
+## Custom commands. If you need a command to be ##
+## executed, add below                          ##
+##################################################
+.PHONY: node_access_rebuild
+.SILENT: node_access_rebuild
+## For rebuilding the content permissions.
+node_access_rebuild:
+	docker compose exec -T drupal with-contenv bash -lc "drush php-eval 'node_access_rebuild();'"
   
