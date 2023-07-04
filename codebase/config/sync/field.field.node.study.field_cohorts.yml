@@ -1,0 +1,19 @@
+uuid: c62a83a1-561c-4755-9cb1-99b501e467a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_cohorts
+    - node.type.study
+id: node.study.field_cohorts
+field_name: field_cohorts
+entity_type: node
+bundle: study
+label: Cohorts
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

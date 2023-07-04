@@ -1,0 +1,21 @@
+uuid: 2b356e1e-9e4b-4ab5-adf3-fe26a69cf2b0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_data_partners
+    - node.type.study
+  module:
+    - options
+id: node.study.field_data_partners
+field_name: field_data_partners
+entity_type: node
+bundle: study
+label: 'Data Partners'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

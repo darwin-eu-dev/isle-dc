@@ -1,0 +1,37 @@
+uuid: 21e04772-90ec-41c2-9240-3ee6edd24086
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+    - options
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: node.field_differentiation
+field_name: field_differentiation
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: Off-the-shelf
+      label: Off-the-shelf
+    -
+      value: 'Routine repeated'
+      label: 'Routine repeated'
+    -
+      value: Complex
+      label: Complex
+    -
+      value: 'Very complex'
+      label: 'Very complex'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

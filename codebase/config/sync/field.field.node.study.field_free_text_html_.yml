@@ -1,0 +1,21 @@
+uuid: e81aa6c0-b096-4904-ba4b-497385ee9d48
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_free_text_html_
+    - node.type.study
+  module:
+    - text
+id: node.study.field_free_text_html_
+field_name: field_free_text_html_
+entity_type: node
+bundle: study
+label: 'Free text (HTML)'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

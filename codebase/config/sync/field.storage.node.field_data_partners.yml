@@ -1,0 +1,52 @@
+uuid: 2ef91fc0-38ac-4902-9f57-9f74ffeac44f
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+    - options
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: node.field_data_partners
+field_name: field_data_partners
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: "Hospital District Southwest Finland\_"
+      label: "Hospital District Southwest Finland\_"
+    -
+      value: 'Centre Hospitalier Universitaire de Bordeaux'
+      label: 'Centre Hospitalier Universitaire de Bordeaux'
+    -
+      value: 'University of Oxford'
+      label: 'University of Oxford'
+    -
+      value: 'University of Tartu'
+      label: 'University of Tartu'
+    -
+      value: 'PSMar & IMIM'
+      label: 'PSMar & IMIM'
+    -
+      value: 'Mieur Implementation and Exploitation B.V'
+      label: 'Mieur Implementation and Exploitation B.V'
+    -
+      value: 'IQVIA Solutions BV'
+      label: 'IQVIA Solutions BV'
+    -
+      value: 'Integraal Kankercentrum Nederland'
+      label: 'Integraal Kankercentrum Nederland'
+    -
+      value: IDIAPJGol
+      label: IDIAPJGol
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

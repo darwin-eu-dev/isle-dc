@@ -1,0 +1,23 @@
+uuid: ca7ab3b7-f059-4ae9-9684-263b832d0edc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_link_to_encepp
+    - node.type.study
+  module:
+    - link
+id: node.study.field_link_to_encepp
+field_name: field_link_to_encepp
+entity_type: node
+bundle: study
+label: 'Link to ENCePP'
+description: '<p><a href="https://www.encepp.eu/">ENCePP Home Page</a></p>'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

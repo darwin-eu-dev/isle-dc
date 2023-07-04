@@ -1,0 +1,23 @@
+uuid: 28a34a30-ea3f-4904-8820-85e406009e28
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_setting
+    - node.type.study
+  module:
+    - options
+id: node.study.field_setting
+field_name: field_setting
+entity_type: node
+bundle: study
+label: Setting
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: Out-patient
+default_value_callback: ''
+settings: {  }
+field_type: list_string
