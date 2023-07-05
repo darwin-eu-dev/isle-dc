@@ -1,0 +1,11 @@
+uuid: fc8ebe2d-d123-4416-bdae-2f9d3451fdf8
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.study
+id: node.study
+target_entity_type_id: node
+target_bundle: study
+default_langcode: site_default
+language_alterable: false

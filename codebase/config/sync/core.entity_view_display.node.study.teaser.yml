@@ -1,0 +1,78 @@
+uuid: 00195125-59e6-4a8b-8ca2-8cde378ec2bf
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.study.field_annexes
+    - field.field.node.study.field_code
+    - field.field.node.study.field_cohorts
+    - field.field.node.study.field_contributors
+    - field.field.node.study.field_data_partners
+    - field.field.node.study.field_database_descriptions
+    - field.field.node.study.field_definition
+    - field.field.node.study.field_differentiation
+    - field.field.node.study.field_free_text_html_
+    - field.field.node.study.field_is_drug_exposure_study
+    - field.field.node.study.field_issues
+    - field.field.node.study.field_labels
+    - field.field.node.study.field_link_to_encepp
+    - field.field.node.study.field_list_of_pipelines
+    - field.field.node.study.field_presentation_material
+    - field.field.node.study.field_references_to_this_study_i
+    - field.field.node.study.field_related_publication
+    - field.field.node.study.field_related_studies
+    - field.field.node.study.field_results
+    - field.field.node.study.field_setting
+    - field.field.node.study.field_status
+    - field.field.node.study.field_study_abstract
+    - field.field.node.study.field_study_description
+    - field.field.node.study.field_study_duration_range
+    - field.field.node.study.field_study_duration_unit
+    - field.field.node.study.field_study_package
+    - field.field.node.study.field_study_sources
+    - field.field.node.study.field_use_of_study_
+    - node.type.study
+  module:
+    - user
+id: node.study.teaser
+targetEntityType: node
+bundle: study
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_annexes: true
+  field_code: true
+  field_cohorts: true
+  field_contributors: true
+  field_data_partners: true
+  field_database_descriptions: true
+  field_definition: true
+  field_differentiation: true
+  field_free_text_html_: true
+  field_is_drug_exposure_study: true
+  field_issues: true
+  field_labels: true
+  field_link_to_encepp: true
+  field_list_of_pipelines: true
+  field_presentation_material: true
+  field_references_to_this_study_i: true
+  field_related_publication: true
+  field_related_studies: true
+  field_results: true
+  field_setting: true
+  field_status: true
+  field_study_abstract: true
+  field_study_description: true
+  field_study_duration_range: true
+  field_study_duration_unit: true
+  field_study_package: true
+  field_study_sources: true
+  field_use_of_study_: true
+  langcode: true
+  search_api_excerpt: true

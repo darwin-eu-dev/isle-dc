@@ -1,0 +1,19 @@
+uuid: 2f3a2c9a-7653-423f-b675-829af09a7bf5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_study_sources
+    - node.type.study
+id: node.study.field_study_sources
+field_name: field_study_sources
+entity_type: node
+bundle: study
+label: 'Study sources'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

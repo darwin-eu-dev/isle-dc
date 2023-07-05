@@ -1,0 +1,23 @@
+uuid: 167c01cb-63c3-4444-a991-d3b0d9ab1bc8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_related_studies
+    - node.type.study
+  module:
+    - link
+id: node.study.field_related_studies
+field_name: field_related_studies
+entity_type: node
+bundle: study
+label: 'Related studies'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link
