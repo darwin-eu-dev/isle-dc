@@ -202,6 +202,7 @@ production: generate-secrets
 	docker compose exec -T drupal with-contenv bash -lc "drush -l $(SITE) user:role:add fedoraadmin admin"
 	MIGRATE_IMPORT_USER_OPTION=--userid=1 $(MAKE) hydrate
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 islandora_fits_tags'
+	docker compose exec -T drupal with-contenv bash -lc 'drush islandora:settings:set-trusted-host-patterns "^$(DOMAIN)$\"'	
 	$(MAKE) node_access_rebuild
 	$(MAKE) login
 
