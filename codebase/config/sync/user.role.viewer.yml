@@ -1,9 +1,0 @@
-uuid: 5201133b-ac8a-46a3-a6b3-e3b00103af65
-langcode: en
-status: true
-dependencies: {  }
-id: viewer
-label: Viewer
-weight: -8
-is_admin: null
-permissions: {  }

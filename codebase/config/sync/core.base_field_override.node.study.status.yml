@@ -1,0 +1,22 @@
+uuid: 3ea179df-e8c8-46d8-abd6-58ac030f7794
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.study
+id: node.study.status
+field_name: status
+entity_type: node
+bundle: study
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean
