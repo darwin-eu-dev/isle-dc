@@ -1,0 +1,15 @@
+uuid: d11e56ae-18c6-4b1a-9deb-78d35a62e368
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.study
+    - user.role.administrator
+id: study-admin_in
+label: 'Administrator - Insider'
+weight: -4
+admin: true
+scope: insider
+global_role: administrator
+group_type: study
+permissions: {  }

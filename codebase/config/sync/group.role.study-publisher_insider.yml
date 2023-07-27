@@ -1,0 +1,21 @@
+uuid: bf7a3f0c-a2d6-434a-bc41-dfac5c2e5d1b
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.study
+    - user.role.editor
+id: study-publisher_insider
+label: 'Publisher - Insider'
+weight: -2
+admin: false
+scope: insider
+global_role: editor
+group_type: study
+permissions:
+  - 'create group_node:study entity'
+  - 'update any group_node:study entity'
+  - 'update own group_node:study entity'
+  - 'view group_node:study entity'
+  - 'view own unpublished group_node:study entity'
+  - 'view unpublished group_node:study entity'

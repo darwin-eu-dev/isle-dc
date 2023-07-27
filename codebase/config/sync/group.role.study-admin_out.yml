@@ -1,0 +1,15 @@
+uuid: 957c433d-1e0a-46d3-8dcd-1d9c92fb48fa
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.study
+    - user.role.administrator
+id: study-admin_out
+label: 'Administrator - Outsider'
+weight: -5
+admin: true
+scope: outsider
+global_role: administrator
+group_type: study
+permissions: {  }

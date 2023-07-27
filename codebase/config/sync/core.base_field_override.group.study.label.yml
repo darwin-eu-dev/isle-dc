@@ -1,0 +1,18 @@
+uuid: cf19423c-4d25-41ec-b0df-718a48b9ef51
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.study
+id: group.study.label
+field_name: label
+entity_type: group
+bundle: study
+label: Title
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

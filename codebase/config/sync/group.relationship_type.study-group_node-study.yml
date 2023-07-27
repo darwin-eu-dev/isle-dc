@@ -1,0 +1,17 @@
+uuid: 0d1033bc-23e1-4d9f-a917-c56401323d3f
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.study
+    - node.type.study
+  module:
+    - gnode
+    - node
+id: study-group_node-study
+group_type: study
+content_plugin: 'group_node:study'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

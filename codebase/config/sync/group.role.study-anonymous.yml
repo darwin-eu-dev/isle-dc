@@ -1,0 +1,15 @@
+uuid: 8074b26d-5a0f-40bb-8ca7-7aa36044897f
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.study
+    - user.role.anonymous
+id: study-anonymous
+label: Anonymous
+weight: -10
+admin: false
+scope: outsider
+global_role: anonymous
+group_type: study
+permissions: {  }

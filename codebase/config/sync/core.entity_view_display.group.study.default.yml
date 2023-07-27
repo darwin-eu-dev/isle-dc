@@ -1,0 +1,35 @@
+uuid: 89ec61e8-519a-4ede-8000-a79c6db4bdbe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.group.study.field_description
+    - group.type.study
+  module:
+    - text
+id: group.study.default
+targetEntityType: group
+bundle: study
+mode: default
+content:
+  field_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: -4
+    region: content
+  label:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -5
+    region: content
+hidden:
+  changed: true
+  created: true
+  langcode: true
+  search_api_excerpt: true
+  uid: true

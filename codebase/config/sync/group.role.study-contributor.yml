@@ -1,0 +1,19 @@
+uuid: fc2fef4f-47b7-4702-bca4-ef0c3ef09f1a
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.study
+    - user.role.contributor
+id: study-contributor
+label: 'Contributor - Insider'
+weight: -7
+admin: false
+scope: insider
+global_role: contributor
+group_type: study
+permissions:
+  - 'update own group_node:study entity'
+  - 'view group_node:study entity'
+  - 'view own unpublished group_node:study entity'
+  - 'view unpublished group_node:study entity'
