@@ -13,7 +13,9 @@ scope: insider
 global_role: contributor
 group_type: study
 permissions:
+  - 'access group_node overview'
   - 'update own group_node:study entity'
+  - 'view group'
   - 'view group_node:study entity'
   - 'view own unpublished group_node:study entity'
   - 'view unpublished group_node:study entity'

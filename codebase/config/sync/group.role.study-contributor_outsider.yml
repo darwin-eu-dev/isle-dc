@@ -13,4 +13,5 @@ scope: outsider
 global_role: contributor
 group_type: study
 permissions:
+  - 'view group'
   - 'view group_node:study entity'

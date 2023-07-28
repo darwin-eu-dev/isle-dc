@@ -13,4 +13,6 @@ scope: insider
 global_role: authenticated
 group_type: study
 permissions:
+  - 'access group_node overview'
+  - 'view group'
   - 'view group_node:study entity'
