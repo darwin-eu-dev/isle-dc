@@ -14,6 +14,7 @@ global_role: contributor
 group_type: study
 permissions:
   - 'access group_node overview'
+  - 'update any group_node:study entity'
   - 'update own group_node:study entity'
   - 'view group'
   - 'view group_node:study entity'
