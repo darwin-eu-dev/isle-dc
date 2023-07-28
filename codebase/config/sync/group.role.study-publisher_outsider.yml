@@ -13,6 +13,7 @@ scope: outsider
 global_role: editor
 group_type: study
 permissions:
+  - 'access group_node overview'
   - 'create group_node:study entity'
   - 'update any group_node:study entity'
   - 'update own group_node:study entity'
