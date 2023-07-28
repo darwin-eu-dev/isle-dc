@@ -16,6 +16,7 @@ dependencies:
     - media
     - node
     - toolbar
+    - view_unpublished
 id: editor
 label: Publisher
 weight: -6
@@ -55,6 +56,7 @@ permissions:
   - 'update any media'
   - 'update media'
   - 'view all media revisions'
+  - 'view any unpublished study content'
   - 'view own unpublished content'
   - 'view own unpublished media'
   - 'view study revisions'

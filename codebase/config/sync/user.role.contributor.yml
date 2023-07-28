@@ -16,6 +16,7 @@ dependencies:
     - media
     - node
     - toolbar
+    - view_unpublished
 id: contributor
 label: Contributor
 weight: -7
@@ -43,5 +44,6 @@ permissions:
   - 'edit own study content'
   - 'edit own video media'
   - 'update media'
+  - 'view any unpublished study content'
   - 'view own unpublished content'
   - 'view own unpublished media'
