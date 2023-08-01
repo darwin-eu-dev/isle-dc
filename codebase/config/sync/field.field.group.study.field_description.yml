@@ -1,0 +1,23 @@
+uuid: 3e570b92-8bbf-4bbf-a09f-f37e69420a6a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_description
+    - group.type.study
+  module:
+    - text
+id: group.study.field_description
+field_name: field_description
+entity_type: group
+bundle: study
+label: Description
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+field_type: text_with_summary

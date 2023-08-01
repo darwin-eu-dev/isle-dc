@@ -1,0 +1,12 @@
+uuid: bec8fc79-101e-4169-bc3f-4e92c0d86d21
+langcode: en
+status: true
+dependencies: {  }
+id: study
+label: Study
+description: 'Groups contents and users based on the study content type'
+new_revision: true
+creator_membership: true
+creator_wizard: false
+creator_roles:
+  - study-admin

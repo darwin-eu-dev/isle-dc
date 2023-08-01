@@ -1,0 +1,17 @@
+uuid: 04357d5a-c0b3-44d9-a8dd-9b9dde5bd2f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.study
+    - user.role.contributor
+id: study-contributor_outsider
+label: 'Contributor - Outsider'
+weight: -6
+admin: false
+scope: outsider
+global_role: contributor
+group_type: study
+permissions:
+  - 'view group'
+  - 'view group_node:study entity'

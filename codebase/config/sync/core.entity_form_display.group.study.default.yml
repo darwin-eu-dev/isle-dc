@@ -1,0 +1,55 @@
+uuid: 48c4a0f7-b217-441c-80d4-12a5c6724479
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.group.study.field_description
+    - group.type.study
+  module:
+    - path
+    - text
+id: group.study.default
+targetEntityType: group
+bundle: study
+mode: default
+content:
+  field_description:
+    type: text_textarea_with_summary
+    weight: 121
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+  label:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  uid: true

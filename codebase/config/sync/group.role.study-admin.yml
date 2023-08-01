@@ -1,0 +1,14 @@
+uuid: 4cc2f23c-f4a0-42b2-95c7-06ce0798619a
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.study
+id: study-admin
+label: Admin
+weight: -1
+admin: true
+scope: individual
+global_role: null
+group_type: study
+permissions: {  }

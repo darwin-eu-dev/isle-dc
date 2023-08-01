@@ -1,0 +1,18 @@
+uuid: 20c09823-bb52-459e-abeb-eb927b16b277
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.study
+    - user.role.authenticated
+id: study-member
+label: 'Viewer - Insider'
+weight: -8
+admin: false
+scope: insider
+global_role: authenticated
+group_type: study
+permissions:
+  - 'access group_node overview'
+  - 'view group'
+  - 'view group_node:study entity'
