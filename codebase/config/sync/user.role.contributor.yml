@@ -15,7 +15,6 @@ dependencies:
   module:
     - media
     - node
-    - toolbar
     - view_unpublished
 id: contributor
 label: Contributor
@@ -23,7 +22,6 @@ weight: -7
 is_admin: null
 permissions:
   - 'access content overview'
-  - 'access toolbar'
   - 'create audio media'
   - 'create document media'
   - 'create extracted_text media'
@@ -32,7 +30,6 @@ permissions:
   - 'create image media'
   - 'create media'
   - 'create remote_video media'
-  - 'create study content'
   - 'create video media'
   - 'edit own audio media'
   - 'edit own document media'

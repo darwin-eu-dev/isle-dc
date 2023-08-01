@@ -15,7 +15,6 @@ dependencies:
   module:
     - media
     - node
-    - toolbar
     - view_unpublished
 id: editor
 label: Publisher
@@ -23,7 +22,6 @@ weight: -6
 is_admin: null
 permissions:
   - 'access content overview'
-  - 'access toolbar'
   - 'create audio media'
   - 'create document media'
   - 'create extracted_text media'
