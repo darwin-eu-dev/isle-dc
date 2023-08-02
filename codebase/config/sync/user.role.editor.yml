@@ -21,7 +21,6 @@ label: Publisher
 weight: -6
 is_admin: null
 permissions:
-  - 'access content overview'
   - 'create audio media'
   - 'create document media'
   - 'create extracted_text media'
