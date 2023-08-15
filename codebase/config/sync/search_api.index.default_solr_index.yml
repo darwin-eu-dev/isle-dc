@@ -3,32 +3,61 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_study_abstract
+    - field.storage.node.field_abstract
     - field.storage.node.field_alt_title
+    - field.storage.node.field_annexes
+    - field.storage.node.field_code
+    - field.storage.node.field_cohorts
+    - field.storage.node.field_contributors
+    - field.storage.node.field_database_descriptions
+    - field.storage.node.field_data_partners
+    - field.storage.node.field_edtf_date_created
+    - field.storage.node.field_definition
     - field.storage.node.field_member_of
+    - field.storage.node.field_study_description
     - field.storage.node.field_description
     - field.storage.node.field_dewey_classification
+    - field.storage.node.field_differentiation
     - field.storage.node.field_edition
-    - field.storage.node.field_edtf_date_created
     - field.storage.node.field_extent
+    - field.storage.node.field_free_text_html_
     - field.storage.node.field_full_title
     - field.storage.node.field_isbn
+    - field.storage.node.field_is_drug_exposure_study
+    - field.storage.node.field_issues
+    - field.storage.node.field_labels
     - field.storage.node.field_lcc_classification
     - field.storage.node.field_linked_agent
+    - field.storage.node.field_link_to_encepp
+    - field.storage.node.field_list_of_pipelines
     - field.storage.node.field_oclc_number
     - field.storage.node.field_physical_form
+    - field.storage.node.field_presentation_material
+    - field.storage.node.field_references_to_this_study_i
+    - field.storage.node.field_related_publication
+    - field.storage.node.field_related_studies
     - field.storage.node.field_resource_type
+    - field.storage.node.field_results
     - field.storage.node.field_rights
-    - field.storage.node.field_tags
-    - field.storage.node.field_abstract
+    - field.storage.node.field_setting
+    - field.storage.node.field_status
+    - field.storage.node.field_study_duration_range
+    - field.storage.node.field_study_duration_unit
+    - field.storage.node.field_study_package
+    - field.storage.node.field_study_sources
     - field.storage.node.field_subject_general
     - field.storage.node.field_geographic_subject
     - field.storage.node.field_subjects_name
     - field.storage.node.field_temporal_subject
     - field.storage.node.field_subject
+    - field.storage.node.field_tags
+    - field.storage.node.field_use_of_study_
     - search_api.server.default_solr_server
     - core.entity_view_mode.node.search_index
   module:
     - search_api_solr
+    - file
     - node
     - user
     - taxonomy
@@ -113,6 +142,62 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_alt_title
+  field_code:
+    label: Code
+    datasource_id: 'entity:node'
+    property_path: field_code
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_code
+  field_cohorts:
+    label: Cohorts
+    datasource_id: 'entity:node'
+    property_path: field_cohorts
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_cohorts
+  field_contributors:
+    label: Contributors
+    datasource_id: 'entity:node'
+    property_path: field_contributors
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_contributors
+  field_data_partners:
+    label: 'Data Partners'
+    datasource_id: 'entity:node'
+    property_path: field_data_partners
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_data_partners
+  field_data_partners_1:
+    label: 'Data Partners'
+    datasource_id: 'entity:node'
+    property_path: field_data_partners
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_data_partners
+  field_database_descriptions:
+    label: 'Database descriptions'
+    datasource_id: 'entity:node'
+    property_path: field_database_descriptions
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_database_descriptions
+  field_definition:
+    label: Definition
+    datasource_id: 'entity:node'
+    property_path: field_definition
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_definition
   field_descendant_of:
     label: 'Descendant of'
     datasource_id: 'entity:node'
@@ -137,6 +222,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_dewey_classification
+  field_differentiation:
+    label: Differentiation
+    datasource_id: 'entity:node'
+    property_path: field_differentiation
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_differentiation
   field_edited_text:
     label: 'Reverse reference: <em class="placeholder">Media</em> using <em class="placeholder">Media of</em> » Edited Text'
     datasource_id: 'entity:node'
@@ -166,6 +259,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_extent
+  field_free_text_html_:
+    label: 'Free text (HTML)'
+    datasource_id: 'entity:node'
+    property_path: field_free_text_html_
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_free_text_html_
   field_full_title:
     label: 'Full Title'
     datasource_id: 'entity:node'
@@ -174,6 +275,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_full_title
+  field_is_drug_exposure_study:
+    label: 'Is Drug Exposure Study'
+    datasource_id: 'entity:node'
+    property_path: field_is_drug_exposure_study
+    type: boolean
+    dependencies:
+      config:
+        - field.storage.node.field_is_drug_exposure_study
   field_isbn:
     label: ISBN
     datasource_id: 'entity:node'
@@ -182,6 +291,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_isbn
+  field_issues:
+    label: Issues
+    datasource_id: 'entity:node'
+    property_path: field_issues
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_issues
   field_lcc_classification:
     label: 'Library of Congress Classification'
     datasource_id: 'entity:node'
@@ -200,6 +317,14 @@ field_settings:
         - field.storage.node.field_linked_agent
       module:
         - taxonomy
+  field_list_of_pipelines:
+    label: 'List of pipelines'
+    datasource_id: 'entity:node'
+    property_path: field_list_of_pipelines
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_list_of_pipelines
   field_member_of:
     label: 'Member of'
     datasource_id: 'entity:node'
@@ -242,6 +367,62 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_rights
+  field_setting:
+    label: Setting
+    datasource_id: 'entity:node'
+    property_path: field_setting
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_setting
+  field_status:
+    label: Status
+    datasource_id: 'entity:node'
+    property_path: field_status
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_status
+  field_study_abstract:
+    label: Abstract
+    datasource_id: 'entity:node'
+    property_path: field_study_abstract
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_study_abstract
+  field_study_description:
+    label: Description
+    datasource_id: 'entity:node'
+    property_path: field_study_description
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_study_description
+  field_study_duration_range:
+    label: 'Study duration - Range'
+    datasource_id: 'entity:node'
+    property_path: field_study_duration_range
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_study_duration_range
+  field_study_duration_unit:
+    label: 'Study duration - Unit'
+    datasource_id: 'entity:node'
+    property_path: field_study_duration_unit
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_study_duration_unit
+  field_study_sources:
+    label: 'Study sources'
+    datasource_id: 'entity:node'
+    property_path: field_study_sources
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_study_sources
   field_tags:
     label: Tags
     datasource_id: 'entity:node'
@@ -250,6 +431,34 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_tags
+  field_use_of_study_:
+    label: 'Use of study '
+    datasource_id: 'entity:node'
+    property_path: field_use_of_study_
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_use_of_study_
+  filename:
+    label: 'Annexes » File » Filename'
+    datasource_id: 'entity:node'
+    property_path: 'field_annexes:entity:filename'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_annexes
+      module:
+        - file
+  filename_1:
+    label: 'Presentation material » File » Filename'
+    datasource_id: 'entity:node'
+    property_path: 'field_presentation_material:entity:filename'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_presentation_material
+      module:
+        - file
   linked_agent_name_fulltext:
     label: Names
     datasource_id: 'entity:node'
@@ -280,6 +489,16 @@ field_settings:
         - field.storage.node.field_member_of
       module:
         - node
+  name:
+    label: 'Labels » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_labels:entity:name'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_labels
+      module:
+        - taxonomy
   nid:
     label: ID
     datasource_id: 'entity:node'
@@ -404,6 +623,54 @@ field_settings:
     dependencies:
       module:
         - node
+  title_1:
+    label: 'Link to ENCePP » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_link_to_encepp:title'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_link_to_encepp
+  title_2:
+    label: 'References to this study in the press » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_references_to_this_study_i:title'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_references_to_this_study_i
+  title_3:
+    label: 'Related publication » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_related_publication:title'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_related_publication
+  title_4:
+    label: 'Related studies » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_related_studies:title'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_related_studies
+  title_5:
+    label: 'Results » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_results:title'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_results
+  title_6:
+    label: 'Study package » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_study_package:title'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_study_package
   title_aggregated:
     label: 'Title (All)'
     property_path: aggregated_field
