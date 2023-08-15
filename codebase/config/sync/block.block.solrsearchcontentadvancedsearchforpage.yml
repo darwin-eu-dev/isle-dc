@@ -20,9 +20,34 @@ settings:
   label_display: visible
   provider: advanced_search
   fields:
+    - field_study_abstract
+    - filename
+    - field_code
+    - field_cohorts
+    - field_contributors
+    - field_data_partners_1
+    - field_definition
+    - field_study_description
+    - field_differentiation
+    - field_free_text_html_
+    - field_is_drug_exposure_study
+    - field_issues
+    - name
+    - title_1
+    - field_list_of_pipelines
+    - filename_1
+    - title_2
+    - title_3
+    - title_4
+    - title_5
+    - field_setting
+    - field_status
+    - field_study_duration_range
+    - field_study_duration_unit
+    - title_6
+    - field_study_sources
     - title_aggregated_fulltext
-    - abstract_description_fulltext
-    - linked_agent_name_fulltext
+    - field_use_of_study_
   context_filter: null
 visibility:
   user_status:
