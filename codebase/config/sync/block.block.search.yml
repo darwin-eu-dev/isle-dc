@@ -7,6 +7,7 @@ dependencies:
     - context
     - islandora
     - system
+    - user
   theme:
     - olivero
 id: search
@@ -54,3 +55,14 @@ visibility:
     id: request_path
     negate: true
     pages: /search
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated
+      contributor: contributor
+      editor: editor
+      administrator: administrator
+      fedoraadmin: fedoraadmin
