@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes |
 | ------- | ----------- | ----- |
+| 0.0.11  | 16 Aug 2023 | AAICDDC-233 - Fix search for Code and Definition |
 | 0.0.10  | 15 Aug 2023 | AAICDDC-89 - Configure study search |
 | 0.0.9   | 03 Aug 2023 | AAICDDC-203 - Big fix: Prevent content access overview |
 | 0.0.8   | 01 Aug 2023 | AAICDDC-78 - Setup site segmentation |

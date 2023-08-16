@@ -22,11 +22,11 @@ settings:
   fields:
     - field_study_abstract
     - filename
-    - field_code
+    - title_7
     - field_cohorts
     - field_contributors
     - field_data_partners_1
-    - field_definition
+    - title_8
     - field_study_description
     - field_differentiation
     - field_free_text_html_
