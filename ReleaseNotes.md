@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes |
 | ------- | ----------- | ----- |
+| 0.0.10  | 15 Aug 2023 | AAICDDC-89 - Configure study search |
 | 0.0.9   | 03 Aug 2023 | AAICDDC-203 - Big fix: Prevent content access overview |
 | 0.0.8   | 01 Aug 2023 | AAICDDC-78 - Setup site segmentation |
 | 0.0.7   | 26 Jul 2023 | AAICDDC-18 - Temp. fix for uploading the files for Study content type |
