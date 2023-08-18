@@ -1,0 +1,32 @@
+login:
+  authenticated:
+    redirect_url: /
+    weight: '-10'
+  contributor:
+    redirect_url: /
+    weight: '-10'
+  editor:
+    redirect_url: /
+    weight: '-10'
+  administrator:
+    redirect_url: /
+    weight: '-10'
+  fedoraadmin:
+    redirect_url: /
+    weight: '-10'
+logout:
+  authenticated:
+    redirect_url: ''
+    weight: '-10'
+  contributor:
+    redirect_url: ''
+    weight: '-10'
+  editor:
+    redirect_url: ''
+    weight: '-10'
+  administrator:
+    redirect_url: ''
+    weight: '-10'
+  fedoraadmin:
+    redirect_url: ''
+    weight: '-10'
