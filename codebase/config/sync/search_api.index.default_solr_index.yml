@@ -15,8 +15,8 @@ dependencies:
     - field.storage.node.field_edtf_date_created
     - field.storage.node.field_definition
     - field.storage.node.field_member_of
-    - field.storage.node.field_study_description
     - field.storage.node.field_description
+    - field.storage.node.field_study_description
     - field.storage.node.field_dewey_classification
     - field.storage.node.field_differentiation
     - field.storage.node.field_edition
@@ -142,14 +142,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_alt_title
-  field_code:
-    label: Code
-    datasource_id: 'entity:node'
-    property_path: field_code
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.field_code
   field_cohorts:
     label: Cohorts
     datasource_id: 'entity:node'
@@ -190,14 +182,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_database_descriptions
-  field_definition:
-    label: Definition
-    datasource_id: 'entity:node'
-    property_path: field_definition
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.field_definition
   field_descendant_of:
     label: 'Descendant of'
     datasource_id: 'entity:node'
@@ -326,7 +310,7 @@ field_settings:
       config:
         - field.storage.node.field_list_of_pipelines
   field_member_of:
-    label: 'Member of'
+    label: 'Member of Count'
     datasource_id: 'entity:node'
     property_path: field_member_of
     type: integer
@@ -440,7 +424,7 @@ field_settings:
       config:
         - field.storage.node.field_use_of_study_
   filename:
-    label: 'Annexes » File » Filename'
+    label: Annexes
     datasource_id: 'entity:node'
     property_path: 'field_annexes:entity:filename'
     type: text
@@ -450,7 +434,7 @@ field_settings:
       module:
         - file
   filename_1:
-    label: 'Presentation material » File » Filename'
+    label: 'Presentation material'
     datasource_id: 'entity:node'
     property_path: 'field_presentation_material:entity:filename'
     type: text
@@ -480,7 +464,7 @@ field_settings:
       module:
         - taxonomy
   member_of_title:
-    label: 'Member of » Content » Title'
+    label: 'Member of'
     datasource_id: 'entity:node'
     property_path: 'field_member_of:entity:title'
     type: string
@@ -490,7 +474,7 @@ field_settings:
       module:
         - node
   name:
-    label: 'Labels » Taxonomy term » Name'
+    label: Labels
     datasource_id: 'entity:node'
     property_path: 'field_labels:entity:name'
     type: text
@@ -624,7 +608,7 @@ field_settings:
       module:
         - node
   title_1:
-    label: 'Link to ENCePP » Link text'
+    label: 'Link to ENCePP'
     datasource_id: 'entity:node'
     property_path: 'field_link_to_encepp:title'
     type: text
@@ -632,7 +616,7 @@ field_settings:
       config:
         - field.storage.node.field_link_to_encepp
   title_2:
-    label: 'References to this study in the press » Link text'
+    label: 'References to this study in the press'
     datasource_id: 'entity:node'
     property_path: 'field_references_to_this_study_i:title'
     type: text
@@ -640,7 +624,7 @@ field_settings:
       config:
         - field.storage.node.field_references_to_this_study_i
   title_3:
-    label: 'Related publication » Link text'
+    label: 'Related publication'
     datasource_id: 'entity:node'
     property_path: 'field_related_publication:title'
     type: text
@@ -648,7 +632,7 @@ field_settings:
       config:
         - field.storage.node.field_related_publication
   title_4:
-    label: 'Related studies » Link text'
+    label: 'Related studies'
     datasource_id: 'entity:node'
     property_path: 'field_related_studies:title'
     type: text
@@ -656,7 +640,7 @@ field_settings:
       config:
         - field.storage.node.field_related_studies
   title_5:
-    label: 'Results » Link text'
+    label: Results
     datasource_id: 'entity:node'
     property_path: 'field_results:title'
     type: text
@@ -664,13 +648,29 @@ field_settings:
       config:
         - field.storage.node.field_results
   title_6:
-    label: 'Study package » Link text'
+    label: 'Study package'
     datasource_id: 'entity:node'
     property_path: 'field_study_package:title'
     type: text
     dependencies:
       config:
         - field.storage.node.field_study_package
+  title_7:
+    label: Code
+    datasource_id: 'entity:node'
+    property_path: 'field_code:title'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_code
+  title_8:
+    label: Definition
+    datasource_id: 'entity:node'
+    property_path: 'field_definition:title'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_definition
   title_aggregated:
     label: 'Title (All)'
     property_path: aggregated_field

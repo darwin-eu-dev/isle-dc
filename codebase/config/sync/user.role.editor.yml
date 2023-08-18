@@ -17,7 +17,7 @@ dependencies:
     - node
     - view_unpublished
 id: editor
-label: Publisher
+label: Manager
 weight: -6
 is_admin: null
 permissions:
