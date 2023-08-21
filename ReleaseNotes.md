@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes |
 | ------- | ----------- | ----- |
+| 0.0.14  | 21 Aug 2023 | AAICDDC-30 - Redirect 403 to login page |
 | 0.0.13  | 18 Aug 2023 | AAICDDC-30 - Redirect users to home after login |
 | 0.0.12  | 17 Aug 2023 | AAICDDC-200 - Rename Publisher role to Manager |
 | 0.0.11  | 16 Aug 2023 | AAICDDC-233 - Fix search for Code and Definition |

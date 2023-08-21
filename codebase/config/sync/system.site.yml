@@ -6,7 +6,7 @@ name: 'DARWIN Study Library'
 mail: no-reply@study-repository-dev.darwin-eu.org
 slogan: ''
 page:
-  403: ''
+  403: /user/login
   404: ''
   front: /node
 admin_compact_mode: false
