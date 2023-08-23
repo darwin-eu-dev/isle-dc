@@ -582,11 +582,14 @@ starter-finalize:
 	docker compose exec -T drupal with-contenv bash -lc 'chown -R nginx:nginx .'
 	$(MAKE) drupal-database update-settings-php
 	docker compose exec -T drupal with-contenv bash -lc "drush si -y --existing-config minimal --account-pass '$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
+	
+	# after install, import configuration
+	docker compose exec -T drupal with-contenv bash -lc "drush -y cset system.site uuid '86955ff9-1be3-40ad-84ae-414c65ae901c'"
+	docker compose exec -T drupal with-contenv bash -lc 'drush -y config:import'
 	docker compose exec -T drupal with-contenv bash -lc "drush -l $(SITE) user:role:add fedoraadmin admin"
-	MIGRATE_IMPORT_USER_OPTION=--userid=1 $(MAKE) hydrate
-	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 --tag=islandora'
-	#docker compose exec -T drupal with-contenv bash -lc 'chown -R `id -u`:nginx /var/www/drupal'
-	#docker compose exec -T drupal with-contenv bash -lc 'drush migrate:rollback islandora_defaults_tags,islandora_tags'
+	
+	# rebuild caches and permissions
+	docker compose exec -T drupal with-contenv bash -lc 'drush cache-rebuild'
 	$(MAKE) node_access_rebuild
 	$(MAKE) login
 
