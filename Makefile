@@ -587,6 +587,7 @@ starter-finalize:
 	docker compose exec -T drupal with-contenv bash -lc "drush -y cset system.site uuid '86955ff9-1be3-40ad-84ae-414c65ae901c'"
 	docker compose exec -T drupal with-contenv bash -lc 'drush -y config:import'
 	docker compose exec -T drupal with-contenv bash -lc "drush -l $(SITE) user:role:add fedoraadmin admin"
+	$(MAKE) hydrate
 	
 	# rebuild caches and permissions
 	docker compose exec -T drupal with-contenv bash -lc 'drush cache-rebuild'

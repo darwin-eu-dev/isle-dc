@@ -10,8 +10,6 @@ services:
       - --api.debug=${EXPOSE_TRAEFIK_DASHBOARD:-false}
       - --entryPoints.http.address=:80
       - --entryPoints.https.address=:443
-      - --entryPoints.mysql.address=:3306
-      - --entryPoints.postgresql.address=:5432
       - --entryPoints.fcrepo.address=:8081
       - --entryPoints.blazegraph.address=:8082
       - --entryPoints.activemq.address=:8161
