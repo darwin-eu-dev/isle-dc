@@ -23,9 +23,6 @@ services:
       - drupal-sites-data:/var/www/drupal/web/sites/default/files
       # Used to dump solr configuration directly into solr instance via the search_api_solr module.
       - solr-data:/opt/solr/server/solr
-    depends_on:
-      # Requires a the very minimum a database.
-      - ${DRUPAL_DATABASE_SERVICE}
   # Extends docker-compose.solr.yml so that they share a volume.
   solr:
     volumes:
