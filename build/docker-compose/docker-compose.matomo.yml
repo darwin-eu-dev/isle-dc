@@ -12,12 +12,12 @@ services:
     image: ${REPOSITORY:-islandora}/matomo:${TAG:-latest}
     environment:
       MATOMO_DEFAULT_HOST: ${DOMAIN}
-      MATOMO_DATABASE_HOST: ${MYSQL_HOST}
     volumes:
       - matomo-config-data:/var/www/matomo
+    depends_on:
+      - mariadb
     networks:
       default:
-      gateway:
     labels:
       # Do not expose in production over http, setup https.
       - traefik.enable=${EXPOSE_MATOMO:-true}

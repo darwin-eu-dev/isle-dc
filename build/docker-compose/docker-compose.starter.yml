@@ -24,6 +24,9 @@ services:
     environment:
       DRUPAL_DEFAULT_INSTALL_EXISTING_CONFIG: ${INSTALL_EXISTING_CONFIG}
       DRUPAL_DEFAULT_PROFILE: ${DRUPAL_INSTALL_PROFILE}
+    depends_on:
+      # Requires a the very minimum a database.
+      - ${DRUPAL_DATABASE_SERVICE}
   # Extends docker-compose.solr.yml
   solr:
     volumes:
