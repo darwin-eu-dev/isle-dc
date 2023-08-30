@@ -94,6 +94,11 @@
         }
     },
     "extra": {
+        "patches": {
+            "drupal/group": {
+                "Cache issue patch": "https://www.drupal.org/files/issues/2019-06-24/2843166-7.patch"
+            }
+        },
         "drupal-scaffold": {
             "locations": {
                 "web-root": "web/"
@@ -134,8 +139,7 @@
             "web/themes/custom/{$name}": [
                 "type:drupal-custom-theme"
             ]
-        },
-        "patches": {}
+        }
     },
     "scripts": {
         "post-root-package-install": ["Islandora\\StarterSite::rootPackageInstall"]
