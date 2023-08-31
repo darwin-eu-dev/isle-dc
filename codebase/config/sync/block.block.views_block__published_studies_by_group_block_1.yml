@@ -1,25 +1,38 @@
-uuid: 0b112c69-6a7f-4be5-999c-4e5a5b5486d4
+uuid: 01d2a49a-7f6f-4830-91ba-c507bd9a4a4d
 langcode: en
 status: true
 dependencies:
+  config:
+    - views.view.published_studies_by_group
   module:
-    - advanced_search
     - context
     - islandora
+    - views
   theme:
     - olivero
-id: solrsearchcontentsearchresultspagerforblock
+id: views_block__published_studies_by_group_block_1
 theme: olivero
 region: content
-weight: -14
+weight: -15
 provider: null
-plugin: 'advanced_search_result_pager:solr_search_content__block_1'
+plugin: 'views_block:published_studies_by_group-block_1'
 settings:
-  id: 'advanced_search_result_pager:solr_search_content__block_1'
-  label: 'Solr search content: Search Results Pager for Block'
-  label_display: '0'
-  provider: advanced_search
+  id: 'views_block:published_studies_by_group-block_1'
+  label: ''
+  label_display: visible
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: none
 visibility:
+  context_all:
+    id: context_all
+    negate: null
+    values: ''
+  context:
+    id: context
+    negate: null
+    values: ''
   user_status:
     id: user_status
     negate: false
@@ -31,14 +44,6 @@ visibility:
       own_page_true: '0'
       field_value: '0'
     user_fields: uid
-  context:
-    id: context
-    negate: null
-    values: ''
-  context_all:
-    id: context_all
-    negate: null
-    values: collection
   media_source_mimetype:
     id: media_source_mimetype
     negate: false

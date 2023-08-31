@@ -2,12 +2,13 @@
 
 | Version | Date        | Notes |
 | ------- | ----------- | ----- |
+| 0.0.15  | 31 Aug 2023 | AAICDDC-241 - Bug Fix: Group view cache |
 | 0.0.14  | 21 Aug 2023 | AAICDDC-30 - Redirect 403 to login page |
 | 0.0.13  | 18 Aug 2023 | AAICDDC-30 - Redirect users to home after login |
 | 0.0.12  | 17 Aug 2023 | AAICDDC-200 - Rename Publisher role to Manager |
 | 0.0.11  | 16 Aug 2023 | AAICDDC-233 - Fix search for Code and Definition |
 | 0.0.10  | 15 Aug 2023 | AAICDDC-89 - Configure study search |
-| 0.0.9   | 03 Aug 2023 | AAICDDC-203 - Big fix: Prevent content access overview |
+| 0.0.9   | 03 Aug 2023 | AAICDDC-203 - Bug fix: Prevent content access overview |
 | 0.0.8   | 01 Aug 2023 | AAICDDC-78 - Setup site segmentation |
 | 0.0.7   | 26 Jul 2023 | AAICDDC-18 - Temp. fix for uploading the files for Study content type |
 | 0.0.6   | 19 Jul 2023 | AAICDDC-18 - Assign permissions to roles, merged authenticated user and viewer role |
