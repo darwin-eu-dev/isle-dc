@@ -2,7 +2,7 @@
 
 | Version | Date        | Notes |
 | ------- | ----------- | ----- |
-| 0.0.15  | 01 Sep 2023 | AAICDDC-241 - New view added for study groups |
+| 0.0.16  | 01 Sep 2023 | AAICDDC-241 - New view added for study groups |
 | 0.0.15  | 31 Aug 2023 | AAICDDC-241 - Bug Fix: Group view cache |
 | 0.0.14  | 21 Aug 2023 | AAICDDC-30 - Redirect 403 to login page |
 | 0.0.13  | 18 Aug 2023 | AAICDDC-30 - Redirect users to home after login |
