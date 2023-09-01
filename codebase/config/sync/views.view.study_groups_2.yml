@@ -1,6 +1,6 @@
-uuid: 3f2db8ae-5c7d-4c40-8011-87bc91382213
+uuid: eb467270-d318-4608-895a-25e5d43e3cda
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - group.type.study
@@ -12,8 +12,8 @@ dependencies:
   module:
     - group
     - user
-id: study_groups
-label: 'Study Groups'
+id: study_groups_2
+label: 'Study Groups Table'
 module: views
 description: ''
 tag: ''
@@ -26,7 +26,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Study Groups'
+      title: 'Study Groups '
       fields:
         label:
           id: label
@@ -38,7 +38,7 @@ display:
           entity_type: null
           entity_field: label
           plugin_id: field
-          label: ''
+          label: Title
           exclude: false
           alter:
             alter_text: false
@@ -82,7 +82,7 @@ display:
           click_sort_column: value
           type: string
           settings:
-            link_to_entity: true
+            link_to_entity: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -93,6 +93,12 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        operations:
+          id: operations
+          table: groups
+          field: operations
+          entity_type: group
+          plugin_id: entity_operations
       pager:
         type: mini
         options:
@@ -130,7 +136,7 @@ display:
             administrator: administrator
             fedoraadmin: fedoraadmin
       cache:
-        type: tag
+        type: none
         options: {  }
       empty: {  }
       sorts: {  }
@@ -162,9 +168,42 @@ display:
             operator_limit_selection: false
             operator_list: {  }
       style:
-        type: default
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            label: label
+            operations: operations
+          default: '-1'
+          info:
+            label:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            operations:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
       row:
         type: fields
+        options:
+          default_field_elements: true
+          inline:
+            label: label
+          separator: ''
+          hide_empty: false
       query:
         type: views_query
         options:
@@ -203,12 +242,16 @@ display:
           category_fallback: ''
           category_facets: {  }
           category_facets_concat_separator: ', '
-      path: study-groups
+      path: study-groups-table
       menu:
         type: normal
         title: 'Study Groups'
+        description: ''
+        weight: 0
+        expanded: false
         menu_name: main
         parent: ''
+        context: '0'
     cache_metadata:
       max-age: -1
       contexts:
