@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes |
 | ------- | ----------- | ----- |
+| 0.0.18  | 05 Sep 2023 | AAICDDC-278 - Disable study group nodes + members view cache |
 | 0.0.17  | 04 Sep 2023 | AAICDDC-295 - Update POC address |
 | 0.0.16  | 01 Sep 2023 | AAICDDC-241 - New view added for study groups |
 | 0.0.15  | 31 Aug 2023 | AAICDDC-241 - Bug Fix: Group view cache |
