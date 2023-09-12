@@ -6,3 +6,4 @@ services:
       FCREPO_PERSISTENCE_TYPE: mysql
       DB_MYSQL_HOST: ${MYSQL_HOST}
       DB_MYSQL_PORT: ${MYSQL_PORT}
+      DB_ROOT_USER: ${DB_ROOT_USER}
