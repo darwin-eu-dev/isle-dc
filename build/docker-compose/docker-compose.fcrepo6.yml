@@ -9,7 +9,9 @@ volumes:
 services:
   fcrepo:
     restart: ${RESTART_POLICY:-unless-stopped}
-    image: ${REPOSITORY:-islandora}/fcrepo6:${TAG:-latest}
+    build:
+      context: ./fcrepo-maria
+      dockerfile: Dockerfile
     environment:
       FCREPO_ALLOW_EXTERNAL_DRUPALHTTP: http://${DOMAIN}/
       FCREPO_ALLOW_EXTERNAL_DRUPALHTTPS: https://${DOMAIN}/
