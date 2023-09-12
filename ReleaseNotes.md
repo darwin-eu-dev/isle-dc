@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes |
 | ------- | ----------- | ----- |
+| 0.0.20  | 12 Sep 2023 | AAICDDC-315 - Administer study view |
 | 0.0.19  | 06 Sep 2023 | AAICDDC-242 - Filter study groups to only those the user belongs to |
 | 0.0.18  | 05 Sep 2023 | AAICDDC-278 - Disable study group nodes + members view cache |
 | 0.0.17  | 04 Sep 2023 | AAICDDC-295 - Update POC address |
