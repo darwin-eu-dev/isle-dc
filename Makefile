@@ -255,14 +255,12 @@ help:
 .PHONY: pull
 ## Fetches the latest images from the registry.
 pull: docker-compose.yml
-	docker login
 ifeq ($(REPOSITORY), local)
 	# Only need to pull external services if using local images.
 	docker compose pull $(filter $(EXTERNAL_SERVICES), $(SERVICES))
 else
 	docker compose pull
 endif
-	docker logout
 
 
 .PHONY: build
@@ -277,9 +275,7 @@ build:
 .PHONY: push-image
 ## Push your custom drupal image to dockerhub or a container registry
 push-image:
-	docker login
 	docker push "$(CUSTOM_IMAGE_NAMESPACE)/$(CUSTOM_IMAGE_NAME):${CUSTOM_IMAGE_TAG}"
-	docker logout
 
 
 .SILENT: docker-compose.yml
