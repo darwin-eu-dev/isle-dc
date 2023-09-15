@@ -173,6 +173,7 @@ if [[ $1 == 'yes' ]]; then
 	-w / \
 	--entrypoint bash \
 	${REPOSITORY}/drupal:${TAG} -c "/generate-secrets.sh && chown -R `id -u`:`id -g` /secrets"
+	cp -n $(pwd)/secrets/live/* ${SECRETS_PATH}/
 	echo -e "\n${GREEN}Secrets generated.${RESET}"
 fi
 
