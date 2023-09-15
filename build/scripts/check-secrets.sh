@@ -26,14 +26,14 @@ cat << EOF
 
 					Security Risk${RESET}
 		
-		Default values are identified in ${GREEN}${SECRETS_PATH}/${RESET}
+		Default values are identified in ${GREEN}$(pwd)/secrets/live/${RESET}
 
 		If you are using the default values, you can either change the values of 
-		the file found in ${SECRETS_PATH}/ 
+		the file found in $(pwd)/secrets/live/ 
 		Or generate new secrets by running:
 			${GREEN}make generate-secrets ${RESET}
 
-		This will generate new secrets in ${SECRETS_PATH}/ but will not update
+		This will generate new secrets in /secrets/live/ but will not update
 		the ISLE containers.
 		
 		If you are not sure how to push updated secrets to ISLE, please consult
@@ -57,25 +57,25 @@ function main() {
 	# Check if $USE_SECRETS is set to true.
 	if [ "$USE_SECRETS" = true ]; then
 		local secret_live=[];
-		# Check if the ${SECRETS_PATH} directory is empty.
-		if [ "$(ls ${SECRETS_PATH})" ]; then
-			local secret_live=($(find ${SECRETS_PATH}/* -exec basename {} \;))
+		# Check if the $(pwd)/secrets/live directory is empty.
+		if [ "$(ls $(pwd)/secrets/live)" ]; then
+			local secret_live=($(find $(pwd)/secrets/live/* -exec basename {} \;))
 		fi
 	fi
 
 	local secret_templates=($(find $(pwd)/secrets/template/* -exec basename {} \;))
 
-	if [ ! "$(ls ${SECRETS_PATH})" ]; then
+	if [ ! "$(ls $(pwd)/secrets/live)" ]; then
 		echo -e "\n${YELLOW}Checking secrets...${RESET}"
-		echo "  No secrets found in ${SECRETS_PATH}/"
+		echo "  No secrets found in $(pwd)/secrets/live/"
 		echo ""
 		echo -e "Everything (Drupal, SQL, Solr, etc.) needs passwords to run. These passwords are stored in the ${GREEN}secrets${RESET} directory."
 		echo "  1. ${BLUE}Generate new secrets${RESET}"
-		echo "       ╰ This will generate random new passwords and output them into ${SECRETS_PATH}/"
+		echo "       ╰ This will generate random new passwords and output them into $(pwd)/secrets/live/"
 		echo "  2. ${BLUE}Copy the existing secrets${RESET}"
-		echo "       ╰ This will copy the existing secrets into the ${SECRETS_PATH}/. Every password will likely be 'password'."
+		echo "       ╰ This will copy the existing secrets into the $(pwd)/secrets/live/. Every password will likely be 'password'."
 		echo "  3. ${BLUE}Create your own secrets${RESET}"
-		echo "       ╰ This will copy the secrets from $(pwd)/secrets/template/ to ${SECRETS_PATH}/"
+		echo "       ╰ This will copy the secrets from $(pwd)/secrets/template/ to $(pwd)/secrets/live/"
 		echo "            and will exit so you can edit the secrets manually prior to building the Docker image."
 		echo "  4. ${BLUE}Exit${RESET}"
 		echo ""
@@ -89,19 +89,18 @@ function main() {
 			-w / \
 			--entrypoint bash \
 			${REPOSITORY}/drupal:${TAG} -c "/generate-secrets.sh && chown -R `id -u`:`id -g` /secrets"
-			cp -n $(pwd)/secrets/live/* ${SECRETS_PATH}/
 			echo -e "\n${GREEN}Secrets generated.${RESET}"
 			;;
 		2)
 			echo "Copying existing secrets"
-			cp -n $(pwd)/secrets/template/* ${SECRETS_PATH}/
+			cp -n $(pwd)/secrets/template/* $(pwd)/secrets/live/
 			echo -e "\n${GREEN}Secrets copied.${RESET}"
 			;;
 		3)
 			echo "Creating your own secrets. Copying templates to live directory."
-			cp -n $(pwd)/secrets/template/* ${SECRETS_PATH}/
-			echo -e "\nTemplate ${GREEN}Secrets copied to ${SECRETS_PATH}/.${RESET}"
-			echo "You can now edit the secrets in ${SECRETS_PATH}/ and then run: ${GREEN}make up${RESET} to start building the Docker image."
+			cp -n $(pwd)/secrets/template/* $(pwd)/secrets/live/
+			echo -e "\nTemplate ${GREEN}Secrets copied to $(pwd)/secrets/live/.${RESET}"
+			echo "You can now edit the secrets in $(pwd)/secrets/live/ and then run: ${GREEN}make up${RESET} to start building the Docker image."
 			exit 1
 			;;
 		*)
@@ -111,7 +110,7 @@ function main() {
 		esac
 	fi
 
-	local secret_live=($(find ${SECRETS_PATH}/* -exec basename {} \;))
+	local secret_live=($(find $(pwd)/secrets/live/* -exec basename {} \;))
 	for secret in "${secret_templates[@]}"; do
 		if [[ ! "${secret_live[@]}" =~ "${secret}" ]]; then
 			missing_secret_identified=true
@@ -119,18 +118,18 @@ function main() {
 		fi
 
 		if [[ $hash == "UNKNOWN" ]]; then
-			if [[ $(cat secrets/template/${secret}) == $(cat ${SECRETS_PATH}/${secret}) ]]; then
+			if [[ $(cat secrets/template/${secret}) == $(cat secrets/live/${secret}) ]]; then
 				# Ignore the config location directory. This won't pose a security risk.
 				if [[ ! "${secret}" = "DRUPAL_DEFAULT_CONFIGDIR" ]]; then
-					echo -e "${RED}Default Secret${RESET} ${BLUE}->${RESET} ${SECRETS_PATH}/${secret}"
+					echo -e "${RED}Default Secret${RESET} ${BLUE}->${RESET} $(pwd)/secrets/live/${secret}"
 					FOUND_INSECURE_SECRETS=true
 				fi
 			fi
 		else
-			if [[ "$($hash $(pwd)/secrets/template/${secret}| awk '{print $1}')" == "$($hash ${SECRETS_PATH}/${secret}| awk '{print $1}')" ]]; then
+			if [[ "$($hash $(pwd)/secrets/template/${secret}| awk '{print $1}')" == "$($hash $(pwd)/secrets/live/${secret}| awk '{print $1}')" ]]; then
 				# Ignore the config location directory. This won't pose a security risk.
 				if [[ ! "${secret}" = "DRUPAL_DEFAULT_CONFIGDIR" ]]; then
-					echo -e "${RED}Default Secret${RESET} ${BLUE}->${RESET} ${SECRETS_PATH}/${secret}"
+					echo -e "${RED}Default Secret${RESET} ${BLUE}->${RESET} $(pwd)/secrets/live/${secret}"
 					FOUND_INSECURE_SECRETS=true
 				fi
 			fi
@@ -145,9 +144,9 @@ function main() {
 			echo ""
 			for secret in "${secret_templates[@]}"; do
 				if [[ ! "${secret_live[@]}" =~ "${secret}" ]]; then
-					echo "MISSING: ${SECRETS_PATH}/${secret}"
-					echo -e "   Copying ${RED}${secret}${RESET} to ${SECRETS_PATH}/${GREEN}${secret}${RESET}\n"
-                    cp -n $(pwd)/secrets/template/${secret} ${SECRETS_PATH}/${secret}
+					echo "MISSING: $(pwd)/secrets/live/${secret}"
+					echo -e "   Copying ${RED}${secret}${RESET} to $(pwd)/secrets/live/${GREEN}${secret}${RESET}\n"
+					cp -n $(pwd)/secrets/template/${secret} $(pwd)/secrets/live/${secret}
 					echo ""
 				fi
 			done
@@ -157,9 +156,9 @@ function main() {
 		fi
 	fi
 
-	# Check if Salt matches the one in ${SECRETS_PATH}/.
+	# Check if Salt matches the one in secrets/live/.
 	SALT=$(echo $(docker compose exec drupal with-contenv bash -lc "cat web/sites/default/settings.php | grep hash_salt | grep '^\$settings' | cut -d\= -f2| cut -d\' -f2 | cut -f1 -d\"'\" | tr -d '\n' | cut -f1 -d\"%\""))
-	SETTINGS_SALT=$(echo $(cat ${SECRETS_PATH}/DRUPAL_DEFAULT_SALT | tr -d '\n' | cut -f1 -d"%"))
+	SETTINGS_SALT=$(echo $(cat secrets/live/DRUPAL_DEFAULT_SALT | tr -d '\n' | cut -f1 -d"%"))
 	if [[ $(echo "${SALT}") != $(echo "${SETTINGS_SALT}") ]]; then
 		echo "${SALT} ${SETTINGS_SALT} Updates to the salt are not automatically added to web/sites/default/settings.php file. Please make this change manually and then run the same ${BLUE}make down && make up${RESET} command again."
 	fi
@@ -173,7 +172,6 @@ if [[ $1 == 'yes' ]]; then
 	-w / \
 	--entrypoint bash \
 	${REPOSITORY}/drupal:${TAG} -c "/generate-secrets.sh && chown -R `id -u`:`id -g` /secrets"
-	cp -n $(pwd)/secrets/live/* ${SECRETS_PATH}/
 	echo -e "\n${GREEN}Secrets generated.${RESET}"
 fi
 
