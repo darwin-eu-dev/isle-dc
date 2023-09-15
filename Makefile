@@ -375,7 +375,7 @@ clean:
 	echo "**DANGER** About to rm your SERVER data subdirs, your docker volumes, codebase, islandora_workbench, certs, secrets, and all untracked/ignored files (including .env)."
 	$(MAKE) confirm
 	-docker compose down -v
-	sudo rm -fr codebase islandora_workbench certs $(SECRETS_PATH:=secrets/live)/*
+	sudo rm -rf codebase islandora_workbench certs $(or $(SECRETS_PATH),secrets/live)/*
 	git clean -xffd .
 
 #############################################
