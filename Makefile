@@ -109,7 +109,7 @@ RED=$(shell tput setaf 9)
 BLUE=$(shell tput setaf 6)
 TARGET_MAX_CHAR_NUM=20
 
-IS_DRUPAL_PSSWD_FILE_READABLE := $(shell test -r secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD -a -w secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD && echo 1 || echo 0)
+IS_DRUPAL_PSSWD_FILE_READABLE := $(shell test -r $(SECRETS_PATH)/DRUPAL_DEFAULT_ACCOUNT_PASSWORD -a -w $(SECRETS_PATH)/DRUPAL_DEFAULT_ACCOUNT_PASSWORD && echo 1 || echo 0)
 CMD := $(shell [ $(IS_DRUPAL_PSSWD_FILE_READABLE) -eq 1 ] && echo 'tee' || echo 'sudo -k tee')
 
 LATEST_VERSION := $(shell curl -s https://api.github.com/repos/desandro/masonry/releases/latest | grep '\"tag_name\":' | sed -E 's/.*\"([^\"]+)\".*/\1/')
@@ -150,15 +150,15 @@ local: generate-secrets
 	docker compose up -d --remove-orphans
 	docker compose exec -T drupal with-contenv bash -lc 'composer install; chown -R nginx:nginx .'
 	$(MAKE) remove_standard_profile_references_from_config drupal-database update-settings-php ENVIRONMENT=local
-	docker compose exec -T drupal with-contenv bash -lc "drush si -y islandora_install_profile_demo --account-pass '$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
+	docker compose exec -T drupal with-contenv bash -lc "drush si -y islandora_install_profile_demo --account-pass '$(shell cat $(SECRETS_PATH)/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
 	$(MAKE) delete-shortcut-entities && docker compose exec -T drupal with-contenv bash -lc "drush pm:un -y shortcut"
 	docker compose exec -T drupal with-contenv bash -lc "drush en -y migrate_tools"
 	$(MAKE) hydrate ENVIRONMENT=local
 	-docker compose exec -T drupal with-contenv bash -lc 'mkdir -p /var/www/drupal/config/sync && chmod -R 775 /var/www/drupal/config/sync'
 	#docker compose exec -T drupal with-contenv bash -lc 'chown -R `id -u`:nginx /var/www/drupal'
 	#docker compose exec -T drupal with-contenv bash -lc 'drush migrate:rollback islandora_defaults_tags,islandora_tags'
-	curl -k -u admin:'$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)' -H "Content-Type: application/json" -d "@build/demo-data/homepage.json" https://${DOMAIN}/node?_format=json
-	curl -k -u admin:'$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)' -H "Content-Type: application/json" -d "@build/demo-data/browse-collections.json" https://${DOMAIN}/node?_format=json
+	curl -k -u admin:'$(shell cat $(SECRETS_PATH)/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)' -H "Content-Type: application/json" -d "@build/demo-data/homepage.json" https://${DOMAIN}/node?_format=json
+	curl -k -u admin:'$(shell cat $(SECRETS_PATH)/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)' -H "Content-Type: application/json" -d "@build/demo-data/browse-collections.json" https://${DOMAIN}/node?_format=json
 	$(MAKE) login
 
 
@@ -198,7 +198,7 @@ production: generate-secrets
 	$(MAKE) pull
 	docker compose up -d --remove-orphans
 	docker compose exec -T drupal with-contenv bash -lc 'composer install; chown -R nginx:nginx .'
-	docker compose exec -T drupal with-contenv bash -lc "drush si -y --existing-config minimal --account-pass '$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
+	docker compose exec -T drupal with-contenv bash -lc "drush si -y --existing-config minimal --account-pass '$(shell cat $(SECRETS_PATH)/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
 	docker compose exec -T drupal with-contenv bash -lc "drush -l $(SITE) user:role:add fedoraadmin admin"
 	MIGRATE_IMPORT_USER_OPTION=--userid=1 $(MAKE) hydrate
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 islandora_fits_tags'
@@ -364,7 +364,7 @@ set_admin_password:
 	@$(eval PASSWORD ?= $(shell bash -c 'read -s -p "New Password: " pwd; echo $$pwd'))
 	@echo "\n\nSetting admin password now"
 	docker compose exec -T drupal with-contenv bash -lc 'drush user:password admin "$(PASSWORD)"'
-	echo "$(PASSWORD)" | $(CMD) secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD >> /dev/null
+	echo "$(PASSWORD)" | $(CMD) $(SECRETS_PATH)/DRUPAL_DEFAULT_ACCOUNT_PASSWORD >> /dev/null
 	@echo "\ndone."
 
 
@@ -375,7 +375,7 @@ clean:
 	echo "**DANGER** About to rm your SERVER data subdirs, your docker volumes, codebase, islandora_workbench, certs, secrets, and all untracked/ignored files (including .env)."
 	$(MAKE) confirm
 	-docker compose down -v
-	sudo rm -fr codebase islandora_workbench certs secrets/live/*
+	sudo rm -fr codebase islandora_workbench certs $(SECRETS_PATH:=secrets/live)/*
 	git clean -xffd .
 
 #############################################
@@ -499,7 +499,7 @@ demo_content:
 	[ -d "islandora_workbench" ] || (git clone https://github.com/mjordan/islandora_workbench)
 	cd islandora_workbench ; cd islandora_workbench_demo_content || git clone https://github.com/DonRichards/islandora_workbench_demo_content
 	$(SED_DASH_I) 's#^host.*#host: $(SITE)/#g' islandora_workbench/islandora_workbench_demo_content/example_content.yml
-	$(SED_DASH_I) 's/^password.*/password: "$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD | sed s#/#\\\\\\\\/#g)"/g' islandora_workbench/islandora_workbench_demo_content/example_content.yml
+	$(SED_DASH_I) 's/^password.*/password: "$(shell cat $(SECRETS_PATH)/DRUPAL_DEFAULT_ACCOUNT_PASSWORD | sed s#/#\\\\\\\\/#g)"/g' islandora_workbench/islandora_workbench_demo_content/example_content.yml
 	cd islandora_workbench && docker build -t workbench-docker .
 	cd islandora_workbench && docker run -it --rm --network="host" -v $(QUOTED_CURDIR)/islandora_workbench:/workbench --name my-running-workbench workbench-docker bash -lc "./workbench --config /workbench/islandora_workbench_demo_content/example_content.yml"
 	$(MAKE) reindex-solr
@@ -577,7 +577,7 @@ starter-init: generate-secrets
 starter-finalize:
 	docker compose exec -T drupal with-contenv bash -lc 'chown -R nginx:nginx .'
 	$(MAKE) drupal-database update-settings-php
-	docker compose exec -T drupal with-contenv bash -lc "drush si -y --existing-config minimal --account-pass '$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
+	docker compose exec -T drupal with-contenv bash -lc "drush si -y --existing-config minimal --account-pass '$(shell cat $(SECRETS_PATH)/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
 	docker compose exec -T drupal with-contenv bash -lc "drush -l $(SITE) user:role:add fedoraadmin admin"
 	MIGRATE_IMPORT_USER_OPTION=--userid=1 $(MAKE) hydrate
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 --tag=islandora'
