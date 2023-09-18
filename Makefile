@@ -652,7 +652,7 @@ confirm:
 ## Check to see if the secrets directory contains default secrets.
 secrets_warning:
 	@echo 'Starting build/scripts/check-secrets.sh'
-	@bash $(CURDIR)/build/scripts/check-secrets.sh yes || (echo "check-secrets exited $$?"; exit 1)
+	@bash "build/scripts/check-secrets.sh yes" || (echo "check-secrets exited $$?"; exit 1)
 
 
 ##################################################
