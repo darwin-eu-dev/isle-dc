@@ -192,7 +192,7 @@ starter_dev: generate-secrets
 
 
 .PHONY: production
-production: generate-secrets
+production:
 	$(MAKE) download-default-certs
 	$(MAKE) -B docker-compose.yml
 	$(MAKE) pull
@@ -652,7 +652,7 @@ confirm:
 ## Check to see if the secrets directory contains default secrets.
 secrets_warning:
 	@echo 'Starting build/scripts/check-secrets.sh'
-	@bash "$(build/scripts/check-secrets.sh yes)" || (echo "check-secrets exited $$?"; exit 1)
+	@bash build/scripts/check-secrets.sh || (echo "check-secrets exited $$?"; exit 1)
 
 
 ##################################################
