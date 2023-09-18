@@ -478,7 +478,6 @@ endif
 generate-secrets:
 	chmod +x "$(CURDIR)/build/scripts/generate-secrets.sh"
 	chmod +x "$(CURDIR)/build/scripts/check-secrets.sh"
-	ls -l "$(CURDIR)/build/scripts/"
 ifeq ($(USE_SECRETS), false)
 	docker run --rm -t \
 		-v "$(CURDIR)/secrets":/secrets \
