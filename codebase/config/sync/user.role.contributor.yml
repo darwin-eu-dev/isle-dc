@@ -12,7 +12,9 @@ dependencies:
     - media.type.remote_video
     - media.type.video
     - node.type.study
+    - workflows.workflow.editorial
   module:
+    - content_moderation
     - media
     - node
     - view_unpublished
@@ -30,6 +32,15 @@ permissions:
   - 'create media'
   - 'create remote_video media'
   - 'create video media'
+  - 'delete any video media'
+  - 'delete own audio media'
+  - 'delete own document media'
+  - 'delete own extracted_text media'
+  - 'delete own file media'
+  - 'delete own fits_technical_metadata media'
+  - 'delete own image media'
+  - 'delete own remote_video media'
+  - 'delete own video media'
   - 'edit own audio media'
   - 'edit own document media'
   - 'edit own extracted_text media'
@@ -40,6 +51,12 @@ permissions:
   - 'edit own study content'
   - 'edit own video media'
   - 'update media'
+  - 'use editorial transition create_draft'
+  - 'use editorial transition under_review'
+  - 'view all revisions'
+  - 'view any unpublished content'
   - 'view any unpublished study content'
+  - 'view latest version'
   - 'view own unpublished content'
   - 'view own unpublished media'
+  - 'view study revisions'
