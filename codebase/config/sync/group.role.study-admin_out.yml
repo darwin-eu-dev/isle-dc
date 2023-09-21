@@ -7,7 +7,7 @@ dependencies:
     - user.role.administrator
 id: study-admin_out
 label: 'Administrator - Outsider'
-weight: -5
+weight: -6
 admin: true
 scope: outsider
 global_role: administrator
