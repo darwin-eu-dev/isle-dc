@@ -27,7 +27,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Administer Studies'
+      title: 'Edit Draft Studies'
       fields:
         title:
           id: title
@@ -348,12 +348,13 @@ display:
           category_fallback: ''
           category_facets: {  }
           category_facets_concat_separator: ', '
-      path: study-administration
+      path: edit-draft-studies
       menu:
         type: normal
-        title: 'Administer Studies'
+        title: 'Edit Draft Studies'
         description: ''
         weight: 0
+        enabled: true
         expanded: false
         menu_name: main
         parent: ''

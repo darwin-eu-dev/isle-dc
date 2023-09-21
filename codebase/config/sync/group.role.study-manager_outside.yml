@@ -1,15 +1,15 @@
-uuid: bf7a3f0c-a2d6-434a-bc41-dfac5c2e5d1b
+uuid: de41d1d9-0d4e-480d-8a9a-a3c8690a2377
 langcode: en
 status: true
 dependencies:
   config:
     - group.type.study
     - user.role.editor
-id: study-publisher_insider
-label: 'Manager - Insider'
-weight: -4
+id: study-manager_outside
+label: 'Manager - Outside'
+weight: -3
 admin: false
-scope: insider
+scope: outsider
 global_role: editor
 group_type: study
 permissions:
@@ -26,12 +26,11 @@ permissions:
   - 'delete own group_node:study entity'
   - 'delete own group_node:study relationship'
   - 'edit group'
-  - 'leave group'
+  - 'join group'
   - 'revert group revisions'
   - 'revert group_node:study entity revisions'
   - 'update any group_node:study entity'
   - 'update any group_node:study relationship'
-  - 'update own group_membership relationship'
   - 'update own group_node:study entity'
   - 'update own group_node:study relationship'
   - 'view all group revisions'

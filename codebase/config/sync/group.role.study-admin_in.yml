@@ -7,7 +7,7 @@ dependencies:
     - user.role.administrator
 id: study-admin_in
 label: 'Administrator - Insider'
-weight: -4
+weight: -5
 admin: true
 scope: insider
 global_role: administrator
