@@ -1,0 +1,69 @@
+uuid: a684a0dc-0074-4881-8e22-32bfd907a20e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.study
+  module:
+    - content_moderation
+id: editorial
+label: Editorial
+type: content_moderation
+type_settings:
+  states:
+    draft:
+      label: Draft
+      weight: -2
+      published: false
+      default_revision: false
+    published:
+      label: Published
+      weight: 0
+      published: true
+      default_revision: true
+    ready_for_review:
+      label: Review
+      weight: -1
+      published: false
+      default_revision: false
+  transitions:
+    create_draft:
+      label: 'Create draft'
+      from:
+        - draft
+      to: draft
+      weight: -3
+    create_new_draft:
+      label: 'Review to Draft'
+      from:
+        - ready_for_review
+      to: draft
+      weight: -1
+    publish:
+      label: 'Reviewed to Published'
+      from:
+        - ready_for_review
+      to: published
+      weight: 0
+    published_to_draft:
+      label: 'Published to Draft'
+      from:
+        - published
+      to: draft
+      weight: 1
+    published_to_review:
+      label: 'Published to Review'
+      from:
+        - published
+      to: ready_for_review
+      weight: 2
+    under_review:
+      label: 'Draft to Review'
+      from:
+        - draft
+      to: ready_for_review
+      weight: -2
+  entity_types:
+    node:
+      - study
+  default_moderation_state: draft
