@@ -12,15 +12,20 @@ dependencies:
     - media.type.remote_video
     - media.type.video
     - node.type.study
+    - workflows.workflow.editorial
   module:
+    - content_moderation
     - media
     - node
+    - system
     - view_unpublished
 id: editor
 label: Manager
 weight: -6
 is_admin: null
 permissions:
+  - 'access content'
+  - 'access media overview'
   - 'create audio media'
   - 'create document media'
   - 'create extracted_text media'
@@ -31,6 +36,24 @@ permissions:
   - 'create remote_video media'
   - 'create study content'
   - 'create video media'
+  - 'delete any audio media'
+  - 'delete any document media'
+  - 'delete any extracted_text media'
+  - 'delete any file media'
+  - 'delete any fits_technical_metadata media'
+  - 'delete any image media'
+  - 'delete any media'
+  - 'delete any remote_video media'
+  - 'delete any video media'
+  - 'delete media'
+  - 'delete own audio media'
+  - 'delete own document media'
+  - 'delete own extracted_text media'
+  - 'delete own file media'
+  - 'delete own fits_technical_metadata media'
+  - 'delete own image media'
+  - 'delete own remote_video media'
+  - 'delete own video media'
   - 'edit any audio media'
   - 'edit any document media'
   - 'edit any extracted_text media'
@@ -49,11 +72,22 @@ permissions:
   - 'edit own remote_video media'
   - 'edit own study content'
   - 'edit own video media'
+  - 'revert all revisions'
   - 'revert study revisions'
   - 'update any media'
   - 'update media'
+  - 'use editorial transition create_draft'
+  - 'use editorial transition create_new_draft'
+  - 'use editorial transition publish'
+  - 'use editorial transition published_to_draft'
+  - 'use editorial transition published_to_review'
+  - 'use editorial transition under_review'
   - 'view all media revisions'
+  - 'view all revisions'
+  - 'view any unpublished content'
   - 'view any unpublished study content'
+  - 'view latest version'
+  - 'view media'
   - 'view own unpublished content'
   - 'view own unpublished media'
   - 'view study revisions'
