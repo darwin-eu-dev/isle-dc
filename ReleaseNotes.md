@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes |
 | ------- | ----------- | ----- |
+| 0.0.23  | 27 Sep 2023 | AAICDDC-135 - Configure email sending from islandora |
 | 0.0.22  | 22 Sep 2023 | AAICDDC-19 - Workflow setup |
 | 0.0.21  | 21 Sep 2023 | AAICDDC-361 - Managers and admins can edit all studies |
 | 0.0.20  | 12 Sep 2023 | AAICDDC-315 - Administer study view |
