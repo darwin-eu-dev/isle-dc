@@ -53,6 +53,7 @@ permissions:
   - 'update media'
   - 'use editorial transition create_draft'
   - 'use editorial transition create_new_draft'
+  - 'use editorial transition published_to_draft'
   - 'use editorial transition under_review'
   - 'view all revisions'
   - 'view any unpublished content'
