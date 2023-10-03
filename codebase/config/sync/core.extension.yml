@@ -90,6 +90,7 @@ module:
   mysql: 0
   node: 0
   openid_connect: 0
+  openid_connect_windows_aad: 0
   openseadragon: 0
   options: 0
   page_cache: 0
