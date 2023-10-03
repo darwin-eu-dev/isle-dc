@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes |
 | ------- | ----------- | ----- |
+| 0.0.25  | 03 Oct 2023 | AAICDDC-28 - Azure Active Directory OIDC integration |
 | 0.0.24  | 03 Oct 2023 | AAICDDC-165 - Reviewing permissions |
 | 0.0.23  | 27 Sep 2023 | AAICDDC-135 - Configure email sending from islandora |
 | 0.0.22  | 22 Sep 2023 | AAICDDC-19 - Workflow setup |
