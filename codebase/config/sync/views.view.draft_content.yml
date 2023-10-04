@@ -664,20 +664,13 @@ display:
           default_row_class: true
           columns:
             title: title
-            type: type
             name: name
             moderation_state: moderation_state
             changed: changed
+            operations: operations
           default: changed
           info:
             title:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            type:
               sortable: true
               default_sort_order: asc
               align: ''
@@ -705,11 +698,16 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
+            operations:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
           override: true
           sticky: true
           summary: ''
           empty_table: true
-          caption: ''
+          caption: 'List of Draft Studies'
           description: ''
       row:
         type: fields
