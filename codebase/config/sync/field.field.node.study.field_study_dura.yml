@@ -1,21 +1,21 @@
-uuid: e81aa6c0-b096-4904-ba4b-497385ee9d48
+uuid: 6c7cd29e-32d2-4e73-b74a-4ab262ce5c7f
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_free_text_html_
+    - field.storage.node.field_study_dura
     - node.type.study
   module:
-    - text
-id: node.study.field_free_text_html_
-field_name: field_free_text_html_
+    - datetime_range
+id: node.study.field_study_dura
+field_name: field_study_dura
 entity_type: node
 bundle: study
-label: 'Free text (HTML)'
+label: 'Study duration'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: text_long
+field_type: daterange

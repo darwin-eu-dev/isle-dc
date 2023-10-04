@@ -1,15 +1,15 @@
-uuid: 10a53f67-1798-4d64-815f-047673871639
+uuid: e10aeb65-4a87-4f79-9687-f5c04c51fbbf
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_issues
+    - field.storage.node.field_study_id
     - node.type.study
-id: node.study.field_issues
-field_name: field_issues
+id: node.study.field_study_id
+field_name: field_study_id
 entity_type: node
 bundle: study
-label: Issues
+label: 'Study Id'
 description: ''
 required: false
 translatable: false

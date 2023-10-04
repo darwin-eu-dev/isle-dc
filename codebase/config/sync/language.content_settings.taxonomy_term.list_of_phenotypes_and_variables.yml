@@ -1,0 +1,11 @@
+uuid: 170c1bd0-b4bf-4286-9c37-abec130f4c87
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.list_of_phenotypes_and_variables
+id: taxonomy_term.list_of_phenotypes_and_variables
+target_entity_type_id: taxonomy_term
+target_bundle: list_of_phenotypes_and_variables
+default_langcode: site_default
+language_alterable: false

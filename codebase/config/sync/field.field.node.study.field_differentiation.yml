@@ -11,7 +11,7 @@ id: node.study.field_differentiation
 field_name: field_differentiation
 entity_type: node
 bundle: study
-label: Differentiation
+label: 'Study Type'
 description: ''
 required: false
 translatable: false

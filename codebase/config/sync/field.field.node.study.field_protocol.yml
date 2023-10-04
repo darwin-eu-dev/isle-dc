@@ -1,17 +1,17 @@
-uuid: 57364e2d-4545-48f9-b3cd-d6bf3df9e37c
+uuid: e345f0c5-7c94-4571-9bf6-774bc1ba002b
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_references_to_this_study_i
+    - field.storage.node.field_protocol
     - node.type.study
   module:
     - link
-id: node.study.field_references_to_this_study_i
-field_name: field_references_to_this_study_i
+id: node.study.field_protocol
+field_name: field_protocol
 entity_type: node
 bundle: study
-label: 'References to this study in the press'
+label: Protocol
 description: ''
 required: false
 translatable: false

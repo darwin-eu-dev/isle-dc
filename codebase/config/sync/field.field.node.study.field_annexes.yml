@@ -26,7 +26,7 @@ settings:
   handler: 'default:file'
   handler_settings: {  }
   file_directory: '[date:custom:Y]-[date:custom:m]'
-  file_extensions: 'doc pdf docx'
+  file_extensions: 'doc pdf docx csv txt'
   max_filesize: ''
   description_field: false
 field_type: file

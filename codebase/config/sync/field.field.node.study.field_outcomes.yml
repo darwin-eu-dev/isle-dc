@@ -1,19 +1,21 @@
-uuid: 2f3a2c9a-7653-423f-b675-829af09a7bf5
+uuid: f1131f00-831c-40f7-be99-69d89cf4e8de
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_study_sources
+    - field.storage.node.field_outcomes
     - node.type.study
-id: node.study.field_study_sources
-field_name: field_study_sources
+  module:
+    - text
+id: node.study.field_outcomes
+field_name: field_outcomes
 entity_type: node
 bundle: study
-label: 'Study sources'
+label: Outcomes
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string_long
+field_type: text_long

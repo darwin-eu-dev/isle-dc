@@ -11,7 +11,7 @@ id: node.study.field_related_studies
 field_name: field_related_studies
 entity_type: node
 bundle: study
-label: 'Related studies'
+label: 'Related study'
 description: ''
 required: false
 translatable: false
