@@ -1,8 +1,0 @@
-uuid: e7b543e6-baaa-44fb-8a94-cc1a7d96def3
-langcode: en
-status: true
-dependencies: {  }
-name: 'List of phenotypes and variables'
-vid: list_of_phenotypes_and_variables
-description: 'For Study content type field'
-weight: 0

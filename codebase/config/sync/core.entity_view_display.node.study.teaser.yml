@@ -12,7 +12,6 @@ dependencies:
     - field.field.node.study.field_data_partners
     - field.field.node.study.field_differentiation
     - field.field.node.study.field_link_to_encepp
-    - field.field.node.study.field_list_of_phenotypes_and_var
     - field.field.node.study.field_list_of_pipelines
     - field.field.node.study.field_outcomes
     - field.field.node.study.field_protocol
@@ -51,7 +50,6 @@ hidden:
   field_data_partners: true
   field_differentiation: true
   field_link_to_encepp: true
-  field_list_of_phenotypes_and_var: true
   field_list_of_pipelines: true
   field_outcomes: true
   field_protocol: true

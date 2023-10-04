@@ -11,7 +11,6 @@ dependencies:
     - field.field.node.study.field_data_partners
     - field.field.node.study.field_differentiation
     - field.field.node.study.field_link_to_encepp
-    - field.field.node.study.field_list_of_phenotypes_and_var
     - field.field.node.study.field_list_of_pipelines
     - field.field.node.study.field_outcomes
     - field.field.node.study.field_protocol
@@ -59,7 +58,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 4
+    weight: 19
     region: content
   field_cohorts:
     type: text_default
@@ -78,28 +77,28 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 20
+    weight: 12
     region: content
   field_contributors:
     type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 15
+    weight: 4
     region: content
   field_data_partners:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 5
     region: content
   field_differentiation:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 6
     region: content
   field_link_to_encepp:
     type: link
@@ -113,27 +112,19 @@ content:
     third_party_settings: {  }
     weight: 8
     region: content
-  field_list_of_phenotypes_and_var:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 17
-    region: content
   field_list_of_pipelines:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 13
+    weight: 9
     region: content
   field_outcomes:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 18
+    weight: 10
     region: content
   field_protocol:
     type: link
@@ -145,7 +136,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 19
+    weight: 11
     region: content
   field_related_publication:
     type: link
@@ -157,7 +148,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 9
+    weight: 13
     region: content
   field_related_studies:
     type: link
@@ -169,7 +160,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 10
+    weight: 14
     region: content
   field_results:
     type: link
@@ -181,21 +172,21 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 11
+    weight: 15
     region: content
   field_setting:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 12
+    weight: 16
     region: content
   field_status:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 14
+    weight: 17
     region: content
   field_study_abstract:
     type: basic_string
@@ -212,7 +203,7 @@ content:
       format_type: medium
       separator: '-'
     third_party_settings: {  }
-    weight: 21
+    weight: 18
     region: content
   field_study_id:
     type: string
@@ -220,12 +211,12 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 16
+    weight: 7
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 5
+    weight: 20
     region: content
 hidden:
   langcode: true

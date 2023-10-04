@@ -11,7 +11,6 @@ dependencies:
     - field.field.node.study.field_data_partners
     - field.field.node.study.field_differentiation
     - field.field.node.study.field_link_to_encepp
-    - field.field.node.study.field_list_of_phenotypes_and_var
     - field.field.node.study.field_list_of_pipelines
     - field.field.node.study.field_outcomes
     - field.field.node.study.field_protocol
@@ -101,16 +100,6 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
-    third_party_settings: {  }
-  field_list_of_phenotypes_and_var:
-    type: entity_reference_autocomplete
-    weight: 16
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   field_list_of_pipelines:
     type: options_buttons
