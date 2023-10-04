@@ -1,17 +1,17 @@
-uuid: eecd460c-2baf-4084-ac1d-369ae5b5c834
+uuid: c96c9829-1c51-4b64-8912-75248f8111e4
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_study_package
+    - field.storage.node.field_communications
     - node.type.study
   module:
     - link
-id: node.study.field_study_package
-field_name: field_study_package
+id: node.study.field_communications
+field_name: field_communications
 entity_type: node
 bundle: study
-label: 'Study package'
+label: Communications
 description: ''
 required: false
 translatable: false

@@ -6,55 +6,31 @@ dependencies:
     - field.field.node.study.field_annexes
     - field.field.node.study.field_code
     - field.field.node.study.field_cohorts
+    - field.field.node.study.field_communications
     - field.field.node.study.field_contributors
     - field.field.node.study.field_data_partners
-    - field.field.node.study.field_database_descriptions
-    - field.field.node.study.field_definition
     - field.field.node.study.field_differentiation
-    - field.field.node.study.field_free_text_html_
-    - field.field.node.study.field_is_drug_exposure_study
-    - field.field.node.study.field_issues
-    - field.field.node.study.field_labels
     - field.field.node.study.field_link_to_encepp
     - field.field.node.study.field_list_of_pipelines
-    - field.field.node.study.field_presentation_material
-    - field.field.node.study.field_references_to_this_study_i
+    - field.field.node.study.field_outcomes
+    - field.field.node.study.field_protocol
     - field.field.node.study.field_related_publication
     - field.field.node.study.field_related_studies
     - field.field.node.study.field_results
     - field.field.node.study.field_setting
     - field.field.node.study.field_status
     - field.field.node.study.field_study_abstract
-    - field.field.node.study.field_study_description
-    - field.field.node.study.field_study_duration_range
-    - field.field.node.study.field_study_duration_unit
-    - field.field.node.study.field_study_package
-    - field.field.node.study.field_study_sources
-    - field.field.node.study.field_use_of_study_
+    - field.field.node.study.field_study_dura
+    - field.field.node.study.field_study_id
     - node.type.study
+    - workflows.workflow.editorial
   module:
-    - field_group
+    - content_moderation
+    - datetime_range
     - file
     - link
     - path
     - text
-third_party_settings:
-  field_group:
-    group_study_duration:
-      children:
-        - field_study_duration_unit
-        - field_study_duration_range
-      label: 'Study duration'
-      region: content
-      parent_name: ''
-      weight: 30
-      format_type: fieldset
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        description: ''
-        required_fields: true
 id: node.study.default
 targetEntityType: node
 bundle: study
@@ -75,13 +51,29 @@ content:
     third_party_settings: {  }
   field_code:
     type: link_default
-    weight: 10
+    weight: 27
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
   field_cohorts:
+    type: text_textarea
+    weight: 10
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_communications:
+    type: link_default
+    weight: 20
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_contributors:
     type: string_textarea
     weight: 11
     region: content
@@ -89,29 +81,19 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_contributors:
-    type: string_textarea
+  field_data_partners:
+    type: options_select
     weight: 12
     region: content
-    settings:
-      rows: 5
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
-  field_data_partners:
+  field_differentiation:
     type: options_select
     weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_database_descriptions:
-    type: string_textarea
-    weight: 14
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-  field_definition:
+  field_link_to_encepp:
     type: link_default
     weight: 15
     region: content
@@ -119,68 +101,23 @@ content:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-  field_differentiation:
-    type: options_select
-    weight: 16
+  field_list_of_pipelines:
+    type: options_buttons
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_free_text_html_:
+  field_outcomes:
     type: text_textarea
-    weight: 19
+    weight: 18
     region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_is_drug_exposure_study:
-    type: options_buttons
-    weight: 18
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_issues:
-    type: string_textfield
-    weight: 20
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_labels:
-    type: entity_reference_autocomplete_tags
-    weight: 21
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_link_to_encepp:
+  field_protocol:
     type: link_default
-    weight: 22
-    region: content
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
-  field_list_of_pipelines:
-    type: options_buttons
-    weight: 23
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_presentation_material:
-    type: file_generic
-    weight: 32
-    region: content
-    settings:
-      progress_indicator: throbber
-    third_party_settings: {  }
-  field_references_to_this_study_i:
-    type: link_default
-    weight: 24
+    weight: 19
     region: content
     settings:
       placeholder_url: ''
@@ -188,7 +125,7 @@ content:
     third_party_settings: {  }
   field_related_publication:
     type: link_default
-    weight: 25
+    weight: 21
     region: content
     settings:
       placeholder_url: ''
@@ -196,7 +133,7 @@ content:
     third_party_settings: {  }
   field_related_studies:
     type: link_default
-    weight: 26
+    weight: 22
     region: content
     settings:
       placeholder_url: ''
@@ -204,7 +141,7 @@ content:
     third_party_settings: {  }
   field_results:
     type: link_default
-    weight: 27
+    weight: 23
     region: content
     settings:
       placeholder_url: ''
@@ -212,13 +149,13 @@ content:
     third_party_settings: {  }
   field_setting:
     type: options_select
-    weight: 28
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
   field_status:
     type: options_buttons
-    weight: 29
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -230,46 +167,15 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_study_description:
-    type: string_textarea
-    weight: 17
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-  field_study_duration_range:
-    type: options_select
-    weight: 35
+  field_study_dura:
+    type: daterange_default
+    weight: 26
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_study_duration_unit:
-    type: number
-    weight: 34
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_study_package:
-    type: link_default
-    weight: 31
-    region: content
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
-  field_study_sources:
-    type: string_textarea
-    weight: 33
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-  field_use_of_study_:
+  field_study_id:
     type: string_textfield
-    weight: 34
+    weight: 14
     region: content
     settings:
       size: 60
@@ -281,6 +187,12 @@ content:
     region: content
     settings:
       include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 28
+    region: content
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path

@@ -1,26 +1,24 @@
-uuid: c9d6812d-6689-4d3a-835f-bc514ea32e71
+uuid: 68cf78cf-749b-4927-b982-68e79017e70d
 langcode: en
 status: true
 dependencies:
   module:
     - field_permissions
-    - file
     - node
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_presentation_material
-field_name: field_presentation_material
+id: node.field_study_id
+field_name: field_study_id
 entity_type: node
-type: file
+type: string
 settings:
-  target_type: file
-  display_field: false
-  display_default: false
-  uri_scheme: public
-module: file
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

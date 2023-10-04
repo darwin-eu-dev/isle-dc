@@ -1,20 +1,21 @@
-uuid: cf7bacde-d486-4674-a56c-b8d2482cb4e1
+uuid: 68abe65c-fffc-4229-a1ed-fe6bc1138041
 langcode: en
 status: true
 dependencies:
   module:
+    - datetime_range
     - field_permissions
     - node
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_study_sources
-field_name: field_study_sources
+id: node.field_study_dura
+field_name: field_study_dura
 entity_type: node
-type: string_long
+type: daterange
 settings:
-  case_sensitive: false
-module: core
+  datetime_type: date
+module: datetime_range
 locked: false
 cardinality: 1
 translatable: true
