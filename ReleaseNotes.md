@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.28  | 09 Oct 2023 | AAICDDC-391 - Update SMTP settings                                                  |
 | 0.0.27  | 04 Oct 2023 | AAICDDC-141 - Study field changes                                                   |
 | 0.0.26  | 03 Oct 2023 | AAICDDC-350 - Style all lists so that they have the same look and feel              |
 | 0.0.25  | 03 Oct 2023 | AAICDDC-28 - Azure Active Directory OIDC integration                                |
