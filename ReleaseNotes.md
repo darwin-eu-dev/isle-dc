@@ -2,6 +2,8 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.30  | 10 Oct 2023 | AAICDDC-414 - Bug fix: New draft studies page for admin and manager role            |
+| 0.0.29  | 10 Oct 2023 | AAICDDC-414 - Bug fix: Group relationship for draft studies page                    |
 | 0.0.28  | 09 Oct 2023 | AAICDDC-391 - Update SMTP settings                                                  |
 | 0.0.27  | 04 Oct 2023 | AAICDDC-141 - Study field changes                                                   |
 | 0.0.26  | 03 Oct 2023 | AAICDDC-350 - Style all lists so that they have the same look and feel              |
