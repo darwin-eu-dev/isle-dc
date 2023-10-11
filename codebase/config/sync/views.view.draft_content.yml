@@ -5,9 +5,7 @@ dependencies:
   config:
     - node.type.study
     - system.menu.main
-    - user.role.administrator
     - user.role.contributor
-    - user.role.editor
     - workflows.workflow.editorial
   module:
     - content_moderation
@@ -20,9 +18,9 @@ dependencies:
 _core:
   default_config_hash: upi3_YaKY1MjDALjDauLNPXfHakisQNehC9Dj6icMPQ
 id: draft_content
-label: 'Manage Draft Studies'
+label: 'Manage group draft studies'
 module: views
-description: 'Find and moderate studies.'
+description: 'Find and moderate draft studies the user has access to. (for contributor role)'
 tag: ''
 base_table: node_field_revision
 base_field: vid
@@ -382,8 +380,6 @@ display:
         options:
           role:
             contributor: contributor
-            editor: editor
-            administrator: administrator
       cache:
         type: tag
         options: {  }
@@ -401,26 +397,25 @@ display:
           tokenize: false
       sorts: {  }
       arguments:
-        gid:
-          id: gid
-          table: group_relationship_field_data
-          field: gid
-          relationship: group_relationship
+        uid:
+          id: uid
+          table: users_field_data
+          field: uid
+          relationship: gc__user
           group_type: group
           admin_label: ''
-          entity_type: group_relationship
-          entity_field: gid
-          plugin_id: group_id
-          default_action: ignore
+          entity_type: user
+          entity_field: uid
+          plugin_id: user_uid
+          default_action: default
           exception:
-            value: all
+            value: ''
             title_enable: false
             title: All
           title_enable: false
           title: ''
-          default_argument_type: fixed
-          default_argument_options:
-            argument: ''
+          default_argument_type: current_user
+          default_argument_options: {  }
           default_argument_skip_url: false
           summary_options:
             base_path: ''
@@ -726,7 +721,7 @@ display:
           field: nid
           relationship: none
           group_type: group
-          admin_label: 'Get the actual content from a content revision.'
+          admin_label: 'Content from revision'
           entity_type: node
           entity_field: nid
           plugin_id: standard
@@ -751,12 +746,51 @@ display:
           admin_label: 'Content group relationship'
           entity_type: node
           plugin_id: group_relationship_to_entity_reverse
-          required: true
+          required: false
           group_relation_plugins:
             'group_node:study': 'group_node:study'
             'group_node:article': '0'
             'group_node:islandora_object': '0'
             'group_node:page': '0'
+        gid:
+          id: gid
+          table: group_relationship_field_data
+          field: gid
+          relationship: group_relationship
+          group_type: group
+          admin_label: Group
+          entity_type: group_relationship
+          entity_field: gid
+          plugin_id: standard
+          required: false
+        group_relationship_id:
+          id: group_relationship_id
+          table: groups_field_data
+          field: group_relationship_id
+          relationship: gid
+          group_type: group
+          admin_label: 'Group relationship'
+          entity_type: group
+          plugin_id: group_to_group_relationship
+          required: false
+          group_relation_plugins:
+            group_membership: group_membership
+            'group_node:article': '0'
+            'group_node:islandora_object': '0'
+            'group_node:page': '0'
+            'group_node:study': '0'
+        gc__user:
+          id: gc__user
+          table: group_relationship_field_data
+          field: gc__user
+          relationship: group_relationship_id
+          group_type: group
+          admin_label: 'Group relationship User'
+          entity_type: group_relationship
+          plugin_id: group_relationship_to_entity
+          required: false
+          group_relation_plugins:
+            group_membership: group_membership
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -767,13 +801,14 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user
         - 'user.node_grants:view'
         - user.roles
       tags:
         - 'config:workflow_list'
   moderated_content:
     id: moderated_content
-    display_title: 'Moderated Studies'
+    display_title: 'Moderated Studies for Contributors'
     display_plugin: page
     position: 1
     display_options:
@@ -790,7 +825,7 @@ display:
           category_fallback: ''
           category_facets: {  }
           category_facets_concat_separator: ', '
-      path: manage-draft-studies
+      path: manage-group-draft-studies
       menu:
         type: normal
         title: 'Edit Draft Studies'
@@ -807,6 +842,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user
         - 'user.node_grants:view'
         - user.roles
       tags:
