@@ -21,7 +21,7 @@ _core:
 id: manage_draft_studies
 label: 'Manage draft studies'
 module: views
-description: 'Find and moderate all the draft studies. (for admins and manager roles)'
+description: 'Find and moderate all the draft studies available for the user'
 tag: ''
 base_table: node_field_revision
 base_field: vid
