@@ -509,8 +509,7 @@ display:
         type: normal
         title: 'Edit Study Groups'
         description: ''
-        weight: 0
-        enabled: true
+        weight: 2
         expanded: false
         menu_name: main
         parent: ''
