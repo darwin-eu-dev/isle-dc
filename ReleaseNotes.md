@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.32  | 11 Oct 2023 | AAICDDC-414 - Bug fix: Removed new draft study page and fixed the old one           |
 | 0.0.31  | 11 Oct 2023 | AAICDDC-35 - Setup the home page                                                    |
 | 0.0.30  | 10 Oct 2023 | AAICDDC-414 - Bug fix: New draft studies page for admin and manager role            |
 | 0.0.29  | 10 Oct 2023 | AAICDDC-414 - Bug fix: Group relationship for draft studies page                    |
