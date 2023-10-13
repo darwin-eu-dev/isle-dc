@@ -1,0 +1,28 @@
+uuid: 635af696-ca1b-4936-9a9a-f0cb23ab3660
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_privacy_policy
+    - node.type.homepage
+  module:
+    - link
+id: node.homepage.field_privacy_policy
+field_name: field_privacy_policy
+entity_type: node
+bundle: homepage
+label: 'Privacy Policy'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    attributes: {  }
+    uri: 'http://www.google.com'
+    title: ''
+    options: {  }
+default_value_callback: ''
+settings:
+  title: 2
+  link_type: 17
+field_type: link

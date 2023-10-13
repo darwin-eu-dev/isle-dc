@@ -1,0 +1,28 @@
+uuid: ae8f4591-30a6-49b7-b7c5-55585c38c58c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_latest_studies
+    - node.type.homepage
+  module:
+    - block_field
+id: node.homepage.field_latest_studies
+field_name: field_latest_studies
+entity_type: node
+bundle: homepage
+label: 'Latest studies'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    plugin_id: 'views_block:latest10studies-block_1'
+    settings: {  }
+default_value_callback: ''
+settings:
+  selection: blocks
+  selection_settings:
+    plugin_ids:
+      'views_block:latest10studies-block_1': 'views_block:latest10studies-block_1'
+field_type: block_field
