@@ -1,19 +1,17 @@
-uuid: fb456dd4-ca6e-448c-b972-ceb86e2be8dd
+uuid: b7c52752-d206-4d96-a3bb-3749cc610498
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_study_abstract
     - node.type.study
-    - system.menu.main
   module:
-    - content_moderation
     - node
     - user
-id: home_page
-label: 'Home page'
+id: latest10studies
+label: Latest10Studies
 module: views
-description: 'This is the home page user will be redirected to this page after login'
+description: 'This block to show the latest published studies'
 tag: ''
 base_table: node_field_data
 base_field: nid
@@ -24,7 +22,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'DARWIN Study Library'
+      title: 'Latest studies'
       fields:
         title:
           id: title
@@ -40,39 +38,21 @@ display:
           exclude: false
           alter:
             alter_text: false
-            text: ''
             make_link: false
-            path: ''
             absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
             word_boundary: false
             ellipsis: false
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
             strip_tags: false
             trim: false
-            preserve_tags: ''
             html: false
           element_type: ''
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: false
+          element_default_classes: true
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -99,11 +79,73 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: ''
+          label: Abstract
           exclude: false
           alter:
             alter_text: false
             text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: basic_string
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        nothing:
+          id: nothing
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: custom
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: "<hr width='95%'>\r\n"
             make_link: false
             path: ''
             absolute: false
@@ -139,166 +181,12 @@ display:
           empty: ''
           hide_empty: false
           empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: basic_string
-          settings: {  }
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        uid:
-          id: uid
-          table: node_field_data
-          field: uid
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: uid
-          plugin_id: field
-          label: Author
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: true
-          group_column: target_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        moderation_state:
-          id: moderation_state
-          table: node_field_data
-          field: moderation_state
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          plugin_id: moderation_state_field
-          label: State
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: content_moderation_state
-          settings: {  }
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
+          hide_alter_empty: false
       pager:
-        type: mini
+        type: some
         options:
           offset: 0
           items_per_page: 10
-          total_pages: null
-          id: 0
-          tags:
-            next: ››
-            previous: ‹‹
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
       exposed_form:
         type: basic
         options:
@@ -330,8 +218,8 @@ display:
           plugin_id: date
           order: DESC
           expose:
-            label: ''
-            field_identifier: ''
+            label: 'Authored on'
+            field_identifier: created
           exposed: false
           granularity: second
       arguments: {  }
@@ -340,42 +228,15 @@ display:
           id: status
           table: node_field_data
           field: status
-          relationship: none
-          group_type: group
-          admin_label: ''
           entity_type: node
           entity_field: status
           plugin_id: boolean
-          operator: '='
           value: '1'
           group: 1
-          exposed: false
           expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
             operator: ''
             operator_limit_selection: false
             operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
         type:
           id: type
           table: node_field_data
@@ -403,9 +264,13 @@ display:
         type: fields
         options:
           default_field_elements: true
-          inline: {  }
-          separator: ''
-          hide_empty: true
+          inline:
+            title: title
+            field_study_abstract: field_study_abstract
+            moderation_state: moderation_state
+            uid: uid
+          separator: '<br>'
+          hide_empty: false
       query:
         type: views_query
         options:
@@ -415,49 +280,22 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
-      header:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text
-          empty: true
-          content:
-            value: "<h2>Lorem Ipsum</h2>\r\n        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat aut quod, voluptatibus neque excepturi dolor iusto iste corporis quo ea voluptatum perspiciatis eveniet, voluptate quas assumenda cumque sit eos veniam.</p>\r\n        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, suscipit numquam cumque voluptas iste minima saepe adipisci architecto, eius praesentium magni repudiandae nostrum? Dignissimos ipsum adipisci, rerum cupiditate esse quae?</p>\r\n        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit sunt, error in, assumenda quae reiciendis commodi, dolore ipsum atque repudiandae sequi ipsa magnam autem. Deleniti eum suscipit id! Dignissimos, vel.</p>\r\n        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, nemo illo! Molestias eum praesentium suscipit veritatis sed illo dolorum nulla repellat vitae, ipsam eaque quidem veniam pariatur ratione natus aliquam.</p>\r\n\r\n\r\n<h3>Latest 10 published studies</h3>"
-            format: basic_html
-          tokenize: false
-      footer:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text
-          empty: false
-          content:
-            value: '<a href="http://www.google.com">Privacy Policy</a>'
-            format: basic_html
-          tokenize: false
+      header: {  }
+      footer: {  }
       display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags:
         - 'config:field.storage.node.field_study_abstract'
-  page_1:
-    id: page_1
-    display_title: Page
-    display_plugin: page
+  block_1:
+    id: block_1
+    display_title: Block
+    display_plugin: block
     position: 1
     display_options:
       display_extenders:
@@ -472,18 +310,11 @@ display:
           category_fallback: ''
           category_facets: {  }
           category_facets_concat_separator: ', '
-      path: home-page
-      menu:
-        type: normal
-        title: 'Home Page'
-        menu_name: main
-        parent: ''
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags:

@@ -37,6 +37,7 @@
         "drupal/admin_toolbar": "^3.1",
         "drupal/better_exposed_filters": "^6.0",
         "drupal/bibcite": "^2.0@beta",
+        "drupal/block_field": "^1.0@RC",
         "drupal/citation_select": "^1.0@beta",
         "drupal/core-composer-scaffold": "^9.4",
         "drupal/core-recommended": "^9.4",
