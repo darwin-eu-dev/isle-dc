@@ -1,0 +1,19 @@
+uuid: ea94af6c-a99b-44e4-8bcb-19acffedcb37
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - footer
+      - main
+    parent: 'main:'
+name: HomePageContentType
+type: homepage
+description: 'This is the site home page content type.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

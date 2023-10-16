@@ -1,0 +1,23 @@
+uuid: 012df1a4-07a3-4744-bd7e-7f3a07e800b4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.homepage
+  module:
+    - text
+id: node.homepage.body
+field_name: body
+entity_type: node
+bundle: homepage
+label: 'Lorem Ipsum'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+field_type: text_with_summary

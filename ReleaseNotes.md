@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.33  | 13 Oct 2023 | AAICDDC-35 - Home page version 2 using the block field           |
 | 0.0.32  | 11 Oct 2023 | AAICDDC-414 - Bug fix: Removed new draft study page and fixed the old one           |
 | 0.0.31  | 11 Oct 2023 | AAICDDC-35 - Setup the home page                                                    |
 | 0.0.30  | 10 Oct 2023 | AAICDDC-414 - Bug fix: New draft studies page for admin and manager role            |
