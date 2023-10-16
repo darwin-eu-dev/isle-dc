@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59bbf10cdc03a6e2f834064e41085ec5",
+    "content-hash": "6796a86486e8bf9e4482536eca22e8b8",
     "packages": [
         {
             "name": "academicpuma/citeproc-php",
@@ -1827,6 +1827,95 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/admin_toolbar",
                 "issues": "https://www.drupal.org/project/issues/admin_toolbar"
+            }
+        },
+        {
+            "name": "drupal/advanced_search",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/advanced_search.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/advanced_search-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "c5417df7fb411dea032975ea1dfb87e9f658a589"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9 || ^10",
+                "drupal/facets": "^2.0",
+                "drupal/search_api_solr": "^4.2"
+            },
+            "require-dev": {
+                "drupal/coder": "*",
+                "phpunit/phpunit": "^8",
+                "sebastian/phpcpd": "*",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1695751418",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "scripts": {
+                "post-install-cmd": [
+                    "./vendor/bin/phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer"
+                ],
+                "post-update-cmd": [
+                    "./vendor/bin/phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer"
+                ],
+                "check": [
+                    "./vendor/bin/phpcs --standard=Drupal --ignore=*.md,vendor --extensions=php,module,inc,install,test,profile,theme,css,info .",
+                    "./vendor/bin/phpcpd --names='*.module,*.inc,*.test,*.php' --exclude=vendor ."
+                ]
+            },
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "community-islandora",
+                    "homepage": "https://www.drupal.org/user/3441437"
+                },
+                {
+                    "name": "donrichards",
+                    "homepage": "https://www.drupal.org/user/3519850"
+                },
+                {
+                    "name": "kylehuynh",
+                    "homepage": "https://www.drupal.org/user/3255474"
+                },
+                {
+                    "name": "rosiel",
+                    "homepage": "https://www.drupal.org/user/3263030"
+                },
+                {
+                    "name": "seth.e.shaw",
+                    "homepage": "https://www.drupal.org/user/50620"
+                },
+                {
+                    "name": "wgillingham",
+                    "homepage": "https://www.drupal.org/user/112955"
+                }
+            ],
+            "description": "This module creates several blocks to support searching. It also enables the use of Ajax with search blocks, facets, and search results.",
+            "homepage": "https://github.com/digitalutsc/advanced_search",
+            "keywords": [
+                "Advanced Search",
+                "Islandora"
+            ],
+            "support": {
+                "source": "https://github.com/digitalutsc/advanced_search/tree/islandora_lite",
+                "issues": "https://github.com/digitalutsc/advanced_search/issues"
             }
         },
         {
@@ -6680,59 +6769,6 @@
                 "source": "http://cgit.drupalcode.org/islandora_fits"
             },
             "time": "2023-06-22T18:50:38+00:00"
-        },
-        {
-            "name": "islandora/advanced_search",
-            "version": "dev-contrib",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/digitalutsc/advanced_search.git",
-                "reference": "de445f96de3514d0797898f9dd364f0dbb93a6bb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/digitalutsc/advanced_search/zipball/de445f96de3514d0797898f9dd364f0dbb93a6bb",
-                "reference": "de445f96de3514d0797898f9dd364f0dbb93a6bb",
-                "shasum": ""
-            },
-            "require": {
-                "drupal/facets": "^2.0",
-                "drupal/search_api_solr": "^4.2"
-            },
-            "require-dev": {
-                "drupal/coder": "*",
-                "phpunit/phpunit": "^8",
-                "sebastian/phpcpd": "*",
-                "squizlabs/php_codesniffer": "^3"
-            },
-            "default-branch": true,
-            "type": "drupal-module",
-            "scripts": {
-                "post-install-cmd": [
-                    "./vendor/bin/phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer"
-                ],
-                "post-update-cmd": [
-                    "./vendor/bin/phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer"
-                ],
-                "check": [
-                    "./vendor/bin/phpcs --standard=Drupal --ignore=*.md,vendor --extensions=php,module,inc,install,test,profile,theme,css,info .",
-                    "./vendor/bin/phpcpd --names='*.module,*.inc,*.test,*.php' --exclude=vendor ."
-                ]
-            },
-            "license": [
-                "GPL-2.0-only"
-            ],
-            "description": "This module creates several blocks to support searching. It also enables the use of Ajax with search blocks, facets, and search results.",
-            "homepage": "https://github.com/digitalutsc/advanced_search",
-            "keywords": [
-                "Advanced Search",
-                "Islandora"
-            ],
-            "support": {
-                "issues": "https://github.com/digitalutsc/advanced_search/issues",
-                "source": "https://github.com/digitalutsc/advanced_search/tree/islandora_lite"
-            },
-            "time": "2023-06-07T18:34:44+00:00"
         },
         {
             "name": "islandora/chullo",
@@ -13091,8 +13127,7 @@
         "drupal/rest_oai_pmh": 10,
         "drupal/term_merge": 10,
         "drupal/views_field_view": 10,
-        "islandora-rdm/islandora_fits": 20,
-        "islandora/advanced_search": 20
+        "islandora-rdm/islandora_fits": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
