@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.35  | 17 Oct 2023 | AAICDDC-119 - update the advanced search module                    |
 | 0.0.34  | 17 Oct 2023 | AAICDDC-414 - Bug fix: Added editable filter for draft page view                    |
 | 0.0.33  | 13 Oct 2023 | AAICDDC-35 - Home page version 2 using the block field                              |
 | 0.0.32  | 11 Oct 2023 | AAICDDC-414 - Bug fix: Removed new draft study page and fixed the old one           |
