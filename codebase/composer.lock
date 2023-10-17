@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59bbf10cdc03a6e2f834064e41085ec5",
+    "content-hash": "ea01bd7d06127af3371d64fe8ff774e2",
     "packages": [
         {
             "name": "academicpuma/citeproc-php",
@@ -5769,6 +5769,57 @@
             "homepage": "https://www.drupal.org/project/views_field_view",
             "support": {
                 "source": "https://git.drupalcode.org/project/views_field_view"
+            }
+        },
+        {
+            "name": "drupal/views_node_access_filter",
+            "version": "1.0.0-beta2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/views_node_access_filter.git",
+                "reference": "8.x-1.0-beta2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_node_access_filter-8.x-1.0-beta2.zip",
+                "reference": "8.x-1.0-beta2",
+                "shasum": "c1d9620d71f863cb78383a6598301e9d5039a4e2"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "require-dev": {
+                "vijaycs85/drupal-quality-checker": "^1.3"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.0-beta2",
+                    "datestamp": "1673270608",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "GaëlG",
+                    "homepage": "https://www.drupal.org/user/431210"
+                },
+                {
+                    "name": "prudloff",
+                    "homepage": "https://www.drupal.org/user/3611858"
+                }
+            ],
+            "description": "Views filter to only show the nodes that the current user is allowed to edit",
+            "homepage": "https://www.drupal.org/project/views_node_access_filter",
+            "support": {
+                "source": "https://git.drupalcode.org/project/views_node_access_filter"
             }
         },
         {
@@ -13091,6 +13142,7 @@
         "drupal/rest_oai_pmh": 10,
         "drupal/term_merge": 10,
         "drupal/views_field_view": 10,
+        "drupal/views_node_access_filter": 10,
         "islandora-rdm/islandora_fits": 20,
         "islandora/advanced_search": 20
     },
