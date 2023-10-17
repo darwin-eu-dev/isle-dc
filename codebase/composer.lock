@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ea01bd7d06127af3371d64fe8ff774e2",
+    "content-hash": "394efe98bf866d52a0d95eb08a903ca0",
     "packages": [
         {
             "name": "academicpuma/citeproc-php",
@@ -6734,16 +6734,16 @@
         },
         {
             "name": "islandora/advanced_search",
-            "version": "dev-contrib",
+            "version": "2.0.0-beta3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digitalutsc/advanced_search.git",
-                "reference": "de445f96de3514d0797898f9dd364f0dbb93a6bb"
+                "reference": "fe6bfe51d1987d571d1b6c65b07043dd7aa9d917"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digitalutsc/advanced_search/zipball/de445f96de3514d0797898f9dd364f0dbb93a6bb",
-                "reference": "de445f96de3514d0797898f9dd364f0dbb93a6bb",
+                "url": "https://api.github.com/repos/digitalutsc/advanced_search/zipball/fe6bfe51d1987d571d1b6c65b07043dd7aa9d917",
+                "reference": "fe6bfe51d1987d571d1b6c65b07043dd7aa9d917",
                 "shasum": ""
             },
             "require": {
@@ -6756,7 +6756,6 @@
                 "sebastian/phpcpd": "*",
                 "squizlabs/php_codesniffer": "^3"
             },
-            "default-branch": true,
             "type": "drupal-module",
             "scripts": {
                 "post-install-cmd": [
@@ -6783,7 +6782,7 @@
                 "issues": "https://github.com/digitalutsc/advanced_search/issues",
                 "source": "https://github.com/digitalutsc/advanced_search/tree/islandora_lite"
             },
-            "time": "2023-06-07T18:34:44+00:00"
+            "time": "2023-06-28T21:04:54+00:00"
         },
         {
             "name": "islandora/chullo",
@@ -13143,8 +13142,7 @@
         "drupal/term_merge": 10,
         "drupal/views_field_view": 10,
         "drupal/views_node_access_filter": 10,
-        "islandora-rdm/islandora_fits": 20,
-        "islandora/advanced_search": 20
+        "islandora-rdm/islandora_fits": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

@@ -69,7 +69,7 @@
         "drupal/views_node_access_filter": "^1.0@beta",
         "drush/drush": "^10.3",
         "islandora-rdm/islandora_fits": "dev-8.x-1.x as 1.x-dev",
-        "islandora/advanced_search": "dev-contrib",
+        "islandora/advanced_search": "^2.0.0",
         "islandora/controlled_access_terms": "^2",
         "islandora/islandora": "^2",
         "islandora/openseadragon": "^2",
