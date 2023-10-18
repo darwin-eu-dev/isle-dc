@@ -5,11 +5,9 @@ dependencies:
   config:
     - field.field.node.homepage.body
     - field.field.node.homepage.field_latest_studies
-    - field.field.node.homepage.field_privacy_policy
     - node.type.homepage
   module:
     - block_field
-    - link
     - text
     - user
 id: node.homepage.default
@@ -30,18 +28,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 2
-    region: content
-  field_privacy_policy:
-    type: link
-    label: hidden
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: '0'
-      target: '0'
-    third_party_settings: {  }
-    weight: 3
     region: content
   links:
     settings: {  }

@@ -9,7 +9,7 @@ dependencies:
     - node
     - user
 id: latest10studies
-label: Latest10Studies
+label: 'Latest 10 Studies'
 module: views
 description: 'This block to show the latest published studies'
 tag: ''

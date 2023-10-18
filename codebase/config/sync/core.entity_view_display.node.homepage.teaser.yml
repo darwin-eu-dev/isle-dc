@@ -6,7 +6,6 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.homepage.body
     - field.field.node.homepage.field_latest_studies
-    - field.field.node.homepage.field_privacy_policy
     - node.type.homepage
   module:
     - text
@@ -31,6 +30,5 @@ content:
     region: content
 hidden:
   field_latest_studies: true
-  field_privacy_policy: true
   langcode: true
   search_api_excerpt: true
