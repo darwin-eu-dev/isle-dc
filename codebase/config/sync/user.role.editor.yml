@@ -15,9 +15,11 @@ dependencies:
     - workflows.workflow.editorial
   module:
     - content_moderation
+    - group
     - media
     - node
     - system
+    - toolbar
     - view_unpublished
 id: editor
 label: Manager
@@ -25,7 +27,10 @@ weight: -6
 is_admin: null
 permissions:
   - 'access content'
+  - 'access group overview'
   - 'access media overview'
+  - 'access toolbar'
+  - 'administer menu'
   - 'create audio media'
   - 'create document media'
   - 'create extracted_text media'
@@ -35,6 +40,7 @@ permissions:
   - 'create media'
   - 'create remote_video media'
   - 'create study content'
+  - 'create study group'
   - 'create video media'
   - 'delete any audio media'
   - 'delete any document media'
