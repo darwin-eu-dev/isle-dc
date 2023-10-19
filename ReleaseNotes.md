@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.37  | 19 Oct 2023 | AAICDDC-415 - allow managers to create study group                                  |
 | 0.0.36  | 17 Oct 2023 | AAICDDC-35 - home page version 3                                                    |
 | 0.0.35  | 17 Oct 2023 | AAICDDC-119 - update the advanced search module                                     |
 | 0.0.34  | 17 Oct 2023 | AAICDDC-414 - Bug fix: Added editable filter for draft page view                    |
