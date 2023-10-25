@@ -1,0 +1,29 @@
+uuid: 8be29186-66b1-4849-80e8-5f65a2ef1828
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.administrator
+    - user.role.editor
+    - workflows.workflow.editorial
+id: draft_to_review
+label: 'Draft to Review'
+format: html
+subject: 'Awaiting review: [node:title]'
+recipient_types:
+  roles_with_access:
+    id: roles_with_access
+    provider: workbench_email
+    status: true
+    settings:
+      roles:
+        editor: editor
+        administrator: administrator
+bundles: {  }
+body:
+  value: '<p>Hello</p><p>A study is now ready for review.&nbsp;</p><p>Title: <strong>[node:title]&nbsp;</strong></p><p>Link: [node:url:absolute]</p>'
+  format: basic_html
+replyTo: ''
+transitions:
+  editorial:
+    under_review: under_review
