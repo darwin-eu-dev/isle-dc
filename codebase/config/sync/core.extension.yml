@@ -136,6 +136,7 @@ module:
   views_nested_details: 0
   views_node_access_filter: 0
   views_ui: 0
+  workbench_email: 0
   workflows: 0
   content_translation: 10
   views: 10
