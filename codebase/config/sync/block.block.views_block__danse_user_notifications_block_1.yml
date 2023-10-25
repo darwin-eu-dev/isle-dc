@@ -1,0 +1,27 @@
+uuid: 73a2b117-6385-48c3-bf88-02a7f3f73294
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.danse_user_notifications
+  module:
+    - views
+  theme:
+    - olivero
+_core:
+  default_config_hash: fyD4-jyb9I3t1w7ieU_avEJ22a3BnQbWh18y0sz3IpA
+id: views_block__danse_user_notifications_block_1
+theme: olivero
+region: secondary_menu
+weight: -5
+provider: null
+plugin: 'views_block:danse_user_notifications-block_1'
+settings:
+  id: 'views_block:danse_user_notifications-block_1'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility: {  }
