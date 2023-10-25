@@ -1,0 +1,31 @@
+uuid: d9213c08-95ea-417b-bc53-4f45674f8b1b
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.administrator
+    - user.role.contributor
+    - user.role.editor
+    - workflows.workflow.editorial
+id: published_to_draft
+label: 'Published to Draft'
+format: html
+subject: 'New study version: [node:title]'
+recipient_types:
+  roles_with_access:
+    id: roles_with_access
+    provider: workbench_email
+    status: true
+    settings:
+      roles:
+        contributor: contributor
+        editor: editor
+        administrator: administrator
+bundles: {  }
+body:
+  value: '<p>Hello</p><p>A new draft version of a published study has been created by <strong>[current-user:account-name]</strong></p><p>Title: <strong>[node:title]&nbsp;</strong></p><p>Link: [node:edit-url]</p>'
+  format: basic_html
+replyTo: ''
+transitions:
+  editorial:
+    published_to_draft: published_to_draft
