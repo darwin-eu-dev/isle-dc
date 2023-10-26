@@ -1,0 +1,29 @@
+_core:
+  default_config_hash: qcKXbxTvggNujvXAhbqBDlOD_ZRnIlfs2w-nU1w4uwE
+active: 1
+use_default_settings: 1
+pattern:
+  subject: ''
+  body:
+    value: ''
+    format: plain_text
+display_modes:
+  block_content: ''
+  comment: ''
+  contact_message: ''
+  content_moderation_state: ''
+  danse_notification: ''
+  danse_event: ''
+  danse_notification_action: ''
+  file: ''
+  group_relationship: ''
+  group_config_wrapper: ''
+  group: ''
+  media: ''
+  menu_link_content: ''
+  node: ''
+  path_alias: ''
+  search_api_task: ''
+  shortcut: ''
+  taxonomy_term: ''
+  user: ''

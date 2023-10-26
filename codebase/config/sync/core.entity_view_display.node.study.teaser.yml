@@ -31,17 +31,18 @@ targetEntityType: node
 bundle: study
 mode: teaser
 content:
-  content_moderation_control:
+  danse_subscribe:
     settings: {  }
     third_party_settings: {  }
-    weight: -20
+    weight: 1
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 0
     region: content
 hidden:
+  content_moderation_control: true
   field_annexes: true
   field_code: true
   field_cohorts: true

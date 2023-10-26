@@ -1,0 +1,28 @@
+_core:
+  default_config_hash: OkT8RW1XS_pK5VVevlY3qkDtmtiloWfIkAdH219F7BU
+display_modes:
+  block_content: full
+  comment: full
+  contact_message: token
+  content_moderation_state: teaser
+  danse_notification: teaser
+  danse_event: teaser
+  danse_notification_action: teaser
+  file: token
+  group_relationship: teaser
+  group_config_wrapper: teaser
+  group: teaser
+  media: file_download
+  menu_link_content: token
+  node: teaser
+  path_alias: token
+  search_api_task: teaser
+  shortcut: token
+  taxonomy_term: full
+  user: compact
+pattern:
+  subject: '[site:name] notification: [push-object:label]'
+  body:
+    value: "Hi [user:display-name],\r\n\r\nAn update has been made to the study - [push-object:label]. \r\n \r\nYou are receiving this email because you subscribed to the study. You may manage your subscriptions in your user profile page.\r\n\r\n[site:name]\r\n"
+    format: plain_text
+order_email: '1'
