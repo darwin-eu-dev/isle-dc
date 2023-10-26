@@ -1,6 +1,6 @@
 uuid: 73a2b117-6385-48c3-bf88-02a7f3f73294
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - views.view.danse_user_notifications
@@ -21,7 +21,7 @@ settings:
   label: ''
   label_display: '0'
   provider: views
+  context_mapping: {  }
   views_label: ''
   items_per_page: none
-  context_mapping: {  }
 visibility: {  }
