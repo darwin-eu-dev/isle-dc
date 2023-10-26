@@ -40,6 +40,11 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  danse_subscribe:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 21
+    region: content
   field_annexes:
     type: file_default
     label: above
