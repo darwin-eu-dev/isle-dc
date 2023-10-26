@@ -1,9 +1,9 @@
 events:
   create_event:
-    publish: '1'
+    update: '1'
     create: 0
-    update: 0
     delete: 0
+    publish: 0
     unpublish: 0
     comment: 0
   push:
@@ -11,15 +11,15 @@ events:
     update: '1'
     delete: '1'
   allow_entity_subscription:
-    publish:
+    update:
       - authenticated
       - contributor
       - editor
       - administrator
       - fedoraadmin
     create: {  }
-    update: {  }
     delete: {  }
+    publish: {  }
     unpublish: {  }
     comment: {  }
   'access settings':
