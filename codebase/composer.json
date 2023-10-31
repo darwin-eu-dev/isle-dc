@@ -57,6 +57,7 @@
         "drupal/pf_email": "^2.1",
         "drupal/push_framework": "^2.2",
         "drupal/rest_oai_pmh": "^2.0@beta",
+        "drupal/robotstxt": "^1.5",
         "drupal/search_api_solr": "^4.2",
         "drupal/simple_content_notifications": "^1.0",
         "drupal/smtp": "^1.2",
