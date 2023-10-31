@@ -77,7 +77,6 @@ jwt
 syn-keys
 codebase/vendor/*
 codebase/web/*
-!codebase/web/robots.txt
 !codebase/web/custom-robots.txt
 
 #===================
