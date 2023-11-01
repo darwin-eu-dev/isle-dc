@@ -48,6 +48,7 @@
         "drupal/field_permissions": "^1",
         "drupal/field_report": "^2.1",
         "drupal/flysystem": "^2.0@alpha",
+        "drupal/gdpr": "^3.0",
         "drupal/group": "^3.2",
         "drupal/hal": "^1.0||^2.0",
         "drupal/matomo": "^1.19",

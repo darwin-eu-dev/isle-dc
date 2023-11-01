@@ -21,6 +21,7 @@ is_admin: false
 permissions:
   - 'access content'
   - 'access shortcuts'
+  - 'cancel account'
   - 'opt-in or out of matomo tracking'
   - 'restful get oai_pmh'
   - 'use text format basic_html'
