@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.41  | 30 Oct 2023 | AAICDDC-21 - Discourage site indexing by search engines                             |
 | 0.0.40  | 26 Oct 2023 | AAICDDC-225 - Allow users to subscribe to study updates                             |
 | 0.0.39  | 26 Oct 2023 | AAICDDC-435 - Change workflow emails to plain-text                                  |
 | 0.0.38  | 25 Oct 2023 | AAICDDC-435 - Setup workflow notifications                                          |

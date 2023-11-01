@@ -77,6 +77,7 @@ jwt
 syn-keys
 codebase/vendor/*
 codebase/web/*
+!codebase/web/custom-robots.txt
 
 #===================
 # User can combined serveral docker-compose.yml files using the `config` command.
