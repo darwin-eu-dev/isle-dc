@@ -204,6 +204,7 @@ production: generate-secrets
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 islandora_fits_tags'
 	docker compose exec -T drupal with-contenv bash -lc 'drush islandora:settings:set-trusted-host-patterns "^$(DOMAIN)$\"'	
 	$(MAKE) node_access_rebuild
+	$(MAKE) place_custom_robots
 	$(MAKE) login
 
 
@@ -584,6 +585,7 @@ starter-finalize:
 	#docker compose exec -T drupal with-contenv bash -lc 'chown -R `id -u`:nginx /var/www/drupal'
 	#docker compose exec -T drupal with-contenv bash -lc 'drush migrate:rollback islandora_defaults_tags,islandora_tags'
 	$(MAKE) node_access_rebuild
+	$(MAKE) place_custom_robots
 	$(MAKE) login
 
 
@@ -683,4 +685,18 @@ fix_views:
 ## For rebuilding the content permissions.
 node_access_rebuild:
 	docker compose exec -T drupal with-contenv bash -lc "drush php-eval 'node_access_rebuild();'"
+
+
+.PHONY: place_custom_robots
+.SILENT: place_custom_robots
+## For replacing the deafult drupal robots.txt file with custom one.
+place_custom_robots:
+	if [ -f codebase/web/custom-robots.txt ]; then \
+		echo "Replacing robots.txt file" ; \
+		docker compose exec -T drupal with-contenv bash -lc "rm -rf /var/www/drupal/web/robots.txt"; \
+		docker cp codebase/web/custom-robots.txt $$(docker compose ps -q drupal):/var/www/drupal/web/robots.txt; \
+	fi
+	if [ ! -f codebase/web/custom-robots.txt ]; then \
+		echo "No custom-robots.txt file found." ; \
+	fi
   
