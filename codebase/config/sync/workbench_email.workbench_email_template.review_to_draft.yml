@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - user.role.administrator
     - user.role.contributor
     - user.role.editor
     - workflows.workflow.editorial
@@ -20,7 +19,6 @@ recipient_types:
       roles:
         contributor: contributor
         editor: editor
-        administrator: administrator
 bundles: {  }
 body:
   value: '<p>Hello</p><p>A study that was in review has been returned to draft status by [current-user:account-name]</p><p>Title: [node:title]&nbsp;</p><p>Link: [node:url:absolute]</p><p>Reason: [node:log]</p><p>[site:name]</p>'

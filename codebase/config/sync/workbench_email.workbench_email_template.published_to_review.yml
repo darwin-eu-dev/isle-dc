@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - user.role.administrator
     - user.role.editor
     - workflows.workflow.editorial
 id: published_to_review
@@ -18,7 +17,6 @@ recipient_types:
     settings:
       roles:
         editor: editor
-        administrator: administrator
 bundles: {  }
 body:
   value: '<p>Hello</p><p>A study is now ready for review.&nbsp;</p><p>Title: [node:title]&nbsp;</p><p>Link: [node:url:absolute]</p><p>[site:name]</p>'
