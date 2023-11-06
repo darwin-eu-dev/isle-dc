@@ -1,13 +1,16 @@
 progress:
-  '#changed': 1698839602
+  '#changed': 1699285725
   '#changed_by': '1'
-  '#completed_items': 7
+  '#completed_items': 8
   '#items':
     responsibility_agreement:
       '#completed': 1698839476
       '#uid': '1'
     recommended_resources:
       '#completed': 1698839476
+      '#uid': '1'
+    external_traffic_measurement:
+      '#completed': 1699285725
       '#uid': '1'
     social_media_connections:
       '#completed': 1698839476
