@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.43  | 06 Nov 2023 | AAICDDC-480 - Disable workflow notifications for admins                             |
 | 0.0.42  | 01 Nov 2023 | AAICDDC-33 - Install GDPR module and apply initial recommendations                  |
 | 0.0.41  | 30 Oct 2023 | AAICDDC-21 - Discourage site indexing by search engines                             |
 | 0.0.40  | 26 Oct 2023 | AAICDDC-225 - Allow users to subscribe to study updates                             |
