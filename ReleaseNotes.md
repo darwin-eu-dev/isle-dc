@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.46  | 08 Nov 2023 | AAICDDC-481 - Include link to study library in subscribed notifications             |
 | 0.0.45  | 08 Nov 2023 | AAICDDC-505 - Resolve 'Unable to Connect to JMS Broker' error when uploading files  |
 | 0.0.44  | 06 Nov 2023 | AAICDDC-164 - Disable matomo tracking                                               |
 | 0.0.43  | 06 Nov 2023 | AAICDDC-480 - Disable workflow notifications for admins                             |
