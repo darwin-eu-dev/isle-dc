@@ -23,6 +23,6 @@ display_modes:
 pattern:
   subject: '[site:name] notification: [push-object:label]'
   body:
-    value: "Hi [user:display-name],\r\n\r\nAn update has been made to the study - [push-object:label]. \r\n\r\nDARWIN Study Library Link:  https://study-repository-poc.darwin-eu.org/\r\n \r\nYou are receiving this email because you subscribed to the study. You may manage your subscriptions in your user profile page.\r\n\r\n[site:name]\r\n"
+    value: "Hi [user:display-name],\r\n\r\nAn update has been made to the study - [push-object:label]. \r\n\r\nDARWIN Study Library Link:  [site:url]\r\n \r\nYou are receiving this email because you subscribed to the study. You may manage your subscriptions in your user profile page.\r\n\r\n[site:name]\r\n"
     format: plain_text
 order_email: '1'
