@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies: {  }
 id: study
-label: Study
+label: 'Study Group'
 description: 'Groups contents and users based on the study content type'
 new_revision: true
 creator_membership: true
