@@ -23,7 +23,6 @@ dependencies:
     - field.storage.node.field_resource_type
     - field.storage.node.field_rights
     - field.storage.node.field_setting
-    - field.storage.node.field_status
     - field.storage.node.field_study_abstract
     - field.storage.node.field_tags
     - field.storage.node.field_annexes
@@ -304,14 +303,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_setting
-  field_status:
-    label: Status
-    datasource_id: 'entity:node'
-    property_path: field_status
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.field_status
   field_study_abstract:
     label: Abstract
     datasource_id: 'entity:node'

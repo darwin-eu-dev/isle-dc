@@ -16,36 +16,39 @@ type: list_string
 settings:
   allowed_values:
     -
-      value: "Hospital District Southwest Finland\_"
-      label: "Hospital District Southwest Finland\_"
+      value: 'Auria Clinical Informatics'
+      label: 'Auria Clinical Informatics'
     -
-      value: 'Centre Hospitalier Universitaire de Bordeaux'
-      label: 'Centre Hospitalier Universitaire de Bordeaux'
+      value: 'Bordeaux University Hospital'
+      label: 'Bordeaux University Hospital'
     -
-      value: 'University of Oxford'
-      label: 'University of Oxford'
+      value: 'Clinical Practice Research Datalink (CPRD) GOLD'
+      label: 'Clinical Practice Research Datalink (CPRD) GOLD'
     -
-      value: 'University of Tartu'
-      label: 'University of Tartu'
+      value: 'Estonian BioBank'
+      label: 'Estonian BioBank'
     -
-      value: 'PSMar & IMIM'
-      label: 'PSMar & IMIM'
+      value: 'Institut Municipal Assistència Sanitària Information System (IMASIS)'
+      label: 'Institut Municipal Assistència Sanitària Information System (IMASIS)'
     -
-      value: 'Mieur Implementation and Exploitation B.V'
-      label: 'Mieur Implementation and Exploitation B.V'
+      value: 'Integrated Primary Care Information (IPCI)'
+      label: 'Integrated Primary Care Information (IPCI)'
     -
-      value: 'IQVIA Solutions BV'
-      label: 'IQVIA Solutions BV'
+      value: 'IQVIA Disease Analyzer Germany'
+      label: 'IQVIA Disease Analyzer Germany'
     -
-      value: 'Integraal Kankercentrum Nederland'
-      label: 'Integraal Kankercentrum Nederland'
+      value: 'IQVIA Longitudinal Patient Database Belgium'
+      label: 'IQVIA Longitudinal Patient Database Belgium'
     -
-      value: IDIAPJGol
-      label: IDIAPJGol
+      value: 'Netherlands Cancer Registry (NCR)'
+      label: 'Netherlands Cancer Registry (NCR)'
+    -
+      value: 'Sistema d’Informació per al Desenvolupament de la Investigació en Atenció Primària (SIDIAP)'
+      label: 'Sistema d’Informació per al Desenvolupament de la Investigació en Atenció Primària (SIDIAP)'
   allowed_values_function: ''
 module: options
 locked: false
-cardinality: 1
+cardinality: -1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

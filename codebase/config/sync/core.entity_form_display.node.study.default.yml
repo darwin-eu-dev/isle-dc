@@ -18,7 +18,6 @@ dependencies:
     - field.field.node.study.field_related_studies
     - field.field.node.study.field_results
     - field.field.node.study.field_setting
-    - field.field.node.study.field_status
     - field.field.node.study.field_study_abstract
     - field.field.node.study.field_study_dura
     - field.field.node.study.field_study_id
@@ -82,7 +81,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_data_partners:
-    type: options_select
+    type: options_buttons
     weight: 12
     region: content
     settings: {  }
@@ -150,12 +149,6 @@ content:
   field_setting:
     type: options_select
     weight: 24
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_status:
-    type: options_buttons
-    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }

@@ -19,7 +19,6 @@ dependencies:
     - field.field.node.study.field_related_studies
     - field.field.node.study.field_results
     - field.field.node.study.field_setting
-    - field.field.node.study.field_status
     - field.field.node.study.field_study_abstract
     - field.field.node.study.field_study_dura
     - field.field.node.study.field_study_id
@@ -58,7 +57,6 @@ hidden:
   field_related_studies: true
   field_results: true
   field_setting: true
-  field_status: true
   field_study_abstract: true
   field_study_dura: true
   field_study_id: true
