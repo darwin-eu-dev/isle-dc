@@ -203,6 +203,7 @@ production: generate-secrets
 	MIGRATE_IMPORT_USER_OPTION=--userid=1 $(MAKE) hydrate
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 islandora_fits_tags'
 	docker compose exec -T drupal with-contenv bash -lc 'drush islandora:settings:set-trusted-host-patterns "^$(DOMAIN)$\"'	
+	$(MAKE) import_custom_blocks
 	$(MAKE) node_access_rebuild
 	$(MAKE) place_custom_robots
 	$(MAKE) login
@@ -584,6 +585,7 @@ starter-finalize:
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 --tag=islandora'
 	#docker compose exec -T drupal with-contenv bash -lc 'chown -R `id -u`:nginx /var/www/drupal'
 	#docker compose exec -T drupal with-contenv bash -lc 'drush migrate:rollback islandora_defaults_tags,islandora_tags'
+	$(MAKE) import_custom_blocks
 	$(MAKE) node_access_rebuild
 	$(MAKE) place_custom_robots
 	$(MAKE) login
@@ -699,4 +701,10 @@ place_custom_robots:
 	if [ ! -f codebase/web/custom-robots.txt ]; then \
 		echo "No custom-robots.txt file found." ; \
 	fi
-  
+
+
+.PHONY: import_custom_blocks
+.SILENT: import_custom_blocks
+## For importing custom blocks using the module structure sync.
+import_custom_blocks:
+	docker compose exec -T drupal with-contenv bash -lc "drush ib --choice=safe"

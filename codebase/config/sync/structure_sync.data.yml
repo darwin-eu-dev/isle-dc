@@ -9,6 +9,6 @@ blocks:
     fields:
       body:
         -
-          value: '<img src="/sites/default/files/inline-images/darwin-eu-logo.png" data-align="left" data-entity-uuid="9d366fce-dd36-418d-a5a5-575aed1d0287" data-entity-type="file" alt="Darwin Logo" width="36.47%"><table><tbody><tr><td><p>Link 1</p><p>Link 2</p><p>Link 3</p></td></tr></tbody></table>'
+          value: '<img src="/sites/default/files/darwin-logo.jpeg" data-align="left" data-entity-uuid="efe295c5-081e-4e2d-8613-8d0a1e1119d7" data-entity-type="file" alt="darwin-logo" width="12.46%"><table><tbody><tr><td><a href="/search">All studies</a>&nbsp;&nbsp;&nbsp;&nbsp;<br><a href="https://darwin-eu.org/index.php/legal-notice">Legal Notice</a>&nbsp;&nbsp;&nbsp;<br><a href="https://darwin-eu.org/index.php/data-protection-notice">Data Protection Notice</a>&nbsp;&nbsp;&nbsp;<br><a href="/privacy-policy">Cookie Policy</a></td></tr></tbody></table><p>&nbsp;</p>'
           summary: ''
           format: full_html
