@@ -1,0 +1,14 @@
+blocks:
+  -
+    info: 'Darwin Footer block'
+    langcode: en
+    uuid: 4355532e-5f9d-4a40-80ef-20b6838920b2
+    bundle: basic
+    revision_id: null
+    rev_id_current: null
+    fields:
+      body:
+        -
+          value: '<img src="/sites/default/files/inline-images/darwin-eu-logo.png" data-align="left" data-entity-uuid="9d366fce-dd36-418d-a5a5-575aed1d0287" data-entity-type="file" alt="Darwin Logo" width="36.47%"><table><tbody><tr><td><p>Link 1</p><p>Link 2</p><p>Link 3</p></td></tr></tbody></table>'
+          summary: ''
+          format: full_html
