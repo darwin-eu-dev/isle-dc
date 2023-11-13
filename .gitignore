@@ -78,6 +78,7 @@ syn-keys
 codebase/vendor/*
 codebase/web/*
 !codebase/web/custom-robots.txt
+!codebase/web/sites/default/files/darwin-logo.jpeg
 
 #===================
 # User can combined serveral docker-compose.yml files using the `config` command.
