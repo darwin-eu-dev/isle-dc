@@ -15,6 +15,7 @@ dependencies:
     - workflows.workflow.editorial
   module:
     - content_moderation
+    - eu_cookie_compliance
     - group
     - media
     - node
@@ -60,6 +61,7 @@ permissions:
   - 'delete own image media'
   - 'delete own remote_video media'
   - 'delete own video media'
+  - 'display eu cookie compliance popup'
   - 'edit any audio media'
   - 'edit any document media'
   - 'edit any extracted_text media'
