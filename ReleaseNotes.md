@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.51  | 14 Nov 2023 | AAICDDC-437 - Site footer added                                                     |
 | 0.0.50  | 13 Nov 2023 | AAICDDC-32 - EU cookie regulations                                                  |
 | 0.0.49  | 10 Nov 2023 | AAICDDC-432 - Changes to study fields                                               |
 | 0.0.48  | 09 Nov 2023 | AAICDDC-436 - Change the name of the study group type to be "Study Group"           |
