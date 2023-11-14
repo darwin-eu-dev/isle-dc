@@ -203,6 +203,7 @@ production: generate-secrets
 	MIGRATE_IMPORT_USER_OPTION=--userid=1 $(MAKE) hydrate
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 islandora_fits_tags'
 	docker compose exec -T drupal with-contenv bash -lc 'drush islandora:settings:set-trusted-host-patterns "^$(DOMAIN)$\"'	
+	$(MAKE) copy_default_files
 	$(MAKE) import_custom_blocks
 	$(MAKE) node_access_rebuild
 	$(MAKE) place_custom_robots
@@ -585,6 +586,7 @@ starter-finalize:
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 --tag=islandora'
 	#docker compose exec -T drupal with-contenv bash -lc 'chown -R `id -u`:nginx /var/www/drupal'
 	#docker compose exec -T drupal with-contenv bash -lc 'drush migrate:rollback islandora_defaults_tags,islandora_tags'
+	$(MAKE) copy_default_files
 	$(MAKE) import_custom_blocks
 	$(MAKE) node_access_rebuild
 	$(MAKE) place_custom_robots
@@ -708,3 +710,13 @@ place_custom_robots:
 ## For importing custom blocks using the module structure sync.
 import_custom_blocks:
 	docker compose exec -T drupal with-contenv bash -lc "drush ib --choice=safe"
+
+
+.PHONY: copy_default_files
+.SILENT: copy_default_files
+## For copying files (for eg: logo-image) which needs to be put inside drupal/web/sites/default/files/.
+copy_default_files:
+	if [ -d codebase/web/sites/default/files ]; then \
+		echo "Copying default site files from codebase/web/sites/default/files to drupal" ; \
+		docker cp codebase/web/sites/default/files/. $$(docker compose ps -q drupal):/var/www/drupal/web/sites/default/files/; \
+	fi
