@@ -1,0 +1,51 @@
+uuid: b580be87-99b8-4304-82c6-298d0cee2039
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:4355532e-5f9d-4a40-80ef-20b6838920b2'
+  module:
+    - block_content
+    - context
+    - islandora
+  theme:
+    - olivero
+id: darwinfooterblock
+theme: olivero
+region: footer_bottom
+weight: 0
+provider: null
+plugin: 'block_content:4355532e-5f9d-4a40-80ef-20b6838920b2'
+settings:
+  id: 'block_content:4355532e-5f9d-4a40-80ef-20b6838920b2'
+  label: 'Darwin Footer block'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  context_all:
+    id: context_all
+    negate: null
+    values: ''
+  user_status:
+    id: user_status
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    user_status:
+      viewing_profile: '0'
+      logged_viewing_profile: '0'
+      own_page_true: '0'
+      field_value: '0'
+    user_fields: uid
+  context:
+    id: context
+    negate: null
+    values: ''
+  media_source_mimetype:
+    id: media_source_mimetype
+    negate: false
+    context_mapping: {  }
+    mimetype: ''

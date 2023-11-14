@@ -64,6 +64,7 @@
         "drupal/search_api_solr": "^4.2",
         "drupal/simple_content_notifications": "^1.0",
         "drupal/smtp": "^1.2",
+        "drupal/structure_sync": "^2.0",
         "drupal/tac_lite": "^1.6",
         "drupal/taxonomy_manager": "^2.0",
         "drupal/term_merge": "^2.0@beta",

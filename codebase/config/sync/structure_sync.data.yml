@@ -1,0 +1,14 @@
+blocks:
+  -
+    info: 'Darwin Footer block'
+    langcode: en
+    uuid: 4355532e-5f9d-4a40-80ef-20b6838920b2
+    bundle: basic
+    revision_id: null
+    rev_id_current: null
+    fields:
+      body:
+        -
+          value: '<img src="/sites/default/files/darwin-logo.jpeg" data-align="left" data-entity-uuid="efe295c5-081e-4e2d-8613-8d0a1e1119d7" data-entity-type="file" alt="darwin-logo" width="12.46%"><table><tbody><tr><td><a href="/search">All studies</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><a href="https://darwin-eu.org/index.php/legal-notice" target="_blank">Legal Notice</a>&nbsp;&nbsp;&nbsp;&nbsp;<br><a href="https://darwin-eu.org/index.php/data-protection-notice" target="_blank">Data Protection Notice</a>&nbsp;&nbsp;&nbsp;&nbsp;<br><a href="/privacy-policy">Cookie Policy</a></td></tr></tbody></table><p>&nbsp;</p>'
+          summary: ''
+          format: full_html

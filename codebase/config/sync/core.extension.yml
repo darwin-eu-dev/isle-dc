@@ -121,6 +121,7 @@ module:
   simple_content_notifications: 0
   smtp: 0
   sqlite: 0
+  structure_sync: 0
   syslog: 0
   system: 0
   tac_lite_create: 0
