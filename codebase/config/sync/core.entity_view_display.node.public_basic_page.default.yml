@@ -1,0 +1,30 @@
+uuid: 99310310-41cc-4562-870a-b6c198d01e59
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.public_basic_page.body
+    - node.type.public_basic_page
+  module:
+    - text
+    - user
+id: node.public_basic_page.default
+targetEntityType: node
+bundle: public_basic_page
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true
+  search_api_excerpt: true

@@ -6,9 +6,11 @@ dependencies:
     - filter.format.basic_html
     - rest.resource.oai_pmh
   module:
+    - eu_cookie_compliance
     - filter
     - matomo
     - media
+    - node_view_permissions
     - rest
     - shortcut
     - system
@@ -22,7 +24,14 @@ permissions:
   - 'access content'
   - 'access shortcuts'
   - 'cancel account'
+  - 'display eu cookie compliance popup'
   - 'opt-in or out of matomo tracking'
   - 'restful get oai_pmh'
   - 'use text format basic_html'
+  - 'view any article content'
+  - 'view any homepage content'
+  - 'view any islandora_object content'
+  - 'view any page content'
+  - 'view any public_basic_page content'
+  - 'view any study content'
   - 'view media'

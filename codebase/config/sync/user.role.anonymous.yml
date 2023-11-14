@@ -1,11 +1,18 @@
 uuid: ce58ac50-c550-4c0d-b832-67a91c600104
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - eu_cookie_compliance
+    - node_view_permissions
+    - system
 _core:
   default_config_hash: 6WavjUYXIegP9AAg2zXGx54MWIVoomC3SZhNiqe-Dyk
 id: anonymous
 label: 'Anonymous user'
 weight: -10
 is_admin: false
-permissions: {  }
+permissions:
+  - 'access content'
+  - 'display eu cookie compliance popup'
+  - 'view any public_basic_page content'

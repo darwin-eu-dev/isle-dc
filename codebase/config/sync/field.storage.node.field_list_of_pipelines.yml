@@ -16,11 +16,35 @@ type: list_string
 settings:
   allowed_values:
     -
-      value: Incidence/Prevalence
-      label: Incidence/Prevalence
+      value: 'Patient-level characterisation'
+      label: 'Patient-level characterisation'
     -
-      value: 'Patient Level Drug Utilisation'
-      label: 'Patient Level Drug Utilisation'
+      value: 'Patient-level DUS analyses'
+      label: 'Patient-level DUS analyses'
+    -
+      value: 'Population-level DUS analyses'
+      label: 'Population-level DUS analyses'
+    -
+      value: 'Population-level descriptive epidemiology'
+      label: 'Population-level descriptive epidemiology'
+    -
+      value: 'Prevalent user active comparator cohort studies'
+      label: 'Prevalent user active comparator cohort studies'
+    -
+      value: 'New user active comparator cohort'
+      label: 'New user active comparator cohort'
+    -
+      value: 'Self-controlled case risk interval'
+      label: 'Self-controlled case risk interval'
+    -
+      value: 'Self-controlled case series'
+      label: 'Self-controlled case series'
+    -
+      value: 'Time series analyses and Difference-in-difference studies'
+      label: 'Time series analyses and Difference-in-difference studies'
+    -
+      value: 'RMM effectiveness'
+      label: 'RMM effectiveness'
   allowed_values_function: ''
 module: options
 locked: false
