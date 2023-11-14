@@ -1,0 +1,18 @@
+uuid: 4057098b-9211-425f-b578-9476273b57a5
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Public Basic Page'
+type: public_basic_page
+description: 'This is a version of the <em>Basic page</em> which is accessible to all users, including users who are not logged in. This can be used for pages such as the cookie policy'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

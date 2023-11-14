@@ -15,4 +15,4 @@ is_admin: false
 permissions:
   - 'access content'
   - 'display eu cookie compliance popup'
-  - 'view any page content'
+  - 'view any public_basic_page content'
