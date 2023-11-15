@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.52  | 14 Nov 2023 | AAICDDC-437 - GDPR check and cookie policy link change                              |
 | 0.0.51  | 14 Nov 2023 | AAICDDC-437 - Site footer added                                                     |
 | 0.0.50  | 13 Nov 2023 | AAICDDC-32 - EU cookie regulations                                                  |
 | 0.0.49  | 10 Nov 2023 | AAICDDC-432 - Changes to study fields                                               |

@@ -1,7 +1,7 @@
 progress:
-  '#changed': 1699628077
+  '#changed': 1699980127
   '#changed_by': '1'
-  '#completed_items': 9
+  '#completed_items': 12
   '#items':
     responsibility_agreement:
       '#completed': 1698839476
@@ -11,6 +11,15 @@ progress:
       '#uid': '1'
     data1:
       '#completed': 1699628066
+      '#uid': '1'
+    privacy_policy_page:
+      '#completed': 1699980127
+      '#uid': '1'
+    privacy_policy_published:
+      '#completed': 1699980127
+      '#uid': '1'
+    privacy_policy_in_menu:
+      '#completed': 1699979399
       '#uid': '1'
     external_traffic_measurement:
       '#completed': 1699285725
