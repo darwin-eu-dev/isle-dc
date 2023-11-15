@@ -25,10 +25,14 @@
                 }
             }
         },
-	{
-	    "type": "vcs",
-	    "url": "https://github.com/digitalutsc/advanced_search.git"
-	}
+        {
+            "type": "vcs",
+            "url": "https://github.com/digitalutsc/advanced_search.git"
+        },
+        {
+            "type": "path",
+            "url": "web/modules/custom/*"
+        }
     ],
     "require": {
         "php": "^7.4 || ^8",
