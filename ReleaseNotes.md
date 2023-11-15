@@ -2,7 +2,6 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
-| 0.0.53  | 15 Nov 2023 | AAICDDC-479 - change the text of the subscription                                   |
 | 0.0.52  | 14 Nov 2023 | AAICDDC-437 - GDPR check and cookie policy link change                              |
 | 0.0.51  | 14 Nov 2023 | AAICDDC-437 - Site footer added                                                     |
 | 0.0.50  | 13 Nov 2023 | AAICDDC-32 - EU cookie regulations                                                  |
