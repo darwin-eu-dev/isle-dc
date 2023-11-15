@@ -82,7 +82,6 @@ codebase/web/*
 !codebase/web/modules/
 codebase/web/modules/*
 !codebase/web/modules/custom/
-!codebase/web/modules/custom/danse_label_override/
 !codebase/web/modules/custom/danse_label_override/*
 
 !codebase/web/custom-robots.txt
