@@ -1,13 +1,13 @@
 _core:
   default_config_hash: uZHsLrDp1ThO0RvupHKcPzLOyVvWexm58JTTHNDo7yc
 display_extenders:
-  matomo: matomo
-skip_cache: true
+  - matomo
+skip_cache: false
 sql_signature: false
 ui:
   show:
     additional_queries: false
-    advanced_column: false
+    advanced_column: true
     default_display: false
     performance_statistics: false
     preview_information: true
