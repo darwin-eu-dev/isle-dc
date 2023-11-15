@@ -76,14 +76,7 @@ islandora_workbench
 jwt
 syn-keys
 codebase/vendor/*
-
-!codebase/web/
 codebase/web/*
-!codebase/web/modules/
-codebase/web/modules/*
-!codebase/web/modules/custom/
-!codebase/web/modules/custom/danse_label_override/*
-
 !codebase/web/custom-robots.txt
 !codebase/web/sites/default/files/darwin-logo.jpeg
 
