@@ -1,0 +1,10 @@
+name: 'DANSE Labels: Custom Overrides'
+type: module
+description: 'Modifies the default DANSE Labels so that they can be customized through the code in the .module file of this module.'
+core_version_requirement: ^8.8 || ^9
+package: DANSE
+dependencies:
+  - danse:danse
+  - danse:danse_content
+
+php: 7.2

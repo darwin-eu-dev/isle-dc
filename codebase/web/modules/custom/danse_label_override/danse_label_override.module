@@ -1,0 +1,418 @@
+<?php
+
+/**
+ * @file
+ * This module enables developers to customize DANSE labels for DANSE v2.2+
+ *
+ * When installed, the DANSE Label Override module modifies the labels that are
+ * generated on Entities, Comments, and Taxonomies from the defaults that the DANSE
+ * Module provides. This allows site administrators to customize their labels
+ * to suit the needs of the site.
+ * 
+ * DLO stands for Dance Label Overide, usually calling out new functionality 
+ * not provided in the original API example in DANSE.
+ * 
+ * YOU WILL NEED TO CUSTOMIZE THIS FILE. 
+ * Read through it carefully.
+ * PRO TIPS:
+ *  - On your site, enable DANSE notifications slowly and incrementally. 
+ *  - Understand where your code changes below reflect on your site.
+ *  - Enabling everything at once makes things really confusing. 
+ * I suggest starting off with Individual Entity Subscriptions (individual nodes), 
+ * then enabling Entity Type subscriptions (events on all nodes of a type)
+ * and then working on Related Entity subscriptions (events from nodes that share taxonomy terms with the current entity)
+ * 
+ */
+
+use Drupal\comment\CommentInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\danse_content\SubscriptionOperation;
+use Drupal\danse_content\Topic\TopicInterface;
+
+/**
+ * Alter labels for subscription operations.
+ *
+ * @param string $label
+ *   The label as computed from the modules logic which can be modified by
+ *   implementing this alter hook.
+ * @param array $args
+ *   Contains a number of already translated arguments for the new translation
+ *   of the altered label:
+ *   - "@entityType": the human readable label of the entity type of the entity
+ *        for which the operations will be provided.
+ *   - "@bundle": the human readable label of the bundle of the entity
+ *        for which the operations will be provided.
+ *   - "@action": the verb in past tense for the topic that may be operated on
+ *        the entity, e.g. "created" or "published".
+ *   - "@title": the label of the entity for which the operations will be
+ *        provided.
+ * @param array $context
+ *   Contains a number of objects known to the context in which the operation
+ *   label gets calculated:
+ *   - "topic": the topic for the operation on the entity.
+ *        @see Drupal\danse_content\Topic\TopicInterface
+ *   - "entity": The entity for which the operation gets provided.
+ *        @see Drupal\danse_content\Topic\TopicInterface
+ *   - "subscribeMode": A boolean indicating if the operation is to subscribe
+ *        (set to TRUE) to or to unsubscribe (set to FALSE) from the events.
+ *   - "subscriptionMode": An integer indicating the subscription mode, i.e.
+ *        whether to subscribe/unsubscribe to/from entity type, individual
+ *        entity or related entities. Allowed values are
+ *        - SUBSCRIPTION_MODE_ENTITY_TYPE
+ *        - SUBSCRIPTION_MODE_ENTITY
+ *        - SUBSCRIPTION_MODE_RELATED_ENTITY
+ *        @see SubscriptionOperation
+ *   - "entityHasBundle": A boolean indivating if this entity's entity-type
+ *        supports bundles or not. Nodes for example support bundles, but
+ *        user entities don't.
+ *
+ * @example See https://www.drupal.org/project/danse_label_override
+ */
+function danse_label_override_danse_content_topic_operation_label_alter(string &$label, array $args, array $context) {
+
+    // Extract all context variables.
+    /** @var TopicInterface $topic */
+    $topic = $context['topic'];
+    /** @var ContentEntityInterface $entity */
+    $entity = $context['entity'];
+    /** @var bool $subscribeMode */
+    $subscribeMode = $context['subscribeMode'];
+    /** @var string $subscriptionMode */
+    $subscriptionMode = $context['subscriptionMode'];
+        /*
+         * $subscribeMode returns 3 modes currently:
+         * 0 = Entity Type Subscription
+         * 1 = Individul Entity Subscription
+         * 2 = Related Entity Subscription
+         */
+    /** @var bool $entityHasBundle */
+    $entityHasBundle = $context['entityHasBundle'];
+
+    // DLO - These are variables for targeting specific content
+    /** @var string $entityType */
+    $entityType = $entity->getEntityTypeId();
+    /** @var string $entityBundle */
+    $entityBundle = $entity->bundle();
+    /** @var int $entityId */
+    $entityId = $entity->id();
+
+    /* **** ARGUMENTS SECTION **** */
+    // Arguments are variables that can be included in your buttons' labels
+
+    // Add a new translation argument which will be used later depending on
+    // the exception that needs to be covered.
+    
+    $args['@verb'] = $subscribeMode ? (string) t('Subscribe to') : (string) t('Unsubscribe from');
+    $args['@verb_time'] = $subscribeMode ? (string) t('Get notified when') : (string) t('Unsubscribe when');
+    $args['@verb_darwin'] = $subscribeMode ? (string) t('Subscribe') : (string) t('Unsubscribe');
+
+
+    $args['@subscriptionMode'] = $context['subscriptionMode'];
+
+    // have to determine node vs taxonomy term here because it's not clear when using @entityType without this statement
+    if ($entity->getEntityTypeId() == 'node' && $entityBundle == 'forum'){
+        $args['@entityType'] = 'topic'; 
+    } elseif ($entity->getEntityTypeId() == 'taxonomy_term' && $entityType == 'taxonomy_term'){
+        $args['@entityType'] = 'forum';
+    } else {
+        $args['@entityType'] = $entity->getEntityTypeId();
+    }
+    $args['@bundle'] = $entity->bundle(); // Entity Types contain BUNDLES that contain individual entities/nodes
+    $args['@entityId'] = $entity->id();     
+    /* **** END ARGUMENTS SECTION **** */
+
+    /*
+     * DLO Important Concept: 
+     * You have the various entity types: Comments, Content, and Taxonomies (and more).
+     * There are others and you can create your own custom ones, but these foundational ones will help you get started.
+     * So, you have an Entity Type                          (like content types, comment types, and taxonomies)
+     *                  Which contain Bundles               (Content Type > Article or Forum Topic or Blog Posts)
+     *                      Which has Individual Entities   (Forum Topic > How do I bake cookies?)
+     *                              Which have Comments     (How do I bake cookies? [topic] > Here's my family recipe [comment])
+     *                              and Related Content     (individual entities that, when created, share taxonomy terms with the subscribed entity)
+     *                                      (Related content is described in Comment #15 here: https://www.drupal.org/project/danse/issues/3175932#comment-14122869)
+     * 
+     * The next block of code is where most of the customization on your part needs to happen.
+     * This is a layered set of conditions that allow you fine-grained control to target the exact label you want
+     * on the entity you want.
+     * We begin with Comment Entities, then Content Entities, then
+     * the last else if 
+     */
+    if ($entity instanceof CommentInterface) {
+        // We want to change the default label for the publish and update topics
+        // on comment entites.
+        
+        if ($entityType == 'comment'){
+            // not sure what other entity types would exist in the CommentInterface, but you can check
+            if ($entityBundle == 'comment_forum'){ // target comments on forums
+                /*
+                * Inside this IF statement, we target comments in the 'comment_forum' bundle, 
+                * 'comment_forum' is the bundle's machine name
+                */
+                if ($subscriptionMode == 0){ // Entity Type Subscription
+                    switch ($topic->id()) {
+                        case TopicInterface::CREATE:
+                            $label = (string) t('@verb_time @entityTypes are created', $args);
+                            break;
+                        case TopicInterface::UPDATE:
+                            $label = (string) t('@verb all updates to @entityTypes', $args);
+                            break;
+                        case TopicInterface::DELETE:
+                            $label = (string) t('@verb_time @entityTypes are deleted', $args);
+                            break;
+                        case TopicInterface::PUBLISH:
+                            $label = (string) t('@verb all @entityTypes', $args);
+                            break;
+                        case TopicInterface::UNPUBLISH:
+                            $label = (string) t('@verb_time @entityTypes are unpublished', $args);
+                            break;
+                        // Comments doesn't have a comments option
+                    }
+                } else if ($subscriptionMode == 1){ // Individual Entity Subscription
+                    switch ($topic->id()) {
+                        case TopicInterface::CREATE:
+                            $label = (string) t('@verb_time replies to "@title" is created', $args);
+                            break;
+                        case TopicInterface::UPDATE:
+                            $label = (string) t('@verb_time replies to "@title" are updated', $args);
+                            break;
+                        case TopicInterface::DELETE:
+                            $label = (string) t('@verb_time replies to "@title" is deleted', $args);
+                            break;
+                        case TopicInterface::PUBLISH:
+                            $label = (string) t('@verb replies to "@title"', $args);
+                            break;
+                        case TopicInterface::UNPUBLISH:
+                            $label = (string) t('@verb_time replies to "@title" is unpublished', $args);
+                            break;
+                        // Comments doesn't have a comments option
+                    }
+                } else if ($subscriptionMode == 2){ // Related Entity Subscription
+                    switch ($topic->id()) {
+                        case TopicInterface::CREATE:
+                            $label = (string) t('@verb_time content related to "@title" is created', $args);
+                            break;
+                        case TopicInterface::UPDATE:
+                            $label = (string) t('@verb_time content related to "@title" is updated', $args);
+                            break;
+                        case TopicInterface::DELETE:
+                            $label = (string) t('@verb_time content related to "@title" is deleted', $args);
+                            break;
+                        case TopicInterface::PUBLISH:
+                            $label = (string) t('@verb_time content related to "@title" is published', $args);
+                            break;
+                        case TopicInterface::UNPUBLISH:
+                            $label = (string) t('@verb_time content related to "@title" is unpublished', $args);
+                            break;
+                        // Comments doesn't have a comments option, use Published to get notified of replies to comments
+                    }
+                } else { // subscriptionMode = something other than 0 (Entity Type Subscriptions), 1 (Individual Entity Subscriptions), or 2 (Related Content Subscriptions)
+                    //Add Switch Statement here if needed
+                } // end Subscription Modes
+            } // end $entityBundle == 'comment_forum' 
+            /*
+             * You can add "else if" statements to target other bundles
+             * or a general "else" statement to act as a catch-all for all other comment bundles
+             * Just create the else at the end if the comment_forum if statement
+             * and then copy the whole if ($subscriptionMode == 0) series of statements and their contents
+             * into the new statement
+             */
+        } // end
+    }
+    else if ($entity instanceof ContentEntityInterface) {
+        // Target Content Entities
+        if ($entityType == 'node'){
+            /*
+             * DLO: This section targets Node types, found under Structure > Content Types in your Admin Menu
+             * Note that you might have a variety of content types that you've custom-built for your Drupal
+             * instance, from an article to a blog post. You can either use the catch-all else at the end
+             * of this section, or you can call out each one like the forum example below.
+             */ 
+            if ($entityBundle == 'forum'){ // labels for the forum Content Entity Bundle
+                if ($subscriptionMode == 0){ // Entity Type Subscription
+                    switch ($topic->id()) {
+                        case TopicInterface::CREATE:
+                            $label = (string) t('@verb_time any @bundle @entityType is created', $args);
+                            break;
+                        case TopicInterface::UPDATE:
+                            $label = (string) t('@verb any @bundles @entityType is updated', $args);
+                            break;
+                        case TopicInterface::DELETE:
+                            $label = (string) t('@verb_time any @bundle @entityType is deleted', $args);
+                            break;
+                        case TopicInterface::PUBLISH:
+                            $label = (string) t('@verb_time any @bundle @entityType is published', $args);
+                            break;
+                        case TopicInterface::UNPUBLISH:
+                            $label = (string) t('@verb_time any @bundle @entityType is unpublished', $args);
+                            break;
+                        case TopicInterface::COMMENT:
+                            $label = (string) t('@verb comments on all @bundle @entityTypes', $args);
+                            break;
+                    }
+                } else if ($subscriptionMode == 1){ // Individual Entity Subscription
+                    switch ($topic->id()) {
+                        case TopicInterface::CREATE:
+                            $label = (string) t('@verb_time "@title" is created', $args);
+                            break;
+                        case TopicInterface::UPDATE:
+                            $label = (string) t('@verb_time "@title" is updated', $args);
+                            break;
+                        case TopicInterface::DELETE:
+                            $label = (string) t('@verb_time "@title" is deleted', $args);
+                            break;
+                        case TopicInterface::PUBLISH:
+                            $label = (string) t('@verb_time "@title" is published', $args);
+                            break;
+                        case TopicInterface::UNPUBLISH:
+                            $label = (string) t('@verb_time "@title" is unpublished', $args);
+                            break;
+                        case TopicInterface::COMMENT:
+                            $label = (string) t('@verb all comments on "@title"', $args);
+                            break;
+                    }
+                } else if ($subscriptionMode == 2){ // Related Entity Subscription
+                    switch ($topic->id()) {
+                        case TopicInterface::CREATE:
+                            $label = (string) t('@verb_time content related to "@title" is created', $args);
+                            break;
+                        case TopicInterface::UPDATE:
+                            $label = (string) t('@verb_time content related to "@title" is updated', $args);
+                            break;
+                        case TopicInterface::DELETE:
+                            $label = (string) t('@verb_time content related to "@title" is deleted', $args);
+                            break;
+                        case TopicInterface::PUBLISH:
+                            $label = (string) t('@verb content related to "@title"', $args);
+                            break;
+                        case TopicInterface::UNPUBLISH:
+                            $label = (string) t('@verb_time content related to "@title" is unpublished', $args);
+                            break;
+                        case TopicInterface::COMMENT:
+                            $label = (string) t('@verb comments related to "@title"', $args);
+                            break;
+                    }
+                } else { // subscriptionMode = something other than 0 (Entity Type Subscriptions), 1 (Individual Entity Subscriptions), or 2 (Related Content Subscriptions)
+                    //Add Switch Statement here if needed
+                } // end Subscription Modes
+            }            
+            else if ($entityBundle == 'study'){ // labels for the forum Content Entity Bundle
+                $label = (string) t('@verb_darwin', $args);
+            }
+        } else if ($entityType == 'taxonomy_term'){
+            /* 
+             * DLO: This block is for targeting taxonomy terms.
+             * Some sites want users to be able to subscribe whenever there are updates to a taxonomy term.
+             */ 
+            if ($entityBundle == 'forums'){
+                // Targets Drupal Forum taxonomy terms 
+                if ($subscriptionMode == 0){ // Entity Type Subscription
+                    switch ($topic->id()) {
+                        case TopicInterface::CREATE:
+                            $label = (string) t('@verb_time new @entityTypes are created', $args);
+                            break;
+                        case TopicInterface::UPDATE:
+                            $label = (string) t('@verb_time @entityTypes are updated', $args);
+                            break;
+                        case TopicInterface::DELETE:
+                            $label = (string) t('@verb_time @entityTypes are deleted', $args);
+                            break;
+                        case TopicInterface::PUBLISH:
+                            $label = (string) t('@verb all @entityType topics', $args);
+                            break;
+                        case TopicInterface::UNPUBLISH:
+                            $label = (string) t('@verb_time @entityTypes are unpublished', $args);
+                            break;
+                        case TopicInterface::COMMENT:
+                            $label = (string) t('@verb comments on all @entityTypes', $args);
+                            break;
+                    }
+                } else if ($subscriptionMode == 1){ // Individual Entity Subscription
+                    switch ($topic->id()) {
+                        case TopicInterface::CREATE:
+                            $label = (string) t('@verb_time @title topics are created', $args);
+                            break;
+                        case TopicInterface::UPDATE:
+                            $label = (string) t('@verb_time @title topics are updated', $args);
+                            break;
+                        case TopicInterface::DELETE:
+                            $label = (string) t('@verb_time @title topics are deleted', $args);
+                            break;
+                        case TopicInterface::PUBLISH:
+                            $label = (string) t('@verb all topics in the @title @entityType', $args);
+                            break;
+                        case TopicInterface::UNPUBLISH:
+                            $label = (string) t('@verb_time @title topics are unpublished', $args);
+                            break;
+                        case TopicInterface::COMMENT:
+                            $label = (string) t('@verb all comments in the @title @entityType', $args);
+                            break;
+                    }
+                } else if ($subscriptionMode == 2){ // Related Entity Subscription
+                    switch ($topic->id()) {
+                        case TopicInterface::CREATE:
+                            $label = (string) t('@verb_time content related to @title is created', $args);
+                            break;
+                        case TopicInterface::UPDATE:
+                            $label = (string) t('@verb)time content related to @title is updated', $args);
+                            break;
+                        case TopicInterface::DELETE:
+                            $label = (string) t('@verb_time content related to @title is deleted', $args);
+                            break;
+                        case TopicInterface::PUBLISH:
+                            $label = (string) t('@verb content related to the @title @entityType', $args);
+                            break;
+                        case TopicInterface::UNPUBLISH:
+                            $label = (string) t('@verb_time content related to @title is unpublished', $args);
+                            break;
+                        case TopicInterface::COMMENT:
+                            $label = (string) t('@verb all comments related to the @title', $args);
+                            break;
+                    }
+                } else { // subscriptionMode = something other than 0 (Entity Type Subscriptions), 1 (Individual Entity Subscriptions), or 2 (Related Content Subscriptions)
+                    //Add switch statement here if needed
+                } // end Subscription Modes
+            }
+            /*
+             * You can add "else if" statements to target other bundles
+             * or a general "else" statement to act as a catch-all for all other taxonomy bundles
+             * Just create the else at the end if the ($entityBundle == 'forums') if statement
+             * and then copy the whole if ($subscriptionMode == 0) series of statements and their contents
+             * into the new statement
+             */
+        } else {
+            /*
+             * This is a catchall for all other Content Entity Types
+             * Use the framework below to build out what you need, while taking from the sections above
+             */
+
+            /*
+            if ($entityBundle == ''){
+                if ($subscriptionMode == 0){ // Entity Type Subscription
+                    //Add switch statement here if needed
+                } else if ($subscriptionMode == 1){ // Individual Entity Subscription
+                    //Add switch statement here if needed
+                } else if ($subscriptionMode == 2){ // Related Entity Subscription
+                    //Add switch statement here if needed
+                } else { // subscriptionMode = something other than 0 (Entity Type Subscriptions), 1 (Individual Entity Subscriptions), or 2 (Related Content Subscriptions)
+                    //Add switch statement here if needed
+                } // end Subscription Modes
+            } // end entityBundle if statement
+            */
+        } // end entityType if statement
+    } 
+    else if ($subscriptionMode === SubscriptionOperation::SUBSCRIPTION_MODE_ENTITY_TYPE) {
+        // For all other Entity Type subscriptions
+        // Let's use much shorter labels for operations on entity types.
+        if ($entityHasBundle) {
+            $label = (string) t('@verb all events on @bundle entities', $args);
+        }
+        else {
+            $label = (string) t('@verb all events on @entityType @bundle', $args);
+        }
+    } 
+    else if ($subscriptionMode === SubscriptionOperation::SUBSCRIPTION_MODE_RELATED_ENTITY) {
+        // For all other Related Entity Subscriptions
+        $label = (string) t('@verb all events on related content to @title', $args);
+    }
+}
