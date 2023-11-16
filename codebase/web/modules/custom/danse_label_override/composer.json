@@ -1,0 +1,34 @@
+{
+    "name": "drupal/danse_label_override",
+    "type": "drupal-module",
+    "description": "Modifies the default DANSE Labels so that they can be customized through the code in the .module file of this module.",
+    "support": {
+        "issues": "https://drupal.org/project/issues/danse_label_override",
+        "source": "https://drupal.org/project/danse_label_override"
+    },
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Rex Barkdoll (rexbarkdoll)",
+            "homepage": "https://www.drupal.org/u/rexbarkdoll",
+            "role": "Maintainer"
+        }
+    ],
+    "homepage": "https://drupal.org/project/danse_label_override",
+    "keywords": [
+        "Drupal",
+        "Notification",
+        "Subscription",
+        "Label"
+    ],
+    "require": {
+        "php": ">=7.2"
+    },
+    "extra": {
+        "drush": {
+            "services": {
+                "drush.services.yml": "^9 | ^10"
+            }
+        }
+    }
+}

@@ -76,7 +76,11 @@ islandora_workbench
 jwt
 syn-keys
 codebase/vendor/*
+
 codebase/web/*
+# make sure we exclude the cutom module from gitignore
+!/codebase/web/modules/custom/
+
 !codebase/web/custom-robots.txt
 !codebase/web/sites/default/files/darwin-logo.jpeg
 
