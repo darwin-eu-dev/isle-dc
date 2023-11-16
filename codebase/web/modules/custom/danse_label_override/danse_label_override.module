@@ -169,26 +169,7 @@ function danse_label_override_danse_content_topic_operation_label_alter(string &
                         break;
                 }                
             }
-        } else {
-            /*
-             * This is a catchall for all other Content Entity Types
-             * Use the framework below to build out what you need, while taking from the sections above
-             */
-
-            /*
-            if ($entityBundle == ''){
-                if ($subscriptionMode == 0){ // Entity Type Subscription
-                    //Add switch statement here if needed
-                } else if ($subscriptionMode == 1){ // Individual Entity Subscription
-                    //Add switch statement here if needed
-                } else if ($subscriptionMode == 2){ // Related Entity Subscription
-                    //Add switch statement here if needed
-                } else { // subscriptionMode = something other than 0 (Entity Type Subscriptions), 1 (Individual Entity Subscriptions), or 2 (Related Content Subscriptions)
-                    //Add switch statement here if needed
-                } // end Subscription Modes
-            } // end entityBundle if statement
-            */
-        } // end entityType if statement
+        }
     } 
     else if ($subscriptionMode === SubscriptionOperation::SUBSCRIPTION_MODE_ENTITY_TYPE) {
         // For all other Entity Type subscriptions
