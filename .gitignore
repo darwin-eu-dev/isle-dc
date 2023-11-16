@@ -77,10 +77,7 @@ jwt
 syn-keys
 codebase/vendor/*
 
-# ignore all the codebase/web folder but don't ignore the custom modules
-
 codebase/web/*
-
 # make sure we exclude the cutom module from gitignore
 !/codebase/web/modules/custom/
 
