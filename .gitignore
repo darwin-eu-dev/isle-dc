@@ -78,13 +78,11 @@ syn-keys
 codebase/vendor/*
 
 # ignore all the codebase/web folder but don't ignore the custom modules
-!codebase/web/
+
 codebase/web/*
-!codebase/web/modules/
-codebase/web/modules/*
+
 # make sure we exclude the cutom module from gitignore
 !/codebase/web/modules/custom/
-!/codebase/web/modules/custom/danse_label_override/
 
 !codebase/web/custom-robots.txt
 !codebase/web/sites/default/files/darwin-logo.jpeg
