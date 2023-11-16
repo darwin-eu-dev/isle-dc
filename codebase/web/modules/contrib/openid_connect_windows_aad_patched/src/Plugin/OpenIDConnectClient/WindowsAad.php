@@ -2,11 +2,24 @@
 
 namespace Drupal\openid_connect_windows_aad\Plugin\OpenIDConnectClient;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
+use Drupal\key\KeyRepositoryInterface;
+use Drupal\openid_connect\OpenIDConnectAutoDiscover;
+use Drupal\openid_connect\OpenIDConnectStateTokenInterface;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
 use Drupal\Core\Url;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use Lcobucci\JWT\Encoding\JoseEncoder;
+use Lcobucci\JWT\Token\Parser;
+use Lcobucci\JWT\Token\Plain;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Generic OpenID Connect client.
@@ -22,38 +35,107 @@ use GuzzleHttp\Exception\RequestException;
 class WindowsAad extends OpenIDConnectClientBase {
 
   /**
-   * Overrides OpenIDConnectClientBase::settingsForm().
+   * The key repository interface.
    *
-   * @param array $form
-   *   Windows AAD form array containing form elements.
-   * @param Drupal\Core\Form\FormStateInterface $form_state
-   *   Submitted form values.
-   *
-   * @return array
-   *   Renderable form array with form elements.
+   * @var \Drupal\key\KeyRepositoryInterface
    */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+  protected $keyRepository;
+
+  protected bool $isB2Cv2 = FALSE;
+
+  /**
+   * The constructor.
+   *
+   * @param array $configuration
+   *   The plugin configuration.
+   * @param string $plugin_id
+   *   The plugin identifier.
+   * @param mixed $plugin_definition
+   *   The plugin definition.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
+   * @param \GuzzleHttp\ClientInterface $http_client
+   *   The http client.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
+   *   The logger factory.
+   * @param \Drupal\key\KeyRepositoryInterface $key_repository
+   *   The Key Repository interface.
+   */
+  public function __construct(array $configuration, string $plugin_id, $plugin_definition, RequestStack $request_stack, ClientInterface $http_client, LoggerChannelFactoryInterface $logger_factory, TimeInterface $datetime_time, KillSwitch $page_cache_kill_switch, LanguageManagerInterface $language_manager, OpenIDConnectStateTokenInterface $state_token, OpenIDConnectAutoDiscover $auto_discover, KeyRepositoryInterface $key_repository) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $request_stack, $http_client, $logger_factory, $datetime_time, $page_cache_kill_switch, $language_manager, $state_token, $auto_discover);
+    $this->keyRepository = $key_repository;
+
+    $endpoint = $this->getEndpoints()['authorization'];
+    $this->isB2Cv2 = str_contains($endpoint, '.b2clogin.com/') && str_ends_with($endpoint, '/oauth2/v2.0/authorize');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('request_stack'),
+      $container->get('http_client'),
+      $container->get('logger.factory'),
+      $container->get('datetime.time'),
+      $container->get('page_cache_kill_switch'),
+      $container->get('language_manager'),
+      $container->get('openid_connect.state_token'),
+      $container->get('openid_connect.autodiscover'),
+      $container->get('key.repository')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function defaultConfiguration(): array {
+    return [
+      'authorization_endpoint_wa' => '',
+      'token_endpoint_wa' => '',
+      'userinfo_endpoint_wa' => '',
+      'map_ad_groups_to_roles' => FALSE,
+      'group_mapping' => [
+        'method' => 0,
+        'mappings' => '',
+        'strict' => FALSE,
+      ],
+      'userinfo_graph_api_wa' => 0,
+      'userinfo_graph_api_use_other_mails' => FALSE,
+      'userinfo_update_email' => FALSE,
+      'hide_email_address_warning' => FALSE,
+      'end_session_endpoint' => '',
+      'subject_key' => 'sub',
+    ] + parent::defaultConfiguration();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildConfigurationForm($form, $form_state);
-    $form['enable_single_sign_out'] = [
-      '#title' => $this->t('Enable Single Sign Out'),
-      '#type' => 'checkbox',
-      '#default_value' => !empty($this->configuration['enable_single_sign_out']) ? $this->configuration['enable_single_sign_out'] : false,
-      '#description' => $this->t('Checking this option will enable Single Sign Out to occur so long as the logout url has been set to (http(s)://yoursite.com/openid-connect/windows_aad/signout) in your Azure AD registered app settings. If a user logs out of the Drupal app then they will be logged out of their SSO session elsewhere as well. Conversely if a user signs out of their SSO account elsewhere, such as Office 365, they will also be logged out of this app.'),
-    ];
     $form['authorization_endpoint_wa'] = [
       '#title' => $this->t('Authorization endpoint'),
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#default_value' => $this->configuration['authorization_endpoint_wa'],
     ];
     $form['token_endpoint_wa'] = [
       '#title' => $this->t('Token endpoint'),
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#default_value' => $this->configuration['token_endpoint_wa'],
     ];
+    $form['end_session_endpoint'] = [
+      '#title' => $this->t('End Session endpoint'),
+      '#type' => 'url',
+      '#default_value' => $this->configuration['end_session_endpoint'],
+    ];
     $form['map_ad_groups_to_roles'] = [
-      '#title' => $this->t('Map user\'s AD groups to Drupal roles'),
+      '#title' => $this->t("Map user's AD groups to Drupal roles"),
       '#type' => 'checkbox',
-      '#default_value' => !empty($this->configuration['map_ad_groups_to_roles']) ? $this->configuration['map_ad_groups_to_roles'] : '',
+      '#default_value' => $this->configuration['map_ad_groups_to_roles'],
       '#description' => $this->t('Enable this to configure Drupal user role assignment based on AD group membership.'),
     ];
     // AD group mapping configuration field set.
@@ -62,7 +144,7 @@ class WindowsAad extends OpenIDConnectClientBase {
       '#title' => $this->t('AD group mapping options'),
       '#states' => [
         'invisible' => [
-          ':input[name="clients[windows_aad][settings][map_ad_groups_to_roles]"]' => ['checked' => FALSE],
+          ':input[name="settings[map_ad_groups_to_roles]"]' => ['checked' => FALSE],
         ],
       ],
     ];
@@ -73,13 +155,13 @@ class WindowsAad extends OpenIDConnectClientBase {
         0 => $this->t('Automatic (AD group names or ids identically match Drupal role names)'),
         1 => $this->t('Manual (Specify which AD groups map to which Drupal roles)'),
       ],
-      '#default_value' => !empty($this->configuration['group_mapping']['method']) ? $this->configuration['group_mapping']['method'] : 0,
-      '#description' => $this->t('Note: For name mapping to function the Azure AD Graph or Windows Graph APIs must be selected as a User endpoint. Otherwise only mapping based on Group Object IDs can be used.'),
+      '#default_value' => $this->configuration['group_mapping']['method'],
+      '#description' => $this->t('Note: For name mapping to function the Azure AD Graph or Microsoft Graph APIs must be selected as a User endpoint. Otherwise only mapping based on Group Object IDs can be used.'),
     ];
     $form['group_mapping']['mappings'] = [
       '#title' => $this->t('Manual mappings'),
       '#type' => 'textarea',
-      '#default_value' => (isset($this->configuration['group_mapping']) && isset($this->configuration['group_mapping']['mappings'])) ? $this->configuration['group_mapping']['mappings'] : '',
+      '#default_value' => $this->configuration['group_mapping']['mappings'],
       '#description' => $this->t('Add one role|group(s) mapping per line. Role and Group should be separated by "|". Multiple groups can be mapped to a single role on the same line using ";" to separate the groups. Ideally you should use the group id since it is immutable, but the title (displayName) may also be used.'),
       '#states' => [
         'invisible' => [
@@ -90,18 +172,19 @@ class WindowsAad extends OpenIDConnectClientBase {
     $form['group_mapping']['strict'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Only allow users to have roles that map to an AD group they are a member of.'),
-      '#default_value' => !empty($this->configuration['group_mapping']['strict']) ? $this->configuration['group_mapping']['strict'] : '',
+      '#default_value' => $this->configuration['group_mapping']['strict'],
       '#description' => $this->t('Removes roles from a Drupal user account that do not map to AD groups the user is a member of. Also, with this enabled you can not grant unmapped roles to a user through the usual Drupal user/role interface such as editing a user account. Note: Only affects users with connected AD accounts.'),
     ];
     $form['userinfo_graph_api_wa'] = [
       '#title' => $this->t('User info endpoint configuration'),
       '#type' => 'radios',
-      '#default_value' => !empty($this->configuration['userinfo_graph_api_wa']) ? $this->configuration['userinfo_graph_api_wa'] : 0,
+      '#default_value' => $this->configuration['userinfo_graph_api_wa'],
       '#options' => [
         0 => $this->t('Alternate or no user endpoint'),
         1 => $this->t('Azure AD Graph API (v1.6)'),
-        2 => $this->t('Windows Graph API (v1.0)')],
-      '#description' => $this->t('Most user/group info can be returned in the access token response through proper claims/permissions configuration for your app registration within Azure AD. If this is the case for your setup then you can choose "Alternate or no user endpoint" and leave blank the dependent "Alternate userinfo endpoint" text box. Otherwise you can choose to use the Azure AD graph API or the Windows Graph API (recommended) to retrieve user and/or graph info.'),
+        2 => $this->t('Microsoft Graph API (v1.0)'),
+      ],
+      '#description' => $this->t('Most user/group info can be returned in the access token response through proper claims/permissions configuration for your app registration within Azure AD. If this is the case for your setup then you can choose "Alternate or no user endpoint" and leave blank the dependent "Alternate userinfo endpoint" text box. Otherwise you can choose to use the Azure AD graph API or the Microsoft Graph API (recommended) to retrieve user and/or graph info.'),
     ];
     $form['userinfo_endpoint_wa'] = [
       '#title' => $this->t('Alternate UserInfo endpoint'),
@@ -116,7 +199,7 @@ class WindowsAad extends OpenIDConnectClientBase {
     $form['userinfo_graph_api_use_other_mails'] = [
       '#title' => $this->t('Use Graph API otherMails property for email address'),
       '#type' => 'checkbox',
-      '#default_value' => !empty($this->configuration['userinfo_graph_api_use_other_mails']) ? $this->configuration['userinfo_graph_api_use_other_mails'] : '',
+      '#default_value' => $this->configuration['userinfo_graph_api_use_other_mails'],
       '#description' => $this->t('Find the first occurrence of an email address in the Graph otherMails property and use this as email address.'),
       '#states' => [
         'visible' => [
@@ -127,68 +210,104 @@ class WindowsAad extends OpenIDConnectClientBase {
     $form['userinfo_update_email'] = [
       '#title' => $this->t('Update email address in user profile'),
       '#type' => 'checkbox',
-      '#default_value' => !empty($this->configuration['userinfo_update_email']) ? $this->configuration['userinfo_update_email'] : '',
+      '#default_value' => $this->configuration['userinfo_update_email'],
       '#description' => $this->t('If email address has been changed for existing user, save the new value to the user profile.'),
     ];
     $form['hide_email_address_warning'] = [
       '#title' => $this->t('Hide missing email address warning'),
       '#type' => 'checkbox',
-      '#default_value' => !empty($this->configuration['hide_email_address_warning']) ? $this->configuration['hide_email_address_warning'] : '',
+      '#default_value' => $this->configuration['hide_email_address_warning'],
       '#description' => $this->t('By default, when email address is not found, a message will appear on the screen. This option hides that message (as it might be confusing for end users).'),
+    ];
+
+    $form['client_secret'] = [
+      '#title' => $this->t('Client secret'),
+      '#type' => 'key_select',
+      '#default_value' => $this->configuration['client_secret'],
+    ];
+
+    $form['subject_key'] = [
+      '#title' => t('Subject key'),
+      '#type' => 'select',
+      '#options' => ['sub' => 'sub', 'oid' => 'oid'],
+      '#default_value' => $this->configuration['subject_key'],
+      '#description' => t('Choose which immutable token parameter to use
+as the mapping between Azure AD accounts and Drupal users.<br/>
+<ul>
+    <li>"sub" is unique per user, but varies across AD application registrations.</li>
+    <li>"oid" is unique per user and common across all applications in the same tenant.</li>
+    <li>See <a href=":url">:url</a> for further details.</li>
+  </ul>
+  <p><strong>The "oid" option, requires a patch for the openid_connect module. See issue <a href=":issue_url">:issue_url</a> for more information.</strong></p>
+  <p>The default "sub" is sufficient in most cases. However, "oid" is useful if
+  you want to use AD auth tokens to request access to other services and verify
+  the user id. For example the Microsoft Graph API does not return the sub, but
+  will return the oid in its "id" parameter. Also to sync databases between
+  environments that use different app registrations, users will not map properly
+  if "sub" is used.</p>'
+  , [
+        ':url' => 'https://learn.microsoft.com/en-us/azure/active-directory/develop/access-tokens',
+        ':issue_url' => 'https://www.drupal.org/i/3298472'
+      ]),
+      '#required' => TRUE,
+    ];
+
+    $form['front_channel_logout_url'] = [
+      '#title' => $this->t('Front-channel logout URL'),
+      '#type' => 'item',
+      '#markup' => Url::fromRoute('openid_connect_windows_aad.sso', [], [
+        'absolute' => TRUE,
+        'language' => $this->languageManager->getLanguage(LanguageInterface::LANGCODE_NOT_APPLICABLE),
+      ])->toString(),
     ];
 
     return $form;
   }
 
   /**
-   * Overrides OpenIDConnectClientBase::getEndpoints().
-   *
-   * @return array
-   *   Endpoint details with authorization endpoints, user access token and
-   *   userinfo object.
+   * {@inheritdoc}
    */
-  public function getEndpoints() {
+  public function getClientScopes(): ?array {
+    $scopes = parent::getClientScopes();
+    if ($this->configuration['subject_key'] === 'oid') {
+      $scopes[] = 'profile';
+    }
+    if ($this->isB2Cv2) {
+      $scopes[] = $this->configuration['client_id'];
+      $scopes[] = 'offline_access';
+    }
+    return array_unique($scopes);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEndpoints() : array {
     return [
       'authorization' => $this->configuration['authorization_endpoint_wa'],
       'token' => $this->configuration['token_endpoint_wa'],
       'userinfo' => $this->configuration['userinfo_endpoint_wa'],
+      'end_session' => $this->configuration['end_session_endpoint'],
     ];
   }
 
   /**
-   * Implements OpenIDConnectClientInterface::retrieveIDToken().
-   *
-   * @param string $authorization_code
-   *   A authorization code string.
-   *
-   * @return array|bool
-   *   A result array or false.
+   * {@inheritdoc}
    */
-  public function retrieveTokens($authorization_code) {
-    // Exchange `code` for access token and ID token.
-    $language_none = \Drupal::languageManager()
-      ->getLanguage(LanguageInterface::LANGCODE_NOT_APPLICABLE);
-    $redirect_uri = Url::fromRoute(
-      'openid_connect.redirect_controller_redirect',
-      [
-        'client_name' => $this->pluginId,
-      ],
-      [
-        'absolute' => TRUE,
-        'language' => $language_none,
-      ]
-    )->toString();
-    $endpoints = $this->getEndpoints();
+  protected function getRequestOptions(string $authorization_code, string $redirect_uri): array {
+    $options = parent::getRequestOptions($authorization_code, $redirect_uri);
+    $options['form_params']['client_secret'] = $this->keyRepository->getKey($this->configuration['client_secret'])->getKeyValue();
+    return $options;
+  }
 
-    $request_options = [
-      'form_params' => [
-        'code' => $authorization_code,
-        'client_id' => $this->configuration['client_id'],
-        'client_secret' => $this->configuration['client_secret'],
-        'redirect_uri' => $redirect_uri,
-        'grant_type' => 'authorization_code',
-      ],
-    ];
+  /**
+   * {@inheritdoc}
+   */
+  public function retrieveTokens(string $authorization_code): ?array {
+    // Exchange `code` for access token and ID token.
+    $redirect_uri = $this->getRedirectUrl()->toString();
+    $endpoints = $this->getEndpoints();
+    $request_options = $this->getRequestOptions($authorization_code, $redirect_uri);
 
     // Add a Graph API as resource if an option is selected.
     switch ($this->configuration['userinfo_graph_api_wa']) {
@@ -197,11 +316,13 @@ class WindowsAad extends OpenIDConnectClientBase {
         break;
 
       case 2:
-        $request_options['form_params']['resource'] = 'https://graph.microsoft.com';
+        $v2 = str_contains($endpoints['token'], '/oauth2/v2.0/');
+        if (!$v2) {
+          $request_options['form_params']['resource'] = 'https://graph.microsoft.com';
+        }
         break;
     }
 
-    /* @var \GuzzleHttp\ClientInterface $client */
     $client = $this->httpClient;
 
     try {
@@ -215,31 +336,25 @@ class WindowsAad extends OpenIDConnectClientBase {
         'refresh_token' => isset($response_data['refresh_token']) ? $response_data['refresh_token'] : FALSE,
       ];
       if (array_key_exists('expires_in', $response_data)) {
-        $tokens['expire'] = \Drupal::time()->getRequestTime() + $response_data['expires_in'];
+        $tokens['expire'] = \Drupal::time()
+            ->getRequestTime() + $response_data['expires_in'];
       }
       return $tokens;
-    }
-    catch (RequestException $e) {
+    } catch (RequestException $e) {
       $variables = [
         '@message' => 'Could not retrieve tokens',
         '@error_message' => $e->getMessage(),
       ];
       $this->loggerFactory->get('openid_connect_windows_aad')
         ->error('@message. Details: @error_message', $variables);
-      return FALSE;
     }
+    return NULL;
   }
 
   /**
-   * Implements OpenIDConnectClientInterface::retrieveUserInfo().
-   *
-   * @param string $access_token
-   *   An access token string.
-   *
-   * @return array|bool
-   *   A result array or false.
+   * {@inheritdoc}
    */
-  public function retrieveUserInfo($access_token) {
+  public function retrieveUserInfo(string $access_token): ?array {
 
     // Determine if we use Graph API or default O365 Userinfo as this will
     // affect the data we collect and use in the Userinfo array.
@@ -258,18 +373,44 @@ class WindowsAad extends OpenIDConnectClientBase {
           $userinfo = $this->buildUserinfo($access_token, $endpoints['userinfo'], 'upn', 'email');
         }
         else {
-          $userinfo = array();
+          $userinfo = [];
         }
         break;
     }
 
+    // Azure AD B2C does not support user-info endpoints, decode everything
+    // retrieve everything from access_token.
+    if ($this->isB2Cv2 && $userinfo === []) {
+      $parser = new Parser(new JoseEncoder());
+      $token = $parser->parse($access_token);
+      if ($token instanceof Plain) {
+        $userinfo = $token->claims()->all();
+        if (!isset($userinfo['email']) && isset($userinfo['emails'][0])) {
+          $userinfo['email'] = $userinfo['emails'][0];
+        }
+      }
+    }
+
     // If AD group to Drupal role mapping has been enabled then attach group
     // data from a graph API if configured to do so.
-    if (!empty($this->configuration['map_ad_groups_to_roles'])) {
+    if ($this->configuration['map_ad_groups_to_roles']) {
       $userinfo['groups'] = $this->retrieveGroupInfo($access_token);
     }
 
     return $userinfo;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function usesUserInfo(): bool {
+    if ($this->isB2Cv2) {
+      return  TRUE;
+    }
+    return match ($this->configuration['userinfo_graph_api_wa']) {
+      1, 2 => TRUE,
+      default => !empty($this->getEndpoints()['userinfo']),
+    };
   }
 
   /**
@@ -307,14 +448,14 @@ class WindowsAad extends OpenIDConnectClientBase {
       // Profile Information.
       $profile_data = json_decode($response_data, TRUE);
       $profile_data['name'] = $profile_data[$name];
-      $profile_data['mail'] = $profile_data['email'];
+	  $profile_data['mail'] = $profile_data['email'];
 
       // Azure provides 'mail' for userinfo vs email.
       if (!isset($profile_data['mail'])) {
         // See if we have the Graph otherMails property and use it if available,
         // if not, add the principal name as email instead, so Drupal still will
         // create the user anyway.
-        if ($this->configuration['userinfo_graph_api_use_other_mails'] == 1) {
+        if ($this->configuration['userinfo_graph_api_use_other_mails']) {
           if (!empty($profile_data['otherMails'])) {
             // Use first occurrence of otherMails attribute.
             $profile_data['email'] = current($profile_data['otherMails']);
@@ -322,8 +463,9 @@ class WindowsAad extends OpenIDConnectClientBase {
         }
         else {
           // Show message to user.
-          if ($this->configuration['hide_email_address_warning'] <> 1) {
-            \Drupal::messenger()->addWarning(t('Email address not found in UserInfo. Used username instead, please check this in your profile.'));
+          if (!$this->configuration['hide_email_address_warning']) {
+            \Drupal::messenger()
+              ->addWarning(t('Email address not found in UserInfo. Used username instead, please check this in your profile.'));
           }
           // Write watchdog warning.
           $variables = ['@user' => $profile_data[$upn]];
@@ -339,8 +481,7 @@ class WindowsAad extends OpenIDConnectClientBase {
         $profile_data['email'] = $profile_data['mail'];
       }
 
-    }
-    catch (RequestException $e) {
+    } catch (RequestException $e) {
       $variables = [
         '@error_message' => $e->getMessage(),
       ];
@@ -373,7 +514,7 @@ class WindowsAad extends OpenIDConnectClientBase {
         break;
 
       default:
-        $uri = false;
+        $uri = FALSE;
         break;
     }
 
@@ -391,11 +532,20 @@ class WindowsAad extends OpenIDConnectClientBase {
       try {
         $response = $client->get($uri, $options);
         $response_data = (string) $response->getBody();
+        $response_data = json_decode($response_data, TRUE);
 
         // Group Information.
-        $group_data = json_decode($response_data, TRUE);
-      }
-      catch (RequestException $e) {
+        $group_data = $response_data['value'] ?? [];
+
+        // Handle pagination for graph.microsoft.com.
+        while (isset($response_data['@odata.nextLink'])) {
+          $response = $client->get($response_data['@odata.nextLink'], $options);
+          $response_data = (string) $response->getBody();
+          $response_data = json_decode($response_data, TRUE);
+
+          $group_data = array_merge($group_data, $response_data['value'] ?? []);
+        }
+      } catch (RequestException $e) {
         $variables = [
           '@api' => $uri,
           '@error_message' => $e->getMessage(),
@@ -407,4 +557,5 @@ class WindowsAad extends OpenIDConnectClientBase {
     // Return group information or an empty array.
     return $group_data;
   }
+
 }

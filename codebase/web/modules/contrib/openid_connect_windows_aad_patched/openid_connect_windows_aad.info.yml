@@ -4,12 +4,7 @@ package: Other
 
 dependencies:
   - openid_connect:openid_connect
-  
-type: module
-core: 8.x
-core_version_requirement: ^8 || ^9
+  - key:key
 
-# Information added by Drupal.org packaging script on 2021-11-16
-version: '8.x-1.4_patched'
-project: 'openid_connect_windows_aad'
-datestamp: 1637094757
+type: module
+core_version_requirement: ^9 || ^10

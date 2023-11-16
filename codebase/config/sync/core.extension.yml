@@ -40,6 +40,7 @@ module:
   encrypt: 0
   entity: 0
   eva: 0
+  externalauth: 0
   facets: 0
   facets_summary: 0
   features: 0

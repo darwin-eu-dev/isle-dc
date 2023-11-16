@@ -21,12 +21,12 @@ Modifications from base image
 src/Plugin/OpenIDConnectClient
 
 Change the login name field to use email instead of name (the Azure AD name contains invalid comma character)
--258 $userinfo = $this->buildUserinfo($access_token, $endpoints['userinfo'], 'upn', 'name');
-+258 $userinfo = $this->buildUserinfo($access_token, $endpoints['userinfo'], 'upn', 'email');
+-373 $userinfo = $this->buildUserinfo($access_token, $endpoints['userinfo'], 'upn', 'name');
++373 $userinfo = $this->buildUserinfo($access_token, $endpoints['userinfo'], 'upn', 'email');
 as per https://www.drupal.org/project/openid_connect_windows_aad/issues/3303932
 
 Copy email claim into mail claim. 'email' is the correct name in latest Azure AD
-+310 $profile_data['mail'] = $profile_data['email'];
++451 $profile_data['mail'] = $profile_data['email'];
 as per https://www.drupal.org/project/openid_connect_windows_aad/issues/3189492
 
 Setup

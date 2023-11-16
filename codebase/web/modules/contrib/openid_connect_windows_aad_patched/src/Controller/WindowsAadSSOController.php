@@ -2,14 +2,15 @@
 
 namespace Drupal\openid_connect_windows_aad\Controller;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\externalauth\AuthmapInterface;
+use Drupal\openid_connect\Entity\OpenIDConnectClientEntity;
+use Drupal\openid_connect\OpenIDConnectSession;
+use Drupal\openid_connect_windows_aad\Plugin\OpenIDConnectClient\WindowsAad;
 use Psr\Log\LoggerInterface;
-use Drupal\Component\Utility\UrlHelper;
-use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Routing\TrustedRedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Drupal\openid_connect\OpenIDConnectAuthmap;
 
 /**
  * Controller routines for Azure AD single sign out user routes.
@@ -24,8 +25,9 @@ class WindowsAadSSOController extends ControllerBase {
   protected $logger;
 
   /*
-   * @param \Drupal\openid_connect\OpenIDConnectAuthmap $authmap
-   *   The authmap storage.
+   * The authmap storage.
+   *
+   * @var \Drupal\externalauth\AuthmapInterface $authmap
    */
   protected $authmap;
 
@@ -34,10 +36,13 @@ class WindowsAadSSOController extends ControllerBase {
    *
    * @param \Psr\Log\LoggerInterface $logger
    *   A logger instance.
+   * @param \Drupal\externalauth\AuthmapInterface $authmap
    */
-  public function __construct(LoggerInterface $logger, OpenIDConnectAuthmap $authmap) {
+  public function __construct(LoggerInterface $logger, AuthmapInterface $authmap, OpenIDConnectSession $openIDConnectSession, ConfigFactoryInterface $configFactory) {
     $this->logger = $logger;
     $this->authmap = $authmap;
+    $this->openIDConnectSession = $openIDConnectSession;
+    $this->configFactory = $configFactory;
   }
 
   /**
@@ -46,7 +51,9 @@ class WindowsAadSSOController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('logger.factory')->get('openid_connect_windows_aad'),
-      $container->get('openid_connect.authmap')
+      $container->get('externalauth.authmap'),
+      $container->get('openid_connect.session'),
+      $container->get('config.factory'),
     );
   }
 
@@ -60,23 +67,29 @@ class WindowsAadSSOController extends ControllerBase {
    *   Either a 200 or 403 response without any content.
    */
   public function signout() {
-    $configuration = $this->config('openid_connect.settings.windows_aad');
-    $settings = $configuration->get('settings');
-    $enabled = $configuration->get('enabled');
-    // Check that the windows_aad client is enabled and so is SSOut.
-    if ($enabled && isset($settings['enable_single_sign_out']) && $settings['enable_single_sign_out']) {
-      // Ensure the user has a connected account.
-      $user = \Drupal::currentUser();
-      $connected_accounts = $this->authmap->getConnectedAccounts($user);
-      $connected = ($connected_accounts && isset($connected_accounts['windows_aad']));
-      $logged_in = $user->isAuthenticated();
-      // Only log the user out if they are logged in and have a connected
-      // account. Return a 200 OK in any case since all is good.
-      if ($logged_in && $connected) {
-        user_logout();
-      }
+    if ($this->currentUser()->isAnonymous()) {
       return new Response('', Response::HTTP_OK);
     }
+
+    $config = $this->configFactory->get('openid_connect.settings');
+    $mapped_users = $this->authmap->getAll($this->currentUser->id());
+    if (is_array($mapped_users) & !empty($mapped_users)) {
+      foreach (array_keys($mapped_users) as $key) {
+        // strlen('openid_connect.') = 15.
+        $client_name = substr($key, 15);
+        $client = OpenIDConnectClientEntity::load($client_name);
+        if ($client->getPlugin() instanceof WindowsAad) {
+          $endpoints = $client->getPlugin()->getEndpoints();
+          // Destroy session if provider supports it.
+          $end_session_enabled = $config->get('end_session_enabled') ?? FALSE;
+          if ($end_session_enabled && !empty($endpoints['end_session'])) {
+            user_logout();
+            return new Response('', Response::HTTP_OK);
+          }
+        }
+      }
+    }
+
     // Likely a misconfiguration since SSOut attempts should not be made to the
     // logout uri unless it has been configured in Azure AD; if you had
     // configured it in Azure AD then you should have also enabled SSOut in the
@@ -86,48 +99,4 @@ class WindowsAadSSOController extends ControllerBase {
     return new Response('', Response::HTTP_FORBIDDEN);
   }
 
-  /**
-   * Logs the current user out. Overrides UserController::logout().
-   *
-   * If Single Sign out has been enabled in OpenID Connect Windows AAD config
-   * then redirect the user when they try to log out of the app to the Windows
-   * single sign out endpoint. They will be logged out of their other SSO apps.
-   *
-   * @return \Symfony\Component\HttpFoundation\RedirectResponse
-   *   A redirection to either the home page or to Azure AD Single Sign out.
-   */
-  public function logout() {
-    $connected = FALSE;
-    $configuration = $this->config('openid_connect.settings.windows_aad');
-    $settings = $configuration->get('settings');
-    // Check that the windows_aad client is enabled and so is SSOut.
-    $enabled = (($configuration->get('enabled')) && isset($settings['enable_single_sign_out']) && $settings['enable_single_sign_out']);
-
-    // Check for a connected account before we log the Drupal user out.
-    if ($enabled) {
-      // Ensure the user has a connected account.
-      $user = \Drupal::currentUser();
-      $connected_accounts = $this->authmap->getConnectedAccounts($user);
-      $connected = ($connected_accounts && isset($connected_accounts['windows_aad']));
-    }
-
-    user_logout();
-    if ($connected) {
-      // Redirect back to the home page once signed out.
-      $redirect_uri = Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString(TRUE)->getGeneratedUrl();
-      $query_parameters = [
-        'post_logout_redirect_uri' => $redirect_uri,
-      ];
-      $query = UrlHelper::buildQuery($query_parameters);
-
-      $response = new TrustedRedirectResponse('https://login.microsoftonline.com/common/oauth2/v2.0/logout?' . $query);
-      // We can't cache the response, since we need the user to get logged out
-      // prior to being redirected. The kill switch will prevent the page
-      // getting cached when page cache is active.
-      \Drupal::service('page_cache_kill_switch')->trigger();
-      return $response;
-    }
-    // No SSOut so do the usual thing and redirect to the front page.
-    return $this->redirect('<front>');
-  }
 }
