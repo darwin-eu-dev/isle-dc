@@ -138,88 +138,7 @@ function danse_label_override_danse_content_topic_operation_label_alter(string &
      * We begin with Comment Entities, then Content Entities, then
      * the last else if 
      */
-    if ($entity instanceof CommentInterface) {
-        // We want to change the default label for the publish and update topics
-        // on comment entites.
-        
-        if ($entityType == 'comment'){
-            // not sure what other entity types would exist in the CommentInterface, but you can check
-            if ($entityBundle == 'comment_forum'){ // target comments on forums
-                /*
-                * Inside this IF statement, we target comments in the 'comment_forum' bundle, 
-                * 'comment_forum' is the bundle's machine name
-                */
-                if ($subscriptionMode == 0){ // Entity Type Subscription
-                    switch ($topic->id()) {
-                        case TopicInterface::CREATE:
-                            $label = (string) t('@verb_time @entityTypes are created', $args);
-                            break;
-                        case TopicInterface::UPDATE:
-                            $label = (string) t('@verb all updates to @entityTypes', $args);
-                            break;
-                        case TopicInterface::DELETE:
-                            $label = (string) t('@verb_time @entityTypes are deleted', $args);
-                            break;
-                        case TopicInterface::PUBLISH:
-                            $label = (string) t('@verb all @entityTypes', $args);
-                            break;
-                        case TopicInterface::UNPUBLISH:
-                            $label = (string) t('@verb_time @entityTypes are unpublished', $args);
-                            break;
-                        // Comments doesn't have a comments option
-                    }
-                } else if ($subscriptionMode == 1){ // Individual Entity Subscription
-                    switch ($topic->id()) {
-                        case TopicInterface::CREATE:
-                            $label = (string) t('@verb_time replies to "@title" is created', $args);
-                            break;
-                        case TopicInterface::UPDATE:
-                            $label = (string) t('@verb_time replies to "@title" are updated', $args);
-                            break;
-                        case TopicInterface::DELETE:
-                            $label = (string) t('@verb_time replies to "@title" is deleted', $args);
-                            break;
-                        case TopicInterface::PUBLISH:
-                            $label = (string) t('@verb replies to "@title"', $args);
-                            break;
-                        case TopicInterface::UNPUBLISH:
-                            $label = (string) t('@verb_time replies to "@title" is unpublished', $args);
-                            break;
-                        // Comments doesn't have a comments option
-                    }
-                } else if ($subscriptionMode == 2){ // Related Entity Subscription
-                    switch ($topic->id()) {
-                        case TopicInterface::CREATE:
-                            $label = (string) t('@verb_time content related to "@title" is created', $args);
-                            break;
-                        case TopicInterface::UPDATE:
-                            $label = (string) t('@verb_time content related to "@title" is updated', $args);
-                            break;
-                        case TopicInterface::DELETE:
-                            $label = (string) t('@verb_time content related to "@title" is deleted', $args);
-                            break;
-                        case TopicInterface::PUBLISH:
-                            $label = (string) t('@verb_time content related to "@title" is published', $args);
-                            break;
-                        case TopicInterface::UNPUBLISH:
-                            $label = (string) t('@verb_time content related to "@title" is unpublished', $args);
-                            break;
-                        // Comments doesn't have a comments option, use Published to get notified of replies to comments
-                    }
-                } else { // subscriptionMode = something other than 0 (Entity Type Subscriptions), 1 (Individual Entity Subscriptions), or 2 (Related Content Subscriptions)
-                    //Add Switch Statement here if needed
-                } // end Subscription Modes
-            } // end $entityBundle == 'comment_forum' 
-            /*
-             * You can add "else if" statements to target other bundles
-             * or a general "else" statement to act as a catch-all for all other comment bundles
-             * Just create the else at the end if the comment_forum if statement
-             * and then copy the whole if ($subscriptionMode == 0) series of statements and their contents
-             * into the new statement
-             */
-        } // end
-    }
-    else if ($entity instanceof ContentEntityInterface) {
+    if ($entity instanceof ContentEntityInterface) {
         // Target Content Entities
         if ($entityType == 'node'){
             /*
@@ -228,158 +147,28 @@ function danse_label_override_danse_content_topic_operation_label_alter(string &
              * instance, from an article to a blog post. You can either use the catch-all else at the end
              * of this section, or you can call out each one like the forum example below.
              */ 
-            if ($entityBundle == 'forum'){ // labels for the forum Content Entity Bundle
-                if ($subscriptionMode == 0){ // Entity Type Subscription
-                    switch ($topic->id()) {
-                        case TopicInterface::CREATE:
-                            $label = (string) t('@verb_time any @bundle @entityType is created', $args);
-                            break;
-                        case TopicInterface::UPDATE:
-                            $label = (string) t('@verb any @bundles @entityType is updated', $args);
-                            break;
-                        case TopicInterface::DELETE:
-                            $label = (string) t('@verb_time any @bundle @entityType is deleted', $args);
-                            break;
-                        case TopicInterface::PUBLISH:
-                            $label = (string) t('@verb_time any @bundle @entityType is published', $args);
-                            break;
-                        case TopicInterface::UNPUBLISH:
-                            $label = (string) t('@verb_time any @bundle @entityType is unpublished', $args);
-                            break;
-                        case TopicInterface::COMMENT:
-                            $label = (string) t('@verb comments on all @bundle @entityTypes', $args);
-                            break;
-                    }
-                } else if ($subscriptionMode == 1){ // Individual Entity Subscription
-                    switch ($topic->id()) {
-                        case TopicInterface::CREATE:
-                            $label = (string) t('@verb_time "@title" is created', $args);
-                            break;
-                        case TopicInterface::UPDATE:
-                            $label = (string) t('@verb_time "@title" is updated', $args);
-                            break;
-                        case TopicInterface::DELETE:
-                            $label = (string) t('@verb_time "@title" is deleted', $args);
-                            break;
-                        case TopicInterface::PUBLISH:
-                            $label = (string) t('@verb_time "@title" is published', $args);
-                            break;
-                        case TopicInterface::UNPUBLISH:
-                            $label = (string) t('@verb_time "@title" is unpublished', $args);
-                            break;
-                        case TopicInterface::COMMENT:
-                            $label = (string) t('@verb all comments on "@title"', $args);
-                            break;
-                    }
-                } else if ($subscriptionMode == 2){ // Related Entity Subscription
-                    switch ($topic->id()) {
-                        case TopicInterface::CREATE:
-                            $label = (string) t('@verb_time content related to "@title" is created', $args);
-                            break;
-                        case TopicInterface::UPDATE:
-                            $label = (string) t('@verb_time content related to "@title" is updated', $args);
-                            break;
-                        case TopicInterface::DELETE:
-                            $label = (string) t('@verb_time content related to "@title" is deleted', $args);
-                            break;
-                        case TopicInterface::PUBLISH:
-                            $label = (string) t('@verb content related to "@title"', $args);
-                            break;
-                        case TopicInterface::UNPUBLISH:
-                            $label = (string) t('@verb_time content related to "@title" is unpublished', $args);
-                            break;
-                        case TopicInterface::COMMENT:
-                            $label = (string) t('@verb comments related to "@title"', $args);
-                            break;
-                    }
-                } else { // subscriptionMode = something other than 0 (Entity Type Subscriptions), 1 (Individual Entity Subscriptions), or 2 (Related Content Subscriptions)
-                    //Add Switch Statement here if needed
-                } // end Subscription Modes
-            }            
-            else if ($entityBundle == 'study'){ // labels for the forum Content Entity Bundle
-                $label = (string) t('@verb_darwin', $args);
+            if ($entityBundle == 'study'){ // labels for the forum Content Entity Bundle                
+                switch ($topic->id()) {
+                    case TopicInterface::CREATE:
+                        $label = (string) t('@verb_darwin', $args);
+                        break;
+                    case TopicInterface::UPDATE:
+                        $label = (string) t('@verb_darwin', $args);
+                        break;
+                    case TopicInterface::DELETE:
+                        $label = (string) t('@verb_darwin', $args);
+                        break;
+                    case TopicInterface::PUBLISH:
+                        $label = (string) t('@verb_darwin', $args);
+                        break;
+                    case TopicInterface::UNPUBLISH:
+                        $label = (string) t('@verb_darwin', $args);
+                        break;
+                    case TopicInterface::COMMENT:
+                        $label = (string) t('@verb_darwin', $args);
+                        break;
+                }                
             }
-        } else if ($entityType == 'taxonomy_term'){
-            /* 
-             * DLO: This block is for targeting taxonomy terms.
-             * Some sites want users to be able to subscribe whenever there are updates to a taxonomy term.
-             */ 
-            if ($entityBundle == 'forums'){
-                // Targets Drupal Forum taxonomy terms 
-                if ($subscriptionMode == 0){ // Entity Type Subscription
-                    switch ($topic->id()) {
-                        case TopicInterface::CREATE:
-                            $label = (string) t('@verb_time new @entityTypes are created', $args);
-                            break;
-                        case TopicInterface::UPDATE:
-                            $label = (string) t('@verb_time @entityTypes are updated', $args);
-                            break;
-                        case TopicInterface::DELETE:
-                            $label = (string) t('@verb_time @entityTypes are deleted', $args);
-                            break;
-                        case TopicInterface::PUBLISH:
-                            $label = (string) t('@verb all @entityType topics', $args);
-                            break;
-                        case TopicInterface::UNPUBLISH:
-                            $label = (string) t('@verb_time @entityTypes are unpublished', $args);
-                            break;
-                        case TopicInterface::COMMENT:
-                            $label = (string) t('@verb comments on all @entityTypes', $args);
-                            break;
-                    }
-                } else if ($subscriptionMode == 1){ // Individual Entity Subscription
-                    switch ($topic->id()) {
-                        case TopicInterface::CREATE:
-                            $label = (string) t('@verb_time @title topics are created', $args);
-                            break;
-                        case TopicInterface::UPDATE:
-                            $label = (string) t('@verb_time @title topics are updated', $args);
-                            break;
-                        case TopicInterface::DELETE:
-                            $label = (string) t('@verb_time @title topics are deleted', $args);
-                            break;
-                        case TopicInterface::PUBLISH:
-                            $label = (string) t('@verb all topics in the @title @entityType', $args);
-                            break;
-                        case TopicInterface::UNPUBLISH:
-                            $label = (string) t('@verb_time @title topics are unpublished', $args);
-                            break;
-                        case TopicInterface::COMMENT:
-                            $label = (string) t('@verb all comments in the @title @entityType', $args);
-                            break;
-                    }
-                } else if ($subscriptionMode == 2){ // Related Entity Subscription
-                    switch ($topic->id()) {
-                        case TopicInterface::CREATE:
-                            $label = (string) t('@verb_time content related to @title is created', $args);
-                            break;
-                        case TopicInterface::UPDATE:
-                            $label = (string) t('@verb)time content related to @title is updated', $args);
-                            break;
-                        case TopicInterface::DELETE:
-                            $label = (string) t('@verb_time content related to @title is deleted', $args);
-                            break;
-                        case TopicInterface::PUBLISH:
-                            $label = (string) t('@verb content related to the @title @entityType', $args);
-                            break;
-                        case TopicInterface::UNPUBLISH:
-                            $label = (string) t('@verb_time content related to @title is unpublished', $args);
-                            break;
-                        case TopicInterface::COMMENT:
-                            $label = (string) t('@verb all comments related to the @title', $args);
-                            break;
-                    }
-                } else { // subscriptionMode = something other than 0 (Entity Type Subscriptions), 1 (Individual Entity Subscriptions), or 2 (Related Content Subscriptions)
-                    //Add switch statement here if needed
-                } // end Subscription Modes
-            }
-            /*
-             * You can add "else if" statements to target other bundles
-             * or a general "else" statement to act as a catch-all for all other taxonomy bundles
-             * Just create the else at the end if the ($entityBundle == 'forums') if statement
-             * and then copy the whole if ($subscriptionMode == 0) series of statements and their contents
-             * into the new statement
-             */
         } else {
             /*
              * This is a catchall for all other Content Entity Types
