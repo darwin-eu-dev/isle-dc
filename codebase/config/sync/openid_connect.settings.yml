@@ -3,6 +3,14 @@ _core:
 always_save_userinfo: true
 connect_existing_users: false
 override_registration_settings: true
+end_session_enabled: true
 user_login_display: above
+redirect_login: ''
+redirect_logout: ''
 userinfo_mappings:
   timezone: zoneinfo
+role_mappings:
+  contributor: {  }
+  editor: {  }
+  administrator: {  }
+  fedoraadmin: {  }
