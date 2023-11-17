@@ -11,7 +11,7 @@ id: node.study.field_code
 field_name: field_code
 entity_type: node
 bundle: study
-label: 'Study code'
+label: 'Study Code'
 description: ''
 required: false
 translatable: false

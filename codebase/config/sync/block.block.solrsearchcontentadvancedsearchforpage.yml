@@ -35,10 +35,11 @@ settings:
     - field_related_studies_title
     - field_results_title
     - field_setting
-    - field_code_title
-    - field_study_dura
     - field_study_id
-    - field_differentiation
+    - field_study_type
+    - field_study_start_date
+    - field_study_end_date
+    - field_code_title
   context_filter: null
 visibility:
   user_status:

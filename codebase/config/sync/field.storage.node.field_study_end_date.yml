@@ -1,21 +1,21 @@
-uuid: 68abe65c-fffc-4229-a1ed-fe6bc1138041
+uuid: 494f63b2-326c-4386-9a3e-a3a06b199656
 langcode: en
 status: true
 dependencies:
   module:
-    - datetime_range
+    - datetime
     - field_permissions
     - node
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_study_dura
-field_name: field_study_dura
+id: node.field_study_end_date
+field_name: field_study_end_date
 entity_type: node
-type: daterange
+type: datetime
 settings:
   datetime_type: date
-module: datetime_range
+module: datetime
 locked: false
 cardinality: 1
 translatable: true

@@ -1,21 +1,21 @@
-uuid: bc163f86-859c-4b04-96e7-1d97833f38ea
+uuid: 8f5a5c99-9a40-4fbd-8205-5fb7b498e7c5
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_differentiation
+    - field.storage.node.field_study_end_date
     - node.type.study
   module:
-    - options
-id: node.study.field_differentiation
-field_name: field_differentiation
+    - datetime
+id: node.study.field_study_end_date
+field_name: field_study_end_date
 entity_type: node
 bundle: study
-label: 'Study Type'
+label: 'Study End Date'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: list_string
+field_type: datetime
