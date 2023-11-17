@@ -2,6 +2,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.55  | 17 Nov 2023 | AAICDDC-434 - change date format                                                    |
 | 0.0.54  | 15 Nov 2023 | AAICDDC-479 - change the text of the subscription                                   |
 | 0.0.53  | 15 Nov 2023 | AAICDDC-516 - Advanced Search fixed                                                 |
 | 0.0.52  | 14 Nov 2023 | AAICDDC-437 - GDPR check and cookie policy link change                              |
