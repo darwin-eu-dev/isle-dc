@@ -15,7 +15,6 @@ module:
   block_field: 0
   breakpoint: 0
   checklistapi: 0
-  citation_select: 0
   ckeditor5: 0
   comment: 0
   config: 0
@@ -41,6 +40,7 @@ module:
   encrypt: 0
   entity: 0
   eva: 0
+  externalauth: 0
   facets: 0
   facets_summary: 0
   features: 0
@@ -72,6 +72,7 @@ module:
   islandora_fits: 0
   islandora_iiif: 0
   islandora_image: 0
+  islandora_mirador: 0
   islandora_text_extraction: 0
   islandora_text_extraction_defaults: 0
   islandora_video: 0

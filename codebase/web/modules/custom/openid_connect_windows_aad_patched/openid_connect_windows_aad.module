@@ -1,94 +1,55 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * @file
  * OpenID Connect Windows AAD module file.
  */
 
-use Drupal\user\Entity\Role;
-use Drupal\user\UserInterface;
-use Drupal\user\RoleInterface;
 use Drupal\Core\Form\FormState;
-
-/**
- * Implements hook_admin_settings_alter().
- */
-function openid_connect_windows_aad_form_openid_connect_admin_settings_alter(&$form, FormState $form_state, $form_id) {
-  array_unshift($form['#submit'], '_openid_connect_windows_aad_form_submit_refresh_routes');
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function _openid_connect_windows_aad_form_submit_refresh_routes(&$form, FormState $form_state) {
-  $assume_disabled = FALSE;
-  try {
-    $configuration = \Drupal::config('openid_connect.settings.windows_aad');
-    $settings = $configuration->get('settings');
-    $aad_enabled = (bool) $configuration->get('enabled');
-    $sso_enabled = (isset($settings['enable_single_sign_out']) && $settings['enable_single_sign_out']);
-  }
-  catch (Exception $exception) {
-    // Not likely to happen but assume windows_aad is not enabled if it does.
-    $assume_disabled = TRUE;
-  }
-
-  // Get clients' enabled status.
-  $aad_checked = (bool) $form_state->getValue(array('clients_enabled', 'windows_aad'));
-  $sso_checked = (bool) $form_state->getValue(array('clients', 'windows_aad', 'settings', 'enable_single_sign_out'));
-
-  // Rebuild routes since we may override the user.logout route for single
-  // sign off.
-  if ((!$assume_disabled && ($aad_enabled !== $aad_checked || $sso_enabled !== $sso_checked)) || ($assume_disabled && ((isset($aad_enabled) && $aad_enabled !== $aad_checked) || $aad_checked))) {
-    \Drupal::logger('openid_connect_windows_aad')->debug('rebuild routes');
-    \Drupal::service('router.builder')->setRebuildNeeded();
-  }
-}
+use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\openid_connect\Entity\OpenIDConnectClientEntity;
+use Drupal\openid_connect_windows_aad\Plugin\OpenIDConnectClient\WindowsAad;
+use Drupal\user\Entity\Role;
+use Drupal\user\RoleInterface;
+use Drupal\user\UserInterface;
+use Lcobucci\JWT\Encoding\CannotDecodeContent;
+use Lcobucci\JWT\Encoding\JoseEncoder;
+use Lcobucci\JWT\Token\InvalidTokenStructure;
+use Lcobucci\JWT\Token\Parser;
+use Lcobucci\JWT\Token\UnsupportedHeaderFound;
 
 /**
  * Implements hook_openid_connect_userinfo_save().
  */
 function openid_connect_windows_aad_openid_connect_userinfo_save(UserInterface $account, array $context) {
-
-  if ($context['plugin_id'] !== 'windows_aad') {
+  $client = OpenIDConnectClientEntity::load($context['plugin_id']);
+  if (!($client->getPlugin() instanceof WindowsAad)) {
     return;
   }
 
-  try {
-    // Ensure windows_aad auth is enabled and configured for group mapping.
-    $configuration = \Drupal::config('openid_connect.settings.windows_aad');
-    $settings = $configuration->get('settings');
-    $aad_enabled = (bool) $configuration->get('enabled');
-    if (!$aad_enabled) {
-      return;
-    }
-  }
-  catch (Exception $exception) {
-    // Not likely to happen but assume windows_aad is not enabled if it does.
-    return;
-  }
+  $settings = $client->getPlugin()->getConfiguration();
 
-  // Update user email address on login, if the setting is enabled
-
-  if ($settings['userinfo_update_email'] === 1 && !empty($context['user_data']['email']) && $context['user_data']['email'] !== $account->getEmail()) {
+  // Update user email address on login, if the setting is enabled.
+  if ($settings['userinfo_update_email'] && !empty($context['user_data']['email']) && $context['user_data']['email'] !== $account->getEmail()) {
     $account->setEmail($context['user_data']['email']);
   }
 
-  // Map AD groups to Drupal roles, if the setting is enabled
+  // Map AD groups to Drupal roles, if the setting is enabled.
+  if ($settings['map_ad_groups_to_roles'] && (isset($context['user_data']['groups']) || isset($context['userinfo']['groups']))) {
 
-  if (!empty($settings['map_ad_groups_to_roles']) && (isset($context['user_data']['groups']) || isset($context['userinfo']['groups']['value']))) {
     $mapped_roles = $groups = [];
 
-    $user_roles = $account->getRoles(true);
+    $user_roles = $account->getRoles(TRUE);
     $all_roles = Role::loadMultiple();
-    unset($all_roles[RoleInterface::ANONYMOUS_ID]);
-    unset($all_roles[RoleInterface::AUTHENTICATED_ID]);
+    unset($all_roles[RoleInterface::ANONYMOUS_ID], $all_roles[RoleInterface::AUTHENTICATED_ID]);
 
     // Retreive a list of previously mapped roles.
     $UserData = \Drupal::service('user.data');
     $previous_mapped_roles = $UserData->get('openid_connect_windows_aad', $account->id(), 'mapped_roles');
     if (!isset($previous_mapped_roles)) {
-      $previous_mapped_roles = array();
+      $previous_mapped_roles = [];
     }
 
     // Groups found in the user_data returned from the auth request.
@@ -100,12 +61,12 @@ function openid_connect_windows_aad_openid_connect_userinfo_save(UserInterface $
 
     $group_id_key = 'id';
     // Depending on the API the group data has different keys.
-    if ($settings['userinfo_graph_api_wa'] == 1) {
+    if ($settings['userinfo_graph_api_wa'] === 1) {
       $group_id_key = 'objectId';
     }
     // Groups found in the userinfo returned from the user info request.
-    if (isset($context['userinfo']['groups']['value'])) {
-      foreach ($context['userinfo']['groups']['value'] as $group) {
+    if (isset($context['userinfo']['groups'])) {
+      foreach ($context['userinfo']['groups'] as $group) {
         $groups[$group['displayName']] = $group['displayName'];
         if (!isset($groups[$group[$group_id_key]])) {
           $groups[$group[$group_id_key]] = $group[$group_id_key];
@@ -113,7 +74,7 @@ function openid_connect_windows_aad_openid_connect_userinfo_save(UserInterface $
       }
     }
 
-    switch($settings['group_mapping']['method']) {
+    switch ($settings['group_mapping']['method']) {
       // Manual mapping.
       case 1:
         if (!empty($settings['group_mapping']['mappings'])) {
@@ -184,8 +145,7 @@ function openid_connect_windows_aad_openid_connect_userinfo_save(UserInterface $
     if ($settings['group_mapping']['strict']) {
       // Strict mode so remove any role the user has that is unmapped.
       $remove = array_diff($user_roles, $mapped_roles);
-    }
-    else {
+    } else {
       // Not so strict, only remove roles previously mapped, but nolonger are.
       $remove = array_diff($previous_mapped_roles, $mapped_roles);
     }
@@ -222,4 +182,54 @@ function openid_connect_windows_aad_openid_connect_userinfo_save(UserInterface $
 
   }
 
+}
+
+/**
+ * Implements hook_openid_connect_redirect_logout_alter().
+ */
+function openid_connect_windows_aad_openid_connect_redirect_logout_alter(array &$response, array $context) : void {
+  $client = OpenIDConnectClientEntity::load($context['client']);
+  if ($client->getPlugin() instanceof WindowsAad && $response['response'] instanceof TrustedRedirectResponse) {
+    $idToken = \Drupal::service('openid_connect.session')->retrieveIdToken();
+    if (!$idToken) {
+      return;
+    }
+    $parser = new Parser(new JoseEncoder());
+    try {
+      $token = $parser->parse($idToken);
+      $loginHint = $token->claims()->get('login_hint');
+      if ($loginHint) {
+        $response['response']->setTrustedTargetUrl($response['response']->getTargetUrl() . '&logout_hint=' . $loginHint);
+      }
+    } catch (CannotDecodeContent | InvalidTokenStructure | UnsupportedHeaderFound $e) {
+      // ID Token is incorrect, don't add alter the redirect url.
+    }
+  }
+}
+
+/**
+ * Implements hook_openid_connect_userinfo_alter().
+ */
+function openid_connect_windows_aad_openid_connect_userinfo_alter(array &$userinfo, array &$context) {
+  $plugin = OpenIDConnectClientEntity::load($context['plugin_id']);
+  if ($plugin->getPlugin() instanceof WindowsAad) {
+    $originalSubs = [
+      'sub' => $context['user_data']['sub'],
+      'oid' => $context['user_data']['oid'] ?? NULL,
+    ];
+
+    $context['user_data']['original_subs'] = $originalSubs;
+    $userinfo['original_subs'] = $originalSubs;
+
+    $subjectKey = $plugin->getPlugin()->getConfiguration()['subject_key'];
+    if ($subjectKey === 'oid') {
+      if ($originalSubs['oid'] === NULL) {
+        throw new LogicException('Missing oid in context.');
+      }
+
+      // Map oid to sub.
+      $context['user_data']['sub'] = $originalSubs['oid'];
+      $userinfo['sub'] = $originalSubs['oid'];
+    }
+  }
 }

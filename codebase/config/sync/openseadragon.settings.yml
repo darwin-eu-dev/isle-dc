@@ -73,9 +73,9 @@ default_options:
     flickMinSpeed: 120
     flickMomentum: 0.25
     pinchRotate: false
-  zoomPerClick: !!float 2
+  zoomPerClick: 2.0
   zoomPerScroll: 1.2
-  zoomPerSecond: !!float 1
+  zoomPerSecond: 1.0
   showNavigator: false
   navigatorPosition: TOP_RIGHT
   navigatorSizeRatio: 0.2
@@ -122,5 +122,5 @@ default_options:
   crossOriginPolicy: false
   ajaxWithCredentials: false
   tileSize: 256
-iiif_server: 'http://127.0.0.1:8080/cantaloupe/iiif/2'
+iiif_server: 'https://127.0.0.1:8080/cantaloupe/iiif/2'
 manifest_view: iiif_manifest

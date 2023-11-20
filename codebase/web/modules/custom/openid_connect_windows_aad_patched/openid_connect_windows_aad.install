@@ -1,0 +1,127 @@
+<?php
+
+/**
+ * @file
+ * Remove Configuration of settings form.
+ */
+
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\key\Entity\Key;
+use Drupal\openid_connect\Entity\OpenIDConnectClientEntity;
+
+/**
+ * Implements hook_uninstall().
+ */
+function openid_connect_windows_aad_uninstall() {
+  // Remove configuration.
+  Drupal::configFactory()
+    ->getEditable('openid_connect.client.windows_aad')
+    ->delete();
+}
+
+/**
+ * Implements hook_update_dependencies().
+ */
+function openid_connect_windows_aad_update_dependencies() {
+  // We want to run before openid_connect_update_8200() so that we can enable
+  // key module which is required to save windows_aad config.
+  $dependencies['openid_connect'][8200] = [
+    'openid_connect_windows_aad' => 9201,
+  ];
+  // Run openid_connect_windows_aad_update_9202() after
+  // openid_connect_update_8200().
+  $dependencies['openid_connect_windows_aad'][9202] = [
+    'openid_connect' => 8200,
+  ];
+  return $dependencies;
+}
+
+/**
+ * Enable key module.
+ */
+function openid_connect_windows_aad_update_9201() {
+  \Drupal::service('module_installer')->install(['key']);
+}
+
+/**
+ * Transwarp the config to start using the key module.
+ */
+function openid_connect_windows_aad_update_9202() {
+  // Get our config, so we have the values we want to save in the new key store.
+  $config = \Drupal::configFactory()
+    ->getEditable('openid_connect.client.windows_aad');
+  $settings = $config->get('settings');
+  $secret = $settings['client_secret'];
+
+  // Create some variables we need to create the key.
+  $label = 'OpenID Connect Windows AAD key';
+  $transliterated = \Drupal::transliteration()
+    ->transliterate($label, LanguageInterface::LANGCODE_DEFAULT, '_');
+  $transliterated = mb_strtolower($transliterated);
+  $machineName = preg_replace('@[^a-z0-9_.]+@', '_', $transliterated);
+
+  // Check if key with machine name already exists.
+  $key = \Drupal::entityTypeManager()->getStorage('key')->loadByProperties([
+    'id' => $machineName
+  ]);
+  if ($key) {
+    return;
+  }
+
+  // Create the Key entity.
+  $key = Key::create([
+    'label' => $label,
+    'id' => $machineName,
+    'key_type' => 'authentication',
+    'key_provider_settings' => [
+      'key_value' => $secret,
+    ],
+  ]);
+
+  // Save the key.
+  $key->save();
+
+  // Save the new key as the client secret.
+  $settings['client_secret'] = $machineName;
+  $config->set('settings', $settings);
+  $config->save();
+}
+
+/**
+ * Convert enable_single_sign_out to openid_connect end_session endpoint.
+ */
+function openid_connect_windows_aad_update_9205() {
+  $ids = \Drupal::entityQuery('openid_connect_client')
+    ->condition('plugin', 'windows_aad')
+    ->condition('settings.enable_single_sign_out', TRUE, '=')
+    ->execute();
+
+  foreach ($ids as $id) {
+    /** @var OpenIDConnectClientEntity $client */
+    $client = OpenIDConnectClientEntity::load($id);
+    $settings = $client->get('settings');
+    if (empty($settings['end_session_endpoint'])) {
+      $settings['end_session_endpoint'] = 'https://login.microsoftonline.com/common/oauth2/v2.0/logout';
+      $client->set('settings', $settings)->save();
+    }
+  }
+}
+
+/**
+ * Set default value ('sub') for 'subject_key', if not set.
+ */
+function openid_connect_windows_aad_update_9206() {
+  $ids = \Drupal::entityQuery('openid_connect_client')
+    ->condition('plugin', 'windows_aad')
+    ->execute();
+
+  foreach ($ids as $id) {
+    /** @var OpenIDConnectClientEntity $client */
+    $client = OpenIDConnectClientEntity::load($id);
+    $settings = $client->get('settings');
+    if (empty($settings['subject_key'])) {
+      $settings['subject_key'] = 'sub';
+      $client->set('settings', $settings)->save();
+    }
+  }
+}

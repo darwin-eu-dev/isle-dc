@@ -26,40 +26,45 @@
             }
         },
         {
-            "type": "vcs",
-            "url": "https://github.com/digitalutsc/advanced_search.git"
-        },
-        {
             "type": "path",
             "url": "web/modules/custom/*"
-        }
+		}
     ],
     "require": {
         "php": "^7.4 || ^8",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
         "drupal/admin_toolbar": "^3.1",
+        "drupal/advanced_search": "^2.0.0@beta",
+        "drupal/advancedqueue": "^1.0@RC",
         "drupal/better_exposed_filters": "^6.0",
         "drupal/bibcite": "^2.0@beta",
         "drupal/block_field": "^1.0@RC",
-        "drupal/citation_select": "^1.0@beta",
-        "drupal/core-composer-scaffold": "^9.4",
-        "drupal/core-recommended": "^9.4",
+        "drupal/checklistapi": "^2.1",
+        "drupal/config_update": "^2.0@alpha",
+        "drupal/context": "^5@RC",
+        "drupal/controlled_access_terms": "^2",
+        "drupal/core-composer-scaffold": "^10.1",
+        "drupal/core-recommended": "^10.1",
         "drupal/danse": "2.2.13",
         "drupal/encrypt": "^3.1",
         "drupal/eu_cookie_compliance": "^1.24",
+        "drupal/externalauth": "^2.0",
         "drupal/facets": "^2",
         "drupal/field_group": "^3",
         "drupal/field_permissions": "^1",
         "drupal/field_report": "^2.1",
+        "drupal/flexible_permissions": "^1.1",
         "drupal/flysystem": "^2.0@alpha",
         "drupal/gdpr": "^3.0",
         "drupal/group": "^3.2",
         "drupal/hal": "^1.0||^2.0",
+        "drupal/islandora": "^2.8.1",
         "drupal/matomo": "^1.19",
-        "drupal/metatag": "^1.26",
+        "drupal/metatag": "^2.0",
         "drupal/node_view_permissions": "^1.6",
-        "drupal/openid_connect": "^1.2",
+        "drupal/openid_connect": "^3.0@alpha",
+        "drupal/openseadragon": "^2.2",
         "drupal/pdf": "^1.1",
         "drupal/pf_email": "^2.1",
         "drupal/push_framework": "^2.2",
@@ -69,27 +74,27 @@
         "drupal/simple_content_notifications": "^1.0",
         "drupal/smtp": "^1.2",
         "drupal/structure_sync": "^2.0",
-        "drupal/tac_lite": "^1.6",
+        "drupal/tac_lite": "^1.7",
         "drupal/taxonomy_manager": "^2.0",
         "drupal/term_merge": "^2.0@beta",
-        "drupal/tfa": "^1.0",
+        "drupal/tfa": "^1.3",
         "drupal/transliterate_filenames": "^2.0",
         "drupal/twig_tweak": "^3.2",
         "drupal/user_redirect": "^2.0",
+        "drupal/variationcache": "^1.3",
         "drupal/view_unpublished": "^1.1",
         "drupal/views_data_export": "^1.2",
         "drupal/views_field_view": "^1.0@beta",
         "drupal/views_node_access_filter": "^1.0@beta",
         "drupal/workbench_email": "^3.0",
-        "drush/drush": "^10.3",
+        "drush/drush": "^12",
         "islandora-rdm/islandora_fits": "dev-8.x-1.x as 1.x-dev",
-        "islandora/advanced_search": "^2.0.0",
         "islandora/controlled_access_terms": "^2",
-        "islandora/islandora": "^2",
-        "islandora/openseadragon": "^2",
+        "islandora/islandora": "^2.8.1",
+        "islandora/islandora_mirador": "^2",
         "islandora/views_nested_details": "^1.0",
         "library/pdf.js": "^2.4",
-        "mjordan/islandora_workbench_integration": "^1.0"
+        "mjordan/islandora_workbench_integration": "dev-main"
     },
     "conflict": {
         "drupal/drupal": "*",
@@ -105,10 +110,7 @@
             "drupal/core-composer-scaffold": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
-        "sort-packages": true,
-        "platform": {
-            "php": "7.4"
-        }
+        "sort-packages": true
     },
     "extra": {
         "drupal-scaffold": {
@@ -152,7 +154,11 @@
                 "type:drupal-custom-theme"
             ]
         },
-        "patches": {}
+        "patches": {
+	    "drupal/matomo": {
+	        "Allow install from existing config": "assets/patches/matomo-3363521-7.patch"
+	    }
+	}
     },
     "scripts": {
         "post-root-package-install": ["Islandora\\StarterSite::rootPackageInstall"]
