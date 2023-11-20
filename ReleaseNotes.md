@@ -1,7 +1,9 @@
+
 # Release notes
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.57  | 20 Nov 2023 | AAICDDC-98 - Update Islandora (Drupal 10, PHP 8.1.22) and all modules               |
 | 0.0.56  | 17 Nov 2023 | AAICDDC-542 - Modified the search results view                                      |
 | 0.0.55  | 17 Nov 2023 | AAICDDC-434 - Change date format                                                    |
 | 0.0.54  | 15 Nov 2023 | AAICDDC-479 - Change the label of the subscription                                  |
