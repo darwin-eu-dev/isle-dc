@@ -2,8 +2,9 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
-| 0.0.55  | 17 Nov 2023 | AAICDDC-434 - change date format                                                    |
-| 0.0.54  | 15 Nov 2023 | AAICDDC-479 - change the text of the subscription                                   |
+| 0.0.56  | 17 Nov 2023 | AAICDDC-542 - Modified the search results view                                      |
+| 0.0.55  | 17 Nov 2023 | AAICDDC-434 - Change date format                                                    |
+| 0.0.54  | 15 Nov 2023 | AAICDDC-479 - Change the label of the subscription                                  |
 | 0.0.53  | 15 Nov 2023 | AAICDDC-516 - Advanced Search fixed                                                 |
 | 0.0.52  | 14 Nov 2023 | AAICDDC-437 - GDPR check and cookie policy link change                              |
 | 0.0.51  | 14 Nov 2023 | AAICDDC-437 - Site footer added                                                     |
@@ -20,9 +21,9 @@
 | 0.0.40  | 26 Oct 2023 | AAICDDC-225 - Allow users to subscribe to study updates                             |
 | 0.0.39  | 26 Oct 2023 | AAICDDC-435 - Change workflow emails to plain-text                                  |
 | 0.0.38  | 25 Oct 2023 | AAICDDC-435 - Setup workflow notifications                                          |
-| 0.0.37  | 19 Oct 2023 | AAICDDC-415 - allow managers to create study group                                  |
-| 0.0.36  | 17 Oct 2023 | AAICDDC-35 - home page version 3                                                    |
-| 0.0.35  | 17 Oct 2023 | AAICDDC-119 - update the advanced search module                                     |
+| 0.0.37  | 19 Oct 2023 | AAICDDC-415 - Allow managers to create study group                                  |
+| 0.0.36  | 17 Oct 2023 | AAICDDC-35 - Home page version 3                                                    |
+| 0.0.35  | 17 Oct 2023 | AAICDDC-119 - Update the advanced search module                                     |
 | 0.0.34  | 17 Oct 2023 | AAICDDC-414 - Bug fix: Added editable filter for draft page view                    |
 | 0.0.33  | 13 Oct 2023 | AAICDDC-35 - Home page version 2 using the block field                              |
 | 0.0.32  | 11 Oct 2023 | AAICDDC-414 - Bug fix: Removed new draft study page and fixed the old one           |

@@ -11,7 +11,7 @@ id: node.study.field_list_of_pipelines
 field_name: field_list_of_pipelines
 entity_type: node
 bundle: study
-label: 'List of pipelines'
+label: 'List of Pipelines'
 description: ''
 required: false
 translatable: false

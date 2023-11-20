@@ -1,21 +1,21 @@
-uuid: 6c7cd29e-32d2-4e73-b74a-4ab262ce5c7f
+uuid: ddf99e39-17f2-4934-bcbc-e65230fb546e
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_study_dura
+    - field.storage.node.field_study_type
     - node.type.study
   module:
-    - datetime_range
-id: node.study.field_study_dura
-field_name: field_study_dura
+    - options
+id: node.study.field_study_type
+field_name: field_study_type
 entity_type: node
 bundle: study
-label: 'Study duration'
+label: 'Study Type'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: daterange
+field_type: list_string

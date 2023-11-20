@@ -1,4 +1,4 @@
-uuid: 21e04772-90ec-41c2-9240-3ee6edd24086
+uuid: b891165a-02bb-4d7c-ac3f-2316dcd2b0f4
 langcode: en
 status: true
 dependencies:
@@ -9,8 +9,8 @@ dependencies:
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_differentiation
-field_name: field_differentiation
+id: node.field_study_type
+field_name: field_study_type
 entity_type: node
 type: list_string
 settings:
