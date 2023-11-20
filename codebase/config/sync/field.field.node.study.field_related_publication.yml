@@ -11,7 +11,7 @@ id: node.study.field_related_publication
 field_name: field_related_publication
 entity_type: node
 bundle: study
-label: 'Related publication'
+label: 'Related Publication'
 description: ''
 required: false
 translatable: false

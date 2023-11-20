@@ -20,34 +20,26 @@ settings:
   label_display: visible
   provider: advanced_search
   fields:
+    - title_aggregated_fulltext
     - field_study_abstract
     - filename
-    - title_7
     - field_cohorts
+    - field_communications_title
     - field_contributors
-    - field_data_partners_1
-    - title_8
-    - field_study_description
-    - field_differentiation
-    - field_free_text_html_
-    - field_is_drug_exposure_study
-    - field_issues
-    - name
-    - title_1
+    - field_data_partners
+    - field_link_to_encepp_title
     - field_list_of_pipelines
-    - filename_1
-    - title_2
-    - title_3
-    - title_4
-    - title_5
+    - field_outcomes
+    - field_protocol_title
+    - field_related_publication_title
+    - field_related_studies_title
+    - field_results_title
     - field_setting
-    - field_status
-    - field_study_duration_range
-    - field_study_duration_unit
-    - title_6
-    - field_study_sources
-    - title_aggregated_fulltext
-    - field_use_of_study_
+    - field_study_id
+    - field_study_type
+    - field_study_start_date
+    - field_study_end_date
+    - field_code_title
   context_filter: null
 visibility:
   user_status:
