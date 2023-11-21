@@ -182,6 +182,11 @@ production: generate-secrets
 	$(MAKE) -B docker-compose.yml
 	$(MAKE) pull
 	docker compose up -d --remove-orphans
+		@echo "Wait for the /var/www/drupal directory to be available"
+	while ! docker compose exec -T drupal with-contenv bash -lc 'test -d /var/www/drupal'; do \
+		echo "Waiting for /var/www/drupal directory to be available..."; \
+		sleep 2; \
+	done	
 	docker compose exec -T drupal with-contenv bash -lc 'composer install; chown -R nginx:nginx .'
 	$(MAKE) drupal-database update-settings-php
 	docker compose exec -T drupal with-contenv bash -lc "drush si -y --existing-config minimal --account-pass '$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
