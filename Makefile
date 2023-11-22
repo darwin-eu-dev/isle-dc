@@ -154,6 +154,11 @@ starter: generate-secrets
 	fi
 	$(MAKE) set-files-owner SRC=$(CURDIR)/codebase ENVIRONMENT=starter
 	docker compose up -d --remove-orphans
+	@echo "Wait for the drupal directory to be available"
+	while ! docker compose exec -T drupal with-contenv bash -lc 'test -d .'; do \
+		echo "Waiting for drupal directory to be available..."; \
+		sleep 2; \
+	done
 	$(MAKE) starter-finalize ENVIRONMENT=starter
 
 
@@ -172,7 +177,7 @@ starter_dev: generate-secrets
 		echo "Waiting for /var/www/drupal directory to be available..."; \
 		sleep 2; \
 	done
-	docker compose exec -T drupal with-contenv bash -lc 'chown -R nginx:nginx /var/www/drupal/ && su nginx -s /bin/bash -c "composer install"'
+	docker compose exec -T drupal with-contenv bash -lc 'chown -R nginx:nginx /var/www/drupal/ ; su nginx -s /bin/bash -c "composer install"'
 	$(MAKE) starter-finalize ENVIRONMENT=starter_dev
 
 
@@ -182,6 +187,11 @@ production: generate-secrets
 	$(MAKE) -B docker-compose.yml
 	$(MAKE) pull
 	docker compose up -d --remove-orphans
+		@echo "Wait for the /var/www/drupal directory to be available"
+	while ! docker compose exec -T drupal with-contenv bash -lc 'test -d /var/www/drupal'; do \
+		echo "Waiting for /var/www/drupal directory to be available..."; \
+		sleep 2; \
+	done	
 	docker compose exec -T drupal with-contenv bash -lc 'composer install; chown -R nginx:nginx .'
 	$(MAKE) drupal-database update-settings-php
 	docker compose exec -T drupal with-contenv bash -lc "drush si -y --existing-config minimal --account-pass '$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
@@ -496,7 +506,12 @@ set-files-owner: $(SRC)
 ifndef SRC
 	$(error SRC is not set)
 endif
-	sudo chown -R $(shell id -u):101 $(SRC)
+	@echo "Changing ownership of $(SRC) to $(shell id -u):101"
+	@if sudo chown -R $(shell id -u):101 $(SRC); then \
+		echo "Ownership changed successfully."; \
+	else \
+		echo "Error: Failed to change ownership."; \
+	fi
 
 
 # RemovesForces the site uuid to match that in the config_sync_directory so that
@@ -559,7 +574,7 @@ starter-init: generate-secrets
 
 .PHONY: starter-finalize
 starter-finalize:
-	docker compose exec -T drupal with-contenv bash -lc 'chown -R nginx:nginx .'
+	docker compose exec -T drupal with-contenv bash -lc 'chown -R nginx:nginx . ; echo "Chown Complete"'
 	$(MAKE) drupal-database update-settings-php
 	docker compose exec -T drupal with-contenv bash -lc "drush si -y --existing-config minimal --account-pass '$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
 	docker compose exec -T drupal with-contenv bash -lc "drush -l $(SITE) user:role:add fedoraadmin admin"
@@ -660,7 +675,7 @@ fix_masonry:
 fix_views:
 	docker cp scripts/patch_views.sh $$(docker ps --format "{{.Names}}" | grep drupal):/var/www/drupal/patch_views.sh
 	docker compose exec -T drupal with-contenv bash -lc "bash /var/www/drupal/patch_views.sh ; rm /var/www/drupal/patch_views.sh ; drush cr"
-
+  
 ##################################################
 ## Custom commands. If you need a command to be ##
 ## executed, add below                          ##

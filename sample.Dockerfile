@@ -1,20 +1,10 @@
-# syntax=docker/dockerfile:experimental
+# syntax=docker/dockerfile:1.5.1
 ARG REPOSITORY=islandora
-ARG TAG=latest
+ARG TAG=2.0.10
 FROM ${REPOSITORY}/drupal:${TAG} as step1
 
-COPY codebase /build
+COPY codebase /var/www/drupal
 
-
-# Remove runtime configuration and data (files, settings.php, etc) these will
-# either be mounted as volumes or generated on startup from environment variables.
-RUN cp -r /build/* /var/www/drupal && \
-    rm -fr /var/www/drupal/web/sites/default/files/* && \
-    bash -lc "remove_standard_profile_references_from_config" && \
-    find /var/www/drupal/web/sites -name "settings.php" -exec rm {} \; && \
-    chown -R nginx:nginx /var/www/drupal
-
-FROM ${REPOSITORY}/drupal:${TAG} as application
-COPY --from=step1 --chown=nginx:nginx /var/www/drupal /var/www/drupal
-
-COPY build/rootfs /
+RUN composer install -d /var/www/drupal && \
+    chown -R nginx:nginx /var/www/drupal && \
+    cleanup.sh
