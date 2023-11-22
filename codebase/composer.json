@@ -71,6 +71,7 @@
         "drupal/rest_oai_pmh": "^2.0@beta",
         "drupal/robotstxt": "^1.5",
         "drupal/search_api_solr": "^4.2",
+        "drupal/seckit": "^2.0",
         "drupal/simple_content_notifications": "^1.0",
         "drupal/smtp": "^1.2",
         "drupal/structure_sync": "^2.0",
