@@ -154,6 +154,11 @@ starter: generate-secrets
 	fi
 	$(MAKE) set-files-owner SRC=$(CURDIR)/codebase ENVIRONMENT=starter
 	docker compose up -d --remove-orphans
+	@echo "Wait for the drupal directory to be available"
+	while ! docker compose exec -T drupal with-contenv bash -lc 'test -d .'; do \
+		echo "Waiting for drupal directory to be available..."; \
+		sleep 2; \
+	done
 	$(MAKE) starter-finalize ENVIRONMENT=starter
 
 
