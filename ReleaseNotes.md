@@ -3,6 +3,7 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.61  | 24 Nov 2023 | AAICDDC-37 - update the site style                                                  |
 | 0.0.60  | 24 Nov 2023 | AAICDDC-629 - Fixed primary menu for small screens                                  |
 | 0.0.59  | 21 Nov 2023 | AAICDDC-29 - Ensure site doesn't break out of iFrames                               |
 | 0.0.58  | 21 Nov 2023 | AAICDDC-98 - Apply patches required for make production                             |
