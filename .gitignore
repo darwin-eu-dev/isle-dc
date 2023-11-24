@@ -83,8 +83,8 @@ codebase/web/*
 
 !codebase/web/custom-robots.txt
 !codebase/web/sites/default/files/darwin-logo.jpeg
-!codebase/web/sites/default/files/darwin-eu-logo.png
 !codebase/web/sites/default/files/star.png
+!codebase/web/sites/default/files/darwin-eu-logo.png
 #===================
 # User can combined serveral docker-compose.yml files using the `config` command.
 docker-compose.yml
