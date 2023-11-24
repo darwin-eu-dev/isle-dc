@@ -3,6 +3,8 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 0.0.59  | 21 Nov 2023 | AAICDDC-29 - Ensure site doesn't break out of iFrames                               |
+| 0.0.58  | 21 Nov 2023 | AAICDDC-98 - Apply patches required for make production                             |
 | 0.0.57  | 20 Nov 2023 | AAICDDC-98 - Update Islandora (Drupal 10, PHP 8.1.22) and all modules               |
 | 0.0.56  | 17 Nov 2023 | AAICDDC-542 - Modified the search results view                                      |
 | 0.0.55  | 17 Nov 2023 | AAICDDC-434 - Change date format                                                    |

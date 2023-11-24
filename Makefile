@@ -154,6 +154,11 @@ starter: generate-secrets
 	fi
 	$(MAKE) set-files-owner SRC=$(CURDIR)/codebase ENVIRONMENT=starter
 	docker compose up -d --remove-orphans
+	@echo "Wait for the drupal directory to be available"
+	while ! docker compose exec -T drupal with-contenv bash -lc 'test -d .'; do \
+		echo "Waiting for drupal directory to be available..."; \
+		sleep 2; \
+	done
 	$(MAKE) starter-finalize ENVIRONMENT=starter
 
 
@@ -191,6 +196,7 @@ production: generate-secrets
 	$(MAKE) drupal-database update-settings-php
 	docker compose exec -T drupal with-contenv bash -lc "drush si -y --existing-config minimal --account-pass '$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
 	docker compose exec -T drupal with-contenv bash -lc "drush -l $(SITE) user:role:add fedoraadmin admin"
+	docker compose exec -T drupal with-contenv bash -lc "drush -l $(SITE) user:role:add administrator admin"
 	MIGRATE_IMPORT_USER_OPTION=--userid=1 $(MAKE) hydrate
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 islandora_fits_tags'
 	docker compose exec -T drupal with-contenv bash -lc 'drush islandora:settings:set-trusted-host-patterns "^$(DOMAIN)$\"'	
@@ -573,6 +579,7 @@ starter-finalize:
 	$(MAKE) drupal-database update-settings-php
 	docker compose exec -T drupal with-contenv bash -lc "drush si -y --existing-config minimal --account-pass '$(shell cat secrets/live/DRUPAL_DEFAULT_ACCOUNT_PASSWORD)'"
 	docker compose exec -T drupal with-contenv bash -lc "drush -l $(SITE) user:role:add fedoraadmin admin"
+	docker compose exec -T drupal with-contenv bash -lc "drush -l $(SITE) user:role:add administrator admin"
 	MIGRATE_IMPORT_USER_OPTION=--userid=1 $(MAKE) hydrate
 	docker compose exec -T drupal with-contenv bash -lc 'drush -l $(SITE) migrate:import --userid=1 --tag=islandora'
 	#docker compose exec -T drupal with-contenv bash -lc 'chown -R `id -u`:nginx /var/www/drupal'
