@@ -1,16 +1,20 @@
 _core:
   default_config_hash: Ylohp6sdrL1dU4v-KcXzXTP-U8BAMgh4NWJA9eGHtO4
 favicon:
-  use_default: true
+  mimetype: image/png
+  path: 'public://star.png'
+  use_default: false
 features:
   comment_user_picture: true
   comment_user_verification: true
   favicon: true
   node_user_picture: false
 logo:
+  path: 'public://darwin-eu-logo.png'
   use_default: false
 third_party_settings:
   shortcut:
     module_link: true
 mobile_menu_all_widths: 0
-site_branding_bg_color: default
+site_branding_bg_color: white
+base_primary_color: '#1b9ae4'

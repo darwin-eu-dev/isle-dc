@@ -26,6 +26,7 @@ module:
   contextual: 0
   controlled_access_terms: 0
   controlled_access_terms_defaults: 0
+  css_editor: 0
   csv_serialization: 0
   ctools: 0
   danse: 0
