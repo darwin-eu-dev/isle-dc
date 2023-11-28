@@ -543,6 +543,7 @@ display:
           value:
             editorial-draft: editorial-draft
             editorial-ready_for_review: editorial-ready_for_review
+            editorial-archived: editorial-archived
           group: 1
           exposed: true
           expose:

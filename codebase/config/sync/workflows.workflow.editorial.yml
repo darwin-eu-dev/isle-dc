@@ -11,6 +11,11 @@ label: Editorial
 type: content_moderation
 type_settings:
   states:
+    archived:
+      label: Archived
+      weight: 1
+      published: false
+      default_revision: true
     draft:
       label: Draft
       weight: -2
@@ -27,6 +32,12 @@ type_settings:
       published: false
       default_revision: false
   transitions:
+    archive_to_draft:
+      label: 'Archive to Draft'
+      from:
+        - archived
+      to: draft
+      weight: 4
     create_draft:
       label: 'Create draft'
       from:
@@ -39,6 +50,14 @@ type_settings:
         - ready_for_review
       to: draft
       weight: -1
+    move_to_archive:
+      label: 'Move to Archive'
+      from:
+        - draft
+        - published
+        - ready_for_review
+      to: archived
+      weight: 3
     publish:
       label: 'Reviewed to Published'
       from:
