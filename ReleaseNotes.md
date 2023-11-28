@@ -3,8 +3,9 @@
 
 | Version | Date        | Notes                                                                               |
 | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| 1.0.1   | 28 Nov 2023 | AAICDDC-649 - Allow studies to be unpublished                                       |
 | 1.0.0   | 24 Nov 2023 | Final version - Development complete                                                |
-| 0.0.61  | 24 Nov 2023 | AAICDDC-37 - update the site style                                                  |
+| 0.0.61  | 24 Nov 2023 | AAICDDC-37 - Update the site style                                                  |
 | 0.0.60  | 24 Nov 2023 | AAICDDC-629 - Fixed primary menu for small screens                                  |
 | 0.0.59  | 21 Nov 2023 | AAICDDC-29 - Ensure site doesn't break out of iFrames                               |
 | 0.0.58  | 21 Nov 2023 | AAICDDC-98 - Apply patches required for make production                             |
